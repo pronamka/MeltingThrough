@@ -71,4 +71,19 @@ public class PlayerMovement: MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
         return hit.collider != null;
     }
+
+    private bool isRunning()
+    {
+        return (body.linearVelocityX != 0)&&(body.linearVelocityY!=0);
+    }
+
+    public bool canPrimaryAttack()
+    {
+        return isGrounded()&&!isRunning();
+    }
+
+    public bool canBonusAttack()
+    {
+        return isGrounded() && !isRunning();
+    }
 }
