@@ -3,44 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public static class AttackAnimationParameters
-{
-    public static string PrimaryAttack = "swordAttack";
-    public static string BonusAttack = "fireballAttack";
-}
-
-public static class AttackAnimationNames
-{
-    public static string PrimaryAttack = "SwordAttack";
-    public static string BonusAttack = "FireballAttack";
-}
-
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float primaryAttackCooldown = 0;
+    [SerializeField] private float primaryAttackCooldown;
     private float timeSincePrimaryAttack = 0;
 
-    [SerializeField] private float bonusAttackCooldown = 0;
-    private float timeSinceBonusAttack;
+    [SerializeField] private float bonusAttackCooldown;
+    private float timeSinceBonusAttack = 0;
+    [SerializeField]private FireballPool fireballPool;
 
     private Animator animator;
 
-    private PlayerMovement playerMovement;
+    private PlayerState playerState;
 
     private InputAction primaryAttackAction;
     private InputAction bonusAttackAction;
 
     private AnimationUtils animationUtils;
 
+    private float spawnFireballAtTime = 0.7f;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        playerMovement = GetComponent<PlayerMovement>();
+        playerState = GetComponent<PlayerState>();
 
         animationUtils = new AnimationUtils(animator);
 
-        primaryAttackCooldown = animationUtils.GetAnimationDuration(AttackAnimationNames.PrimaryAttack);
-        bonusAttackCooldown = animationUtils.GetAnimationDuration(AttackAnimationNames.BonusAttack);
+        primaryAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack);
+        bonusAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.BonusAttack);
     }
 
     private void Start()
@@ -53,25 +44,24 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Updating attack");
         HandlePrimaryAttack();
         HandleBonusAttack();
     }
 
     private void HandlePrimaryAttack()
     {
-        //Debug.Log($"Checking for primary attack: {primaryAttackAction.triggered}, {timeSincePrimaryAttack} > {primaryAttackCooldown} = {timeSincePrimaryAttack > primaryAttackCooldown}, {playerMovement.canPrimaryAttack()}");
         if (primaryAttackAction.triggered && 
             timeSincePrimaryAttack > primaryAttackCooldown &&
-            playerMovement.canPrimaryAttack()) PrimaryAttack();
+            playerState.CanPrimaryAttack()) PrimaryAttack();
 
         timeSincePrimaryAttack += Time.deltaTime;
     }
 
     private void PrimaryAttack()
     {
-        //Debug.Log("Performing primary attack");
-        animator.SetTrigger(AttackAnimationParameters.PrimaryAttack);
+        playerState.StartAttack(animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack));
+
+        animator.SetTrigger(AnimationParameters.PrimaryAttack);
         timeSincePrimaryAttack = 0;
     }
 
@@ -79,7 +69,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (bonusAttackAction.triggered && 
             timeSinceBonusAttack > bonusAttackCooldown &&
-            playerMovement.canBonusAttack()) 
+            playerState.CanBonusAttack()) 
             BonusAttack();
 
         timeSinceBonusAttack += Time.deltaTime;
@@ -87,7 +77,37 @@ public class PlayerAttack : MonoBehaviour
 
     private void BonusAttack()
     {
-        animator.SetTrigger(AttackAnimationParameters.BonusAttack);
+        playerState.StartAttack(animationUtils.GetAnimationDuration(AnimationNames.BonusAttack));
+        animator.SetTrigger(AnimationParameters.BonusAttack);
+        Invoke(nameof(SpawnFireball), spawnFireballAtTime);
         timeSinceBonusAttack = 0;
+    }
+
+    private void SpawnFireball()
+    {
+        Fireball fireball = fireballPool.TakeFireball();
+
+        Vector2 direction = CalculateFireballDirection();
+        Vector3 spawnPosition = CalculateFireballPosition(direction);
+
+        fireball.transform.position = spawnPosition;
+        fireball.SetDirection(direction);
+    }
+
+    private Vector3 CalculateFireballPosition(Vector2 direction)
+    {
+        float fireballOffset = 1.5f;
+        Vector3 spawnPosition = transform.position + (Vector3)(direction * fireballOffset);
+        return spawnPosition;
+    }
+
+    private Vector2 CalculateFireballDirection()
+    {
+        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        mousePosition.z = 0;
+        Vector2 direction = (mousePosition - transform.position).normalized;
+
+        return direction;
     }
 }

@@ -1,6 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public static class AnimationParameters
+{
+    public static string PrimaryAttack = "swordAttack";
+    public static string BonusAttack = "fireballAttack";
+
+    public static string FireballExplode = "explode";
+}
+
+public static class AnimationNames
+{
+    public static string PrimaryAttack = "SwordAttack";
+    public static string BonusAttack = "FireballAttack";
+
+    public static string FireballExplode = "Explode";
+}
+
 public class AnimationUtils
 {
     private Dictionary<string, float> AnimationDurations = new Dictionary<string, float>();

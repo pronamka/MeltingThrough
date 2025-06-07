@@ -6,24 +6,19 @@ public class PlayerMovement: MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 2.5f;
-    
 
     private InputAction moveAction;
     private InputAction jumpAction;
 
     private Rigidbody2D body;
-    private BoxCollider2D boxCollider;
-
-    [SerializeField] private LayerMask groundLayer;
+    private PlayerState playerState;
 
     private Animator animator;
-
-    private int scaleValue = 5;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        playerState = GetComponent<PlayerState>();
         animator = GetComponent<Animator>();
     }
 
@@ -45,45 +40,24 @@ public class PlayerMovement: MonoBehaviour
         HandleHorizontalMovement(movement.x);
         HandleVerticalMovement(movement.y);
 
-        animator.SetBool("isRunning", movement.x != 0);
-        animator.SetBool("grounded", isGrounded());
+        animator.SetBool("isRunning", playerState.IsRunning());
+        animator.SetBool("grounded", playerState.IsGrounded());
     }
 
     private void HandleHorizontalMovement(float x)
     {
-        if (x > 0.01f) transform.localScale = new Vector3(1, 1, 1) * scaleValue;
-        else if (x < -0.01f) transform.localScale = new Vector3(-1, 1, 1) * scaleValue;
+        if (x > 0.01f) transform.localScale = new Vector3(1, 1, 1) * playerState.scaleValue;
+        else if (x < -0.01f) transform.localScale = new Vector3(-1, 1, 1) * playerState.scaleValue;
 
         body.linearVelocityX = x * speed;
     }
 
     private void HandleVerticalMovement(float y)
     {
-        if (jumpAction.triggered && isGrounded())
+        if (jumpAction.triggered && playerState.IsGrounded())
         {
             body.linearVelocityY = jumpForce;
             animator.SetTrigger("isJumping");
         }
-    }
-
-    private bool isGrounded()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
-        return hit.collider != null;
-    }
-
-    private bool isRunning()
-    {
-        return (body.linearVelocityX != 0)&&(body.linearVelocityY!=0);
-    }
-
-    public bool canPrimaryAttack()
-    {
-        return isGrounded()&&!isRunning();
-    }
-
-    public bool canBonusAttack()
-    {
-        return isGrounded() && !isRunning();
     }
 }
