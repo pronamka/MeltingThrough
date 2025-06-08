@@ -1,7 +1,30 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public class AttackAction
+{
+    public string AnimationName;
+    public float AnimationDuration;
+    public string AnimationTrigger;
+    public AudioClip AnimationSound;
+
+
+    public AttackAction(
+        string animationName,
+        float animationDuration,
+        string animationTrigger,
+        AudioClip animationSound
+        )
+    {
+        AnimationName = animationName;
+        AnimationDuration = animationDuration;
+        AnimationTrigger = animationTrigger;
+        AnimationSound = animationSound;
+    }
+}
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -10,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private float bonusAttackCooldown;
     private float timeSinceBonusAttack = 0;
-    [SerializeField]private FireballPool fireballPool;
+    [SerializeField] private FireballPool fireballPool;
 
     private Animator animator;
 
@@ -21,7 +44,13 @@ public class PlayerAttack : MonoBehaviour
 
     private AnimationUtils animationUtils;
 
+    [SerializeField] private AudioClip bonusAttackSound;
+    [SerializeField] private AudioClip primaryAttackSound;
+
     private float spawnFireballAtTime = 0.7f;
+
+    private Dictionary<string, AttackAction> attackAnimationsAndSounds =
+        new Dictionary<string, AttackAction>();
 
     private void Awake()
     {
@@ -32,6 +61,20 @@ public class PlayerAttack : MonoBehaviour
 
         primaryAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack);
         bonusAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.BonusAttack);
+
+        attackAnimationsAndSounds["primary"] = new AttackAction(
+            AnimationNames.PrimaryAttack,
+            animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack),
+            AnimationParameters.PrimaryAttack,
+            primaryAttackSound
+        );
+
+        attackAnimationsAndSounds["bonus"] = new AttackAction(
+            AnimationNames.BonusAttack,
+            animationUtils.GetAnimationDuration(AnimationNames.BonusAttack),
+            AnimationParameters.BonusAttack,
+            bonusAttackSound
+        );
     }
 
     private void Start()
@@ -50,7 +93,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void HandlePrimaryAttack()
     {
-        if (primaryAttackAction.triggered && 
+        if (primaryAttackAction.triggered &&
             timeSincePrimaryAttack > primaryAttackCooldown &&
             playerState.CanPrimaryAttack()) PrimaryAttack();
 
@@ -59,17 +102,16 @@ public class PlayerAttack : MonoBehaviour
 
     private void PrimaryAttack()
     {
-        playerState.StartAttack(animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack));
+        ManageAnimationAndSound("primary");
 
-        animator.SetTrigger(AnimationParameters.PrimaryAttack);
         timeSincePrimaryAttack = 0;
     }
 
     private void HandleBonusAttack()
     {
-        if (bonusAttackAction.triggered && 
+        if (bonusAttackAction.triggered &&
             timeSinceBonusAttack > bonusAttackCooldown &&
-            playerState.CanBonusAttack()) 
+            playerState.CanBonusAttack())
             BonusAttack();
 
         timeSinceBonusAttack += Time.deltaTime;
@@ -77,17 +119,18 @@ public class PlayerAttack : MonoBehaviour
 
     private void BonusAttack()
     {
-        playerState.StartAttack(animationUtils.GetAnimationDuration(AnimationNames.BonusAttack));
-        animator.SetTrigger(AnimationParameters.BonusAttack);
-        Invoke(nameof(SpawnFireball), spawnFireballAtTime);
+        ManageAnimationAndSound("bonus");
+
+        Vector2 fireballDirection = CalculateFireballDirection();
+        StartCoroutine(SpawnFireball(fireballDirection));
         timeSinceBonusAttack = 0;
     }
 
-    private void SpawnFireball()
+    private IEnumerator SpawnFireball(Vector2 direction)
     {
+        yield return new WaitForSeconds(spawnFireballAtTime);
         Fireball fireball = fireballPool.TakeFireball();
 
-        Vector2 direction = CalculateFireballDirection();
         Vector3 spawnPosition = CalculateFireballPosition(direction);
 
         fireball.transform.position = spawnPosition;
@@ -96,7 +139,7 @@ public class PlayerAttack : MonoBehaviour
 
     private Vector3 CalculateFireballPosition(Vector2 direction)
     {
-        float fireballOffset = 1.5f;
+        float fireballOffset = 1.7f;
         Vector3 spawnPosition = transform.position + (Vector3)(direction * fireballOffset);
         return spawnPosition;
     }
@@ -109,5 +152,20 @@ public class PlayerAttack : MonoBehaviour
         Vector2 direction = (mousePosition - transform.position).normalized;
 
         return direction;
+    }
+
+
+
+    private void ManageAnimationAndSound(string attackName)
+    {
+        if (!attackAnimationsAndSounds.ContainsKey(attackName))
+        {
+            throw new KeyNotFoundException();
+        }
+
+        AttackAction attack = attackAnimationsAndSounds[attackName];
+        playerState.StartAttack(attack.AnimationDuration);
+        animator.SetTrigger(attack.AnimationTrigger);
+        SoundManager.instance.PlaySound(attack.AnimationSound);
     }
 }
