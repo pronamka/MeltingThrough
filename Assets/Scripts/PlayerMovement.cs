@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
 
-public class PlayerMovement: MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 2.5f;
@@ -14,6 +14,8 @@ public class PlayerMovement: MonoBehaviour
     private PlayerState playerState;
 
     private Animator animator;
+
+    [SerializeField] private AudioClip jumpSound;
 
     private void Awake()
     {
@@ -27,7 +29,6 @@ public class PlayerMovement: MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
     }
-
 
     private void Update()
     {
@@ -58,6 +59,7 @@ public class PlayerMovement: MonoBehaviour
         {
             body.linearVelocityY = jumpForce;
             animator.SetTrigger("isJumping");
+            SoundManager.instance.PlaySound(jumpSound);
         }
     }
 }
