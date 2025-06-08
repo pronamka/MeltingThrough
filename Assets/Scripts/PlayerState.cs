@@ -14,10 +14,14 @@ public class PlayerState : MonoBehaviour
     public bool isAttacking = false;
     private float attackTimeLeft = 0;
 
+    private Health health;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+
+        health = GetComponent<Health>();
     }
 
     private void Update()
@@ -74,5 +78,15 @@ public class PlayerState : MonoBehaviour
 
         isAttacking = true;
         attackTimeLeft = attackTime;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health.TakeDamage(damage);
+    }
+
+    public bool IsDead()
+    {
+        return health.isDead;
     }
 }

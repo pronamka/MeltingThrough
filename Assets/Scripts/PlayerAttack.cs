@@ -87,6 +87,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (playerState.IsDead()) return;
         HandlePrimaryAttack();
         HandleBonusAttack();
     }
@@ -102,7 +103,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void PrimaryAttack()
     {
-        ManageAnimationAndSound("primary");
+        //ManageAnimationAndSound("primary");
+        playerState.TakeDamage(10);
 
         timeSincePrimaryAttack = 0;
     }

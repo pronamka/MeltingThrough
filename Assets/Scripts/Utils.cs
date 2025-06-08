@@ -7,6 +7,8 @@ public static class AnimationParameters
     public static string BonusAttack = "fireballAttack";
 
     public static string FireballExplode = "explode";
+    public static string Hurt = "hurt";
+    public static string Death = "death";
 }
 
 public static class AnimationNames
@@ -15,6 +17,9 @@ public static class AnimationNames
     public static string BonusAttack = "FireballAttack";
 
     public static string FireballExplode = "Explode";
+
+    public static string Hurt = "Hurt";
+    public static string Death = "Death";
 }
 
 public class AnimationUtils
