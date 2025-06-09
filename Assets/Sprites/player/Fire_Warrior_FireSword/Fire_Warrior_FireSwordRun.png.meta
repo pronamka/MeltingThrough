@@ -148,7 +148,7 @@ TextureImporter:
         width: 41
         height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,7 +170,7 @@ TextureImporter:
         width: 41
         height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -188,33 +188,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 337
-        y: 23
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2c28eb53d2b139490800000000000000
-      internalID: -7740813453530594622
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fire_Warrior_FireSwordRun_3
-      rect:
-        serializedVersion: 2
-        x: 341
         y: 15
-        width: 37
+        width: 41
         height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -228,7 +206,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordRun_4
+      name: Fire_Warrior_FireSwordRun_3
       rect:
         serializedVersion: 2
         x: 481
@@ -236,7 +214,7 @@ TextureImporter:
         width: 40
         height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -250,7 +228,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordRun_5
+      name: Fire_Warrior_FireSwordRun_4
       rect:
         serializedVersion: 2
         x: 625
@@ -258,7 +236,7 @@ TextureImporter:
         width: 39
         height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -272,7 +250,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordRun_6
+      name: Fire_Warrior_FireSwordRun_5
       rect:
         serializedVersion: 2
         x: 770
@@ -280,7 +258,7 @@ TextureImporter:
         width: 39
         height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -294,37 +272,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordRun_7
+      name: Fire_Warrior_FireSwordRun_6
       rect:
         serializedVersion: 2
-        x: 913
-        y: 23
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 58251266e28b66970800000000000000
-      internalID: 8747881835635233413
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fire_Warrior_FireSwordRun_8
-      rect:
-        serializedVersion: 2
-        x: 917
-        y: 15
-        width: 37
+        x: 914
+        y: 14
+        width: 41
         height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -338,15 +294,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordRun_9
+      name: Fire_Warrior_FireSwordRun_7
       rect:
         serializedVersion: 2
         x: 1057
-        y: 15
+        y: 14
         width: 42
         height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -363,7 +319,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 76cb03cc65786c845a50aa11a2486949
     internalID: 0
     vertices: []
     indices: 
@@ -375,14 +331,13 @@ TextureImporter:
     nameFileIdTable:
       Fire_Warrior_FireSwordRun_0: -5523136038998442828
       Fire_Warrior_FireSwordRun_1: 1452465492792031537
-      Fire_Warrior_FireSwordRun_2: -7740813453530594622
-      Fire_Warrior_FireSwordRun_3: -9190453322218334584
-      Fire_Warrior_FireSwordRun_4: -7149955463867208568
-      Fire_Warrior_FireSwordRun_5: 3733657335199100938
-      Fire_Warrior_FireSwordRun_6: -8266834483127956674
-      Fire_Warrior_FireSwordRun_7: 8747881835635233413
-      Fire_Warrior_FireSwordRun_8: -4043797975843701215
-      Fire_Warrior_FireSwordRun_9: -6072863862624158069
+      Fire_Warrior_FireSwordRun_10: -1323301167
+      Fire_Warrior_FireSwordRun_2: -9190453322218334584
+      Fire_Warrior_FireSwordRun_3: -7149955463867208568
+      Fire_Warrior_FireSwordRun_4: 3733657335199100938
+      Fire_Warrior_FireSwordRun_5: -8266834483127956674
+      Fire_Warrior_FireSwordRun_6: -4043797975843701215
+      Fire_Warrior_FireSwordRun_7: -6072863862624158069
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
