@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
     private float timeSinceTakenDamage = 0;
 
     private Animator animator;
-    private SpriteRenderer renderer;
+    private SpriteRenderer playerRenderer;
 
     private AnimationUtils utils;
 
@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
     {
         isDead = false;
         animator = GetComponent<Animator>();
-        renderer = GetComponent<SpriteRenderer>();
+        playerRenderer = GetComponent<SpriteRenderer>();
 
         utils = new AnimationUtils(animator);
     }
@@ -71,7 +71,7 @@ public class Health : MonoBehaviour
 
     private void DisableEntity()
     {
-        renderer.enabled = false;
+        playerRenderer.enabled = false;
     }
 
     private bool IsInvincible()

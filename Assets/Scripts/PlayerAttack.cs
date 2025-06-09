@@ -28,15 +28,15 @@ public class AttackAction
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float primaryAttackCooldown;
+    private float primaryAttackCooldown;
     private float timeSincePrimaryAttack = 0;
 
-    [SerializeField] private float bonusAttackCooldown;
+    private float bonusAttackCooldown;
     private float timeSinceBonusAttack = 0;
+    [SerializeField] private float bonusAttackManaCost;
     [SerializeField] private FireballPool fireballPool;
 
     private Animator animator;
-
     private PlayerState playerState;
 
     private InputAction primaryAttackAction;
@@ -103,8 +103,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void PrimaryAttack()
     {
-        //ManageAnimationAndSound("primary");
-        playerState.TakeDamage(10);
+        ManageAnimationAndSound("primary");
 
         timeSincePrimaryAttack = 0;
     }
@@ -113,14 +112,14 @@ public class PlayerAttack : MonoBehaviour
     {
         if (bonusAttackAction.triggered &&
             timeSinceBonusAttack > bonusAttackCooldown &&
-            playerState.CanBonusAttack())
+            playerState.CanBonusAttack()&&playerState.mana.HasEnoughMana(bonusAttackManaCost))
             BonusAttack();
-
         timeSinceBonusAttack += Time.deltaTime;
     }
 
     private void BonusAttack()
     {
+        playerState.mana.UseMana(bonusAttackManaCost);
         ManageAnimationAndSound("bonus");
 
         Vector2 fireballDirection = CalculateFireballDirection();

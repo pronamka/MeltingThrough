@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeState",
+                    "type": "Button",
+                    "id": "dfe5df81-b74e-488d-a4ea-d02b21381811",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -468,6 +477,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "BonusAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "207ea130-01ea-4e38-b8ce-95664fea6833",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChangeState",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

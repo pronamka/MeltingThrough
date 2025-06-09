@@ -6,6 +6,7 @@ public class PlayerState : MonoBehaviour
 {
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
+    private Animator animator;
 
     [SerializeField] private LayerMask groundLayer;
 
@@ -15,17 +16,42 @@ public class PlayerState : MonoBehaviour
     private float attackTimeLeft = 0;
 
     private Health health;
+    public PlayerMana mana { get; private set; }
+
+    private InputAction changeStateAction;
+    private bool isOnFire = false;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
 
         health = GetComponent<Health>();
+        mana = GetComponent<PlayerMana>();
+    }
+
+    private void Start()
+    {
+        changeStateAction = InputSystem.actions.FindAction("ChangeState");
+        changeStateAction.Enable();
     }
 
     private void Update()
     {
+        if (IsDead())
+        {
+            mana.enabled = false;
+            return;
+        }
+
+        if (changeStateAction.triggered)
+        {
+            isOnFire = !isOnFire;
+            animator.SetTrigger("transition");
+            animator.SetBool("isOnFire", isOnFire);
+        }
+
         if (isAttacking)
         {
             attackTimeLeft -= Time.deltaTime;
@@ -51,7 +77,7 @@ public class PlayerState : MonoBehaviour
 
     public bool IsMoving()
     {
-        return (body.linearVelocityX != 0) && (body.linearVelocityY != 0);
+        return (body.linearVelocityX != 0) || (body.linearVelocityY != 0);
     }
 
     public bool CanPrimaryAttack()
