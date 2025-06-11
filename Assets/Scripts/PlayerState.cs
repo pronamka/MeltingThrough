@@ -21,6 +21,8 @@ public class PlayerState : MonoBehaviour
     private InputAction changeStateAction;
     private bool isOnFire = false;
 
+    private InputAction takeDamageAction;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -35,6 +37,9 @@ public class PlayerState : MonoBehaviour
     {
         changeStateAction = InputSystem.actions.FindAction("ChangeState");
         changeStateAction.Enable();
+
+        takeDamageAction = InputSystem.actions.FindAction("TakeDamage");
+        takeDamageAction.Enable();
     }
 
     private void Update()
@@ -43,6 +48,11 @@ public class PlayerState : MonoBehaviour
         {
             mana.enabled = false;
             return;
+        }
+
+        if (takeDamageAction.triggered)
+        {
+            TakeDamage(20);
         }
 
         if (changeStateAction.triggered)
