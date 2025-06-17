@@ -200,7 +200,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ice_monster_0
+      name: ice_monster_attack_0
       rect:
         serializedVersion: 2
         x: 41
@@ -208,7 +208,7 @@ TextureImporter:
         width: 101
         height: 130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -222,7 +222,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_1
+      name: ice_monster_attack_1
       rect:
         serializedVersion: 2
         x: 233
@@ -230,7 +230,7 @@ TextureImporter:
         width: 100
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -244,7 +244,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_2
+      name: ice_monster_attack_2
       rect:
         serializedVersion: 2
         x: 373
@@ -252,7 +252,7 @@ TextureImporter:
         width: 152
         height: 132
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -266,15 +266,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_3
+      name: ice_monster_attack_3
       rect:
         serializedVersion: 2
-        x: 593
+        x: 594
         y: 798
         width: 124
         height: 130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -288,7 +288,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_4
+      name: ice_monster_death_0
       rect:
         serializedVersion: 2
         x: 41
@@ -296,7 +296,7 @@ TextureImporter:
         width: 100
         height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -310,37 +310,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_5
+      name: ice_monster_death_1
       rect:
         serializedVersion: 2
-        x: 221
-        y: 698
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 208455e5cbbc5a160800000000000000
-      internalID: 7036254002733205506
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_6
-      rect:
-        serializedVersion: 2
-        x: 229
+        x: 215
         y: 606
-        width: 100
-        height: 108
+        width: 114
+        height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -354,81 +332,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_7
+      name: ice_monster_death_2
       rect:
         serializedVersion: 2
-        x: 241
-        y: 714
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2456a379b636f8230800000000000000
-      internalID: 3643239937315857730
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_8
-      rect:
-        serializedVersion: 2
-        x: 429
-        y: 712
-        width: 8
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b53d15a8605ff3380800000000000000
-      internalID: -8989196922768993445
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_9
-      rect:
-        serializedVersion: 2
-        x: 401
-        y: 694
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4e9120d17e9e64c90800000000000000
-      internalID: -7185798976589653532
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_10
-      rect:
-        serializedVersion: 2
-        x: 421
+        x: 400
         y: 606
-        width: 112
-        height: 92
+        width: 133
+        height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -442,37 +354,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_11
+      name: ice_monster_death_3
       rect:
         serializedVersion: 2
-        x: 585
-        y: 682
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cbfc5d1a7eea92fa0800000000000000
-      internalID: -5824932333151203396
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_12
-      rect:
-        serializedVersion: 2
-        x: 609
+        x: 582
         y: 606
-        width: 92
-        height: 84
+        width: 151
+        height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -486,37 +376,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_13
-      rect:
-        serializedVersion: 2
-        x: 701
-        y: 654
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e575a67c5c83383e0800000000000000
-      internalID: -2052734583045466274
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_14
+      name: ice_monster_death_4
       rect:
         serializedVersion: 2
         x: 801
         y: 606
-        width: 93
-        height: 72
+        width: 120
+        height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -530,95 +398,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_15
-      rect:
-        serializedVersion: 2
-        x: 901
-        y: 640
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f135370ab784e76a0800000000000000
-      internalID: -6449637920537881825
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_16
-      rect:
-        serializedVersion: 2
-        x: 705
-        y: 630
-        width: 16
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1a825b21402395880800000000000000
-      internalID: -8621805018548983647
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_17
-      rect:
-        serializedVersion: 2
-        x: 909
-        y: 622
-        width: 8
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e7ffe238a7fae3110800000000000000
-      internalID: 1242623487922601854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_18
-      rect:
-        serializedVersion: 2
-        x: 709
-        y: 606
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 637828d56091609a0800000000000000
-      internalID: -6267294316310132938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice_monster_19
+      name: ice_monster_hurt_0
       rect:
         serializedVersion: 2
         x: 41
@@ -626,7 +406,7 @@ TextureImporter:
         width: 112
         height: 132
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -640,7 +420,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_20
+      name: ice_monster_hurt_1
       rect:
         serializedVersion: 2
         x: 233
@@ -648,7 +428,7 @@ TextureImporter:
         width: 108
         height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -662,7 +442,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_21
+      name: ice_monster_idle_0
       rect:
         serializedVersion: 2
         x: 41
@@ -670,7 +450,7 @@ TextureImporter:
         width: 100
         height: 130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -684,7 +464,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_22
+      name: ice_monster_idle_1
       rect:
         serializedVersion: 2
         x: 233
@@ -692,7 +472,7 @@ TextureImporter:
         width: 100
         height: 132
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -706,7 +486,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_23
+      name: ice_monster_idle_2
       rect:
         serializedVersion: 2
         x: 425
@@ -714,7 +494,7 @@ TextureImporter:
         width: 104
         height: 132
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -728,7 +508,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_24
+      name: ice_monster_idle_3
       rect:
         serializedVersion: 2
         x: 617
@@ -736,7 +516,7 @@ TextureImporter:
         width: 104
         height: 130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -750,7 +530,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_25
+      name: ice_monster_walk_0
       rect:
         serializedVersion: 2
         x: 41
@@ -758,7 +538,7 @@ TextureImporter:
         width: 101
         height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -772,7 +552,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_26
+      name: ice_monster_walk_1
       rect:
         serializedVersion: 2
         x: 233
@@ -780,7 +560,7 @@ TextureImporter:
         width: 96
         height: 130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -794,7 +574,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_27
+      name: ice_monster_walk_2
       rect:
         serializedVersion: 2
         x: 425
@@ -802,7 +582,7 @@ TextureImporter:
         width: 100
         height: 132
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -816,7 +596,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_28
+      name: ice_monster_walk_3
       rect:
         serializedVersion: 2
         x: 617
@@ -824,7 +604,7 @@ TextureImporter:
         width: 100
         height: 130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -838,7 +618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice_monster_29
+      name: ice_monster_walk_4
       rect:
         serializedVersion: 2
         x: 809
@@ -846,7 +626,7 @@ TextureImporter:
         width: 96
         height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -863,7 +643,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: af4bb72b86babbc46840e00e368e2944
     internalID: 0
     vertices: []
     indices: 
@@ -873,36 +653,36 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ice_monster_0: 8547629202100249411
-      ice_monster_1: -3039291870364430004
-      ice_monster_10: 5031938210424502738
       ice_monster_11: -5824932333151203396
-      ice_monster_12: 4768421274805943397
       ice_monster_13: -2052734583045466274
-      ice_monster_14: -7744461629013178942
       ice_monster_15: -6449637920537881825
       ice_monster_16: -8621805018548983647
       ice_monster_17: 1242623487922601854
       ice_monster_18: -6267294316310132938
-      ice_monster_19: 8709800179976229346
-      ice_monster_2: -8634488008129964069
-      ice_monster_20: -4250594202948567864
-      ice_monster_21: 1513765509717471931
-      ice_monster_22: 8215261315171230120
-      ice_monster_23: -9061598229610309681
-      ice_monster_24: 2692121192207023199
-      ice_monster_25: 700074283054590056
-      ice_monster_26: -1094217910888866815
-      ice_monster_27: -179336313668600576
-      ice_monster_28: 4469852740737800896
-      ice_monster_29: -1241565401628483799
-      ice_monster_3: 7240472725601789440
-      ice_monster_4: 39319201717582569
       ice_monster_5: 7036254002733205506
-      ice_monster_6: 6685591004922071285
       ice_monster_7: 3643239937315857730
       ice_monster_8: -8989196922768993445
       ice_monster_9: -7185798976589653532
+      ice_monster_attack_0: 8547629202100249411
+      ice_monster_attack_1: -3039291870364430004
+      ice_monster_attack_2: -8634488008129964069
+      ice_monster_attack_3: 7240472725601789440
+      ice_monster_death_0: 39319201717582569
+      ice_monster_death_1: 6685591004922071285
+      ice_monster_death_2: 5031938210424502738
+      ice_monster_death_3: 4768421274805943397
+      ice_monster_death_4: -7744461629013178942
+      ice_monster_hurt_0: 8709800179976229346
+      ice_monster_hurt_1: -4250594202948567864
+      ice_monster_idle_0: 1513765509717471931
+      ice_monster_idle_1: 8215261315171230120
+      ice_monster_idle_2: -9061598229610309681
+      ice_monster_idle_3: 2692121192207023199
+      ice_monster_walk_0: 700074283054590056
+      ice_monster_walk_1: -1094217910888866815
+      ice_monster_walk_2: -179336313668600576
+      ice_monster_walk_3: 4469852740737800896
+      ice_monster_walk_4: -1241565401628483799
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,7 +1,6 @@
-using UnityEditor.Rendering;
 using UnityEngine;
 
-public class DeerAttack : MonoBehaviour
+public class IceMonsterAttack : MonoBehaviour
 {
     [SerializeField] private float attackDistance;
     [SerializeField] private float damage;
@@ -9,7 +8,6 @@ public class DeerAttack : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
 
     [SerializeField] private AudioClip attackSound;
-
     private EnemyState state;
 
     private AttackAction attackAction;
