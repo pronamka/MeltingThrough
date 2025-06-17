@@ -4,28 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AttackAction
-{
-    public string AnimationName;
-    public float AnimationDuration;
-    public string AnimationTrigger;
-    public AudioClip AnimationSound;
-
-
-    public AttackAction(
-        string animationName,
-        float animationDuration,
-        string animationTrigger,
-        AudioClip animationSound
-        )
-    {
-        AnimationName = animationName;
-        AnimationDuration = animationDuration;
-        AnimationTrigger = animationTrigger;
-        AnimationSound = animationSound;
-    }
-}
-
 public class PlayerAttack : MonoBehaviour
 {
     private float primaryAttackCooldown;
@@ -59,20 +37,20 @@ public class PlayerAttack : MonoBehaviour
 
         animationUtils = new AnimationUtils(animator);
 
-        primaryAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack);
-        bonusAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.BonusAttack);
+        primaryAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PlayerPrimaryAttack);
+        bonusAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PlayerBonusAttack);
 
         attackAnimationsAndSounds["primary"] = new AttackAction(
-            AnimationNames.PrimaryAttack,
-            animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack),
-            AnimationParameters.PrimaryAttack,
+            AnimationNames.PlayerPrimaryAttack,
+            animationUtils.GetAnimationDuration(AnimationNames.PlayerPrimaryAttack),
+            AnimationParameters.PlayerPrimaryAttack,
             primaryAttackSound
         );
 
         attackAnimationsAndSounds["bonus"] = new AttackAction(
-            AnimationNames.BonusAttack,
-            animationUtils.GetAnimationDuration(AnimationNames.BonusAttack),
-            AnimationParameters.BonusAttack,
+            AnimationNames.PlayerBonusAttack,
+            animationUtils.GetAnimationDuration(AnimationNames.PlayerBonusAttack),
+            AnimationParameters.PlayerBonusAttack,
             bonusAttackSound
         );
     }

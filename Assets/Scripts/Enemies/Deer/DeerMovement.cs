@@ -24,6 +24,7 @@ public class DeerMovement : MonoBehaviour
     private void Update()
     {
         if (enemyState.IsDead()) return;
+        if (enemyState.isAttacking) return;
         timePassed += Time.deltaTime;
         HandleMovement();
     }
@@ -34,6 +35,7 @@ public class DeerMovement : MonoBehaviour
         {
             direction = -old_direction;
         }
+
         HandleHorizontalMovement(direction);
         if (direction != 0 && enemyState.IsOnEdge())
         {

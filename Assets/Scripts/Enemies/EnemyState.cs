@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 public class EnemyState : MonoBehaviour
 {
@@ -67,21 +69,12 @@ public class EnemyState : MonoBehaviour
 
     public bool CanPrimaryAttack()
     {
-        return IsGrounded() && !IsMoving() && !isAttacking;
-    }
-
-    private bool IsPlayerLeft()
-    {
-        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-        return mousePosition.x < transform.position.x;
+        return IsGrounded() && !isAttacking && !IsDead();
     }
 
     public void StartAttack(float attackTime)
     {
-        if (!IsPlayerLeft()) transform.localScale = new Vector3(1, 1, 1) * scaleValue;
-        else transform.localScale = new Vector3(-1, 1, 1) * scaleValue;
-
+        body.linearVelocityX = 0;
         isAttacking = true;
         attackTimeLeft = attackTime;
     }
@@ -104,5 +97,12 @@ public class EnemyState : MonoBehaviour
         }
         RaycastHit2D isOnEdge = Physics2D.Raycast(groundCheck.position, Vector2.down, 1f, groundLayer);
         return isOnEdge.collider==null;
+    }
+
+    public void ManageAttackAnimationAndSound(AttackAction attackAction)
+    {
+        StartAttack(attackAction.AnimationDuration);
+        animator.SetTrigger(attackAction.AnimationTrigger);
+        SoundManager.instance.PlaySound(attackAction.AnimationSound);
     }
 }
