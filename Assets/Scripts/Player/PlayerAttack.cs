@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField] private float primaryAttackDamage;
     private float primaryAttackCooldown;
     private float timeSincePrimaryAttack = 0;
 
@@ -29,6 +30,8 @@ public class PlayerAttack : MonoBehaviour
 
     private Dictionary<string, AttackAction> attackAnimationsAndSounds =
         new Dictionary<string, AttackAction>();
+
+    private Dictionary<Collider2D, bool> enemies = new Dictionary<Collider2D, bool>();
 
     private void Awake()
     {
@@ -86,6 +89,14 @@ public class PlayerAttack : MonoBehaviour
         timeSincePrimaryAttack = 0;
     }
 
+    private void DealDamage()
+    {
+        foreach (Collider2D enemy in enemies.Keys)
+        {
+            enemy.transform.GetComponent<EnemyState>().TakeDamage(primaryAttackDamage);
+        }
+    }
+
     private void HandleBonusAttack()
     {
         if (bonusAttackAction.triggered &&
@@ -133,8 +144,6 @@ public class PlayerAttack : MonoBehaviour
         return direction;
     }
 
-
-
     private void ManageAnimationAndSound(string attackName)
     {
         if (!attackAnimationsAndSounds.ContainsKey(attackName))
@@ -146,5 +155,21 @@ public class PlayerAttack : MonoBehaviour
         playerState.StartAttack(attack.AnimationDuration);
         animator.SetTrigger(attack.AnimationTrigger);
         SoundManager.instance.PlaySound(attack.AnimationSound);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            enemies[other] = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (enemies.ContainsKey(other))
+        {
+            enemies.Remove(other);
+        }
     }
 }

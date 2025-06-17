@@ -461,6 +461,67 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &444071107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2823568982631505413, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_Name
+      value: DeerEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926219742770685136, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.3637705
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.00982
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111457132759985556, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,17 +2910,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &984084385 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5480961728810702692, guid: c345dc8c2600b3b4e90866c1930becdb, type: 3}
-  m_PrefabInstance: {fileID: 1779241320599825848}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d2a10ea1b2ef4446903df1c67b4495f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1135882128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,7 +3259,7 @@ PrefabInstance:
     - target: {fileID: 3041579762911714754, guid: c345dc8c2600b3b4e90866c1930becdb, type: 3}
       propertyPath: fireballPool
       value: 
-      objectReference: {fileID: 984084385}
+      objectReference: {fileID: 7991445185254602452, guid: 6d463ad8bd0254d4db1936a6c15bce4a, type: 3}
     - target: {fileID: 3578591123425492333, guid: c345dc8c2600b3b4e90866c1930becdb, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3327,3 +3377,4 @@ SceneRoots:
   - {fileID: 5075634183390913508}
   - {fileID: 179716170}
   - {fileID: 148536460}
+  - {fileID: 444071107}

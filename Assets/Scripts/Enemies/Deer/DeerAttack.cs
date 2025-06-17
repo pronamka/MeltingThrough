@@ -70,6 +70,10 @@ public class DeerAttack : MonoBehaviour
 
     private void DamagePlayer()
     {
+        if (!state.isAttacking)
+        {
+            return;
+        }
         if (playerCollider != null)
         {
             playerCollider.transform.GetComponent<PlayerState>().TakeDamage(damage);

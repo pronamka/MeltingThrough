@@ -5,6 +5,7 @@ public class Fireball : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float maxFlyingTime;
+    [SerializeField] private float damage;
     private float timeFlying = 0;
 
     private Vector2 direction;
@@ -35,14 +36,22 @@ public class Fireball : MonoBehaviour
         timeFlying += Time.deltaTime;
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AttackZones"))
+        {
+            return;
+        }
+        animator.SetTrigger("explode");
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            collision.GetComponent<EnemyState>().TakeDamage(damage);
+        }
         Explode();
     }
 
     private void Explode()
     {
-        animator.SetTrigger("explode");
         exploded = true;
         boxCollider.enabled = false;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
