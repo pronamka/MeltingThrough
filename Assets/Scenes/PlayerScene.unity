@@ -515,11 +515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6881059100736320445, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
       propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6881059100736320445, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
-      propertyPath: m_GravityScale
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3322,8 +3318,12 @@ PrefabInstance:
       value: IceMonsterEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 3478370843070973284, guid: c245aec8c270b1946ac6cffc26fdea82, type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3478370843070973284, guid: c245aec8c270b1946ac6cffc26fdea82, type: 3}
       propertyPath: m_BodyType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5962065532919968533, guid: c245aec8c270b1946ac6cffc26fdea82, type: 3}
       propertyPath: m_LocalPosition.x
