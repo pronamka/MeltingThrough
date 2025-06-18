@@ -4,30 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AttackAction
-{
-    public string AnimationName;
-    public float AnimationDuration;
-    public string AnimationTrigger;
-    public AudioClip AnimationSound;
-
-
-    public AttackAction(
-        string animationName,
-        float animationDuration,
-        string animationTrigger,
-        AudioClip animationSound
-        )
-    {
-        AnimationName = animationName;
-        AnimationDuration = animationDuration;
-        AnimationTrigger = animationTrigger;
-        AnimationSound = animationSound;
-    }
-}
-
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField] private float primaryAttackDamage;
     private float primaryAttackCooldown;
     private float timeSincePrimaryAttack = 0;
 
@@ -52,6 +31,8 @@ public class PlayerAttack : MonoBehaviour
     private Dictionary<string, AttackAction> attackAnimationsAndSounds =
         new Dictionary<string, AttackAction>();
 
+    private Dictionary<Collider2D, bool> enemies = new Dictionary<Collider2D, bool>();
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -59,20 +40,20 @@ public class PlayerAttack : MonoBehaviour
 
         animationUtils = new AnimationUtils(animator);
 
-        primaryAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack);
-        bonusAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.BonusAttack);
+        primaryAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PlayerPrimaryAttack);
+        bonusAttackCooldown = animationUtils.GetAnimationDuration(AnimationNames.PlayerBonusAttack);
 
         attackAnimationsAndSounds["primary"] = new AttackAction(
-            AnimationNames.PrimaryAttack,
-            animationUtils.GetAnimationDuration(AnimationNames.PrimaryAttack),
-            AnimationParameters.PrimaryAttack,
+            AnimationNames.PlayerPrimaryAttack,
+            animationUtils.GetAnimationDuration(AnimationNames.PlayerPrimaryAttack),
+            AnimationParameters.PlayerPrimaryAttack,
             primaryAttackSound
         );
 
         attackAnimationsAndSounds["bonus"] = new AttackAction(
-            AnimationNames.BonusAttack,
-            animationUtils.GetAnimationDuration(AnimationNames.BonusAttack),
-            AnimationParameters.BonusAttack,
+            AnimationNames.PlayerBonusAttack,
+            animationUtils.GetAnimationDuration(AnimationNames.PlayerBonusAttack),
+            AnimationParameters.PlayerBonusAttack,
             bonusAttackSound
         );
     }
@@ -106,6 +87,14 @@ public class PlayerAttack : MonoBehaviour
         ManageAnimationAndSound("primary");
 
         timeSincePrimaryAttack = 0;
+    }
+
+    private void DealDamage()
+    {
+        foreach (Collider2D enemy in enemies.Keys)
+        {
+            enemy.transform.GetComponent<EnemyState>().TakeDamage(primaryAttackDamage);
+        }
     }
 
     private void HandleBonusAttack()
@@ -155,8 +144,6 @@ public class PlayerAttack : MonoBehaviour
         return direction;
     }
 
-
-
     private void ManageAnimationAndSound(string attackName)
     {
         if (!attackAnimationsAndSounds.ContainsKey(attackName))
@@ -168,5 +155,21 @@ public class PlayerAttack : MonoBehaviour
         playerState.StartAttack(attack.AnimationDuration);
         animator.SetTrigger(attack.AnimationTrigger);
         SoundManager.instance.PlaySound(attack.AnimationSound);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            enemies[other] = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (enemies.ContainsKey(other))
+        {
+            enemies.Remove(other);
+        }
     }
 }

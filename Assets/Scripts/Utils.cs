@@ -1,25 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class AttackAction
+{
+    public string AnimationName;
+    public float AnimationDuration;
+    public string AnimationTrigger;
+    public AudioClip AnimationSound;
+
+
+    public AttackAction(
+        string animationName,
+        float animationDuration,
+        string animationTrigger,
+        AudioClip animationSound
+    )
+    {
+        AnimationName = animationName;
+        AnimationDuration = animationDuration;
+        AnimationTrigger = animationTrigger;
+        AnimationSound = animationSound;
+    }
+}
+
 public static class AnimationParameters
 {
-    public static string PrimaryAttack = "swordAttack";
-    public static string BonusAttack = "fireballAttack";
+    public static string PlayerPrimaryAttack = "swordAttack";
+    public static string PlayerBonusAttack = "fireballAttack";
 
     public static string FireballExplode = "explode";
     public static string Hurt = "hurt";
     public static string Death = "death";
+
+    public static string EnemyPrimaryAttack = "attack";
 }
 
 public static class AnimationNames
 {
-    public static string PrimaryAttack = "SwordAttack";
-    public static string BonusAttack = "FireballAttack";
+    public static string PlayerPrimaryAttack = "SwordAttack";
+    public static string PlayerBonusAttack = "FireballAttack";
 
     public static string FireballExplode = "Explode";
 
     public static string Hurt = "Hurt";
     public static string Death = "Death";
+
+    public static string EnemyPrimaryAttack = "Attack";
 }
 
 public class AnimationUtils

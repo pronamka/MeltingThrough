@@ -1,7 +1,5 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 
 public class Health : MonoBehaviour
 {
@@ -72,6 +70,7 @@ public class Health : MonoBehaviour
     private void DisableEntity()
     {
         playerRenderer.enabled = false;
+        Destroy(this);
     }
 
     private bool IsInvincible()
