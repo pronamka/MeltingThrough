@@ -5,12 +5,12 @@ using UnityEngine;
 public class FireballPool : MonoBehaviour
 {
     [SerializeField]private Fireball fireballPrefab;
-    private int poolSize = 10;
+    private int poolSize = 1;
     private Queue<Fireball> pool = new Queue<Fireball>();
 
     private void createFireball()
     {
-        Fireball fireball = Instantiate(fireballPrefab, transform);
+        Fireball fireball = Instantiate(fireballPrefab);
         fireball.SetPool(this);
         fireball.gameObject.SetActive(false);
         pool.Enqueue(fireball);
