@@ -5,7 +5,7 @@ public class MeltingIce : MonoBehaviour
     private float timeOnBlock = 0f;
     private bool playerOnBlock = false;
 
-    public float meltingTime = 2f;
+    public float meltingTime = 3f;
     public Sprite meltedBlock;
     private SpriteRenderer sr;
     private Collider2D col;
@@ -53,7 +53,7 @@ public class MeltingIce : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             playerOnBlock = false;
-            timeOnBlock = 0f;
+//            timeOnBlock = 0f;
         }
     }
 }
