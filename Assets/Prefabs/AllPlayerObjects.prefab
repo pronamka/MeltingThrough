@@ -600,9 +600,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4984879485131187855, guid: c345dc8c2600b3b4e90866c1930becdb, type: 3}
-      propertyPath: m_GravityScale
-      value: 4
+    - target: {fileID: 8249310065122276490, guid: c345dc8c2600b3b4e90866c1930becdb, type: 3}
+      propertyPath: fallDamageMultiplier
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

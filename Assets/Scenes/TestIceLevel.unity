@@ -532,22 +532,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AllPlayerObjects
       objectReference: {fileID: 0}
-    - target: {fileID: 3319495376843275823, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -17.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3319495376843275823, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 5508565006917410987, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: orthographic size
-      value: 7.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 6785913227501606137, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_GravityScale
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 8197542787171744943, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.40564
