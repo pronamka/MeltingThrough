@@ -92,12 +92,12 @@ public class PlayerState : MonoBehaviour
 
     public bool CanPrimaryAttack()
     {
-        return IsGrounded() && !IsMoving() && !isAttacking;
+        return !isAttacking;
     }
 
     public bool CanBonusAttack()
     {
-        return IsGrounded() && !IsMoving() && !isAttacking;
+        return !isAttacking;
     }
 
     private bool IsMouseLeft()
