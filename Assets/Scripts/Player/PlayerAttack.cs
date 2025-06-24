@@ -97,6 +97,11 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (Collider2D enemy in enemies.Keys)
         {
+            if (enemy.transform == null)
+            {
+                enemies.Remove(enemy);
+                continue;
+            }
             enemy.transform.GetComponent<EnemyState>().TakeDamage(primaryAttackDamage);
         }
     }
