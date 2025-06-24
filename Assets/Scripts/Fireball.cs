@@ -10,6 +10,7 @@ public class Fireball : MonoBehaviour
 
     private Vector2 direction;
 
+    private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     private Animator animator;
 
@@ -21,6 +22,7 @@ public class Fireball : MonoBehaviour
 
     private void Awake()
     {
+        body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
 
@@ -32,7 +34,7 @@ public class Fireball : MonoBehaviour
         if (exploded) return;
         if (timeFlying > maxFlyingTime) Explode();
 
-        transform.Translate(direction*speed*Time.deltaTime);
+        //transform.Translate(direction*speed*Time.deltaTime);
         timeFlying += Time.deltaTime;
     }
 
@@ -64,7 +66,7 @@ public class Fireball : MonoBehaviour
         pool.ReturnFireball(this);
     }
 
-    public void SetDirection(Vector2 newDirection)
+    public void SetDirection(Vector2 newDirection, Vector2 additionalSpeed)
     {
         direction = newDirection.normalized;
         gameObject.SetActive(true);
@@ -73,6 +75,8 @@ public class Fireball : MonoBehaviour
 
         float atAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Deg2Rad;
         transform.rotation = Quaternion.AngleAxis(atAngle, Vector3.forward);
+
+        body.linearVelocity = direction*speed+additionalSpeed;
 
         timeFlying = 0;
     }

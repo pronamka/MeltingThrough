@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
@@ -9,6 +10,8 @@ public class PlayerState : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float fallDamageMultiplier;
+    private float fallSpeed = 0;
 
     public int scaleValue = 5;
 
@@ -49,6 +52,8 @@ public class PlayerState : MonoBehaviour
             mana.enabled = false;
             return;
         }
+
+        fallSpeed = body.linearVelocityY;
 
         if (takeDamageAction.triggered)
         {
@@ -92,12 +97,12 @@ public class PlayerState : MonoBehaviour
 
     public bool CanPrimaryAttack()
     {
-        return IsGrounded() && !IsMoving() && !isAttacking;
+        return !isAttacking;
     }
 
     public bool CanBonusAttack()
     {
-        return IsGrounded() && !IsMoving() && !isAttacking;
+        return !isAttacking;
     }
 
     private bool IsMouseLeft()
@@ -118,11 +123,26 @@ public class PlayerState : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (IsDead()) return;
         health.TakeDamage(damage);
     }
 
     public bool IsDead()
     {
         return health.isDead;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            if (fallSpeed < -40)
+            {
+                float fallDamage = (Mathf.Abs(fallSpeed) - 40) / 10 * fallDamageMultiplier;
+                TakeDamage(fallDamage);
+            }
+
+            fallSpeed = 0;
+        }
     }
 }

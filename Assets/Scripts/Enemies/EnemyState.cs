@@ -81,6 +81,7 @@ public class EnemyState : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (IsDead()) return;
         isAttacking = false;
         attackTimeLeft = 0;
         health.TakeDamage(damage);

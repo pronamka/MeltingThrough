@@ -75,6 +75,11 @@ public class DeerAttack : MonoBehaviour
         }
         if (playerCollider != null)
         {
+            if (playerCollider.transform == null)
+            {
+                playerCollider = null;
+                return;
+            }
             playerCollider.transform.GetComponent<PlayerState>().TakeDamage(damage);
         }
     }

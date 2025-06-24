@@ -15,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float bonusAttackManaCost;
     [SerializeField] private FireballPool fireballPool;
 
+    private Rigidbody2D body;
     private Animator animator;
     private PlayerState playerState;
 
@@ -33,8 +34,11 @@ public class PlayerAttack : MonoBehaviour
 
     private Dictionary<Collider2D, bool> enemies = new Dictionary<Collider2D, bool>();
 
+    private Vector2 fireballDirection;
+
     private void Awake()
     {
+        body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerState = GetComponent<PlayerState>();
 
@@ -93,6 +97,11 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (Collider2D enemy in enemies.Keys)
         {
+            if (enemy.transform == null)
+            {
+                enemies.Remove(enemy);
+                continue;
+            }
             enemy.transform.GetComponent<EnemyState>().TakeDamage(primaryAttackDamage);
         }
     }
@@ -111,20 +120,18 @@ public class PlayerAttack : MonoBehaviour
         playerState.mana.UseMana(bonusAttackManaCost);
         ManageAnimationAndSound("bonus");
 
-        Vector2 fireballDirection = CalculateFireballDirection();
-        StartCoroutine(SpawnFireball(fireballDirection));
+        fireballDirection = CalculateFireballDirection();
         timeSinceBonusAttack = 0;
     }
 
-    private IEnumerator SpawnFireball(Vector2 direction)
+    private void SpawnFireball()
     {
-        yield return new WaitForSeconds(spawnFireballAtTime);
         Fireball fireball = fireballPool.TakeFireball();
 
-        Vector3 spawnPosition = CalculateFireballPosition(direction);
+        Vector3 spawnPosition = CalculateFireballPosition(fireballDirection);
 
         fireball.transform.position = spawnPosition;
-        fireball.SetDirection(direction);
+        fireball.SetDirection(fireballDirection, body.linearVelocity);
     }
 
     private Vector3 CalculateFireballPosition(Vector2 direction)
