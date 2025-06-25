@@ -70,7 +70,7 @@ public class Health : MonoBehaviour
     private void DisableEntity()
     {
         playerRenderer.enabled = false;
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
     private bool IsInvincible()
