@@ -280,8 +280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 1777131381}
-  totalPlatforms: 100
-  levelWidth: 50
+  totalPlatforms: 500
+  levelWidth: 88
   startY: 5
   endY: -500
   minJumpDistance: 2.7
@@ -589,7 +589,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 2823568982631505413, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
   spawnCooldown: 1
-  maxEnemies: 30
+  maxEnemies: 15
   spawnDistance: 5
   groundLayer:
     serializedVersion: 2
