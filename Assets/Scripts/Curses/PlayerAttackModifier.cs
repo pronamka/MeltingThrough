@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAttackModifier : MonoBehaviour
+/*public class PlayerAttackModifier : MonoBehaviour
 {
     private PlayerAttack playerAttack;
     private float basePrimaryDamage = 25f; 
@@ -30,4 +30,4 @@ public class PlayerAttackModifier : MonoBehaviour
             damageField.SetValue(playerAttack, newDamage);
         }
     }
-}
+}*/

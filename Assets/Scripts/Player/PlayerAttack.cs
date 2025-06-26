@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float primaryAttackDamage;
+    [SerializeField] public float primaryAttackDamage;
     private float primaryAttackCooldown;
     private float timeSincePrimaryAttack = 0;
 

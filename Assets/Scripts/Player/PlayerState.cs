@@ -10,7 +10,7 @@ public class PlayerState : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float fallDamageMultiplier;
+    [SerializeField] public float fallDamageMultiplier;
     private float fallSpeed = 0;
 
     public int scaleValue = 5;

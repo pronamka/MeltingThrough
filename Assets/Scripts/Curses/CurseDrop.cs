@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CurseDrop : MonoBehaviour
 {
-    [SerializeField] private float dropChance = 0.7f; 
+    [SerializeField] private float dropChance = 1f; 
     [SerializeField] private float minCurseValue = 0.3f;
     [SerializeField] private float maxCurseValue = 2f;
     [SerializeField] private GameObject cursePickupPrefab;

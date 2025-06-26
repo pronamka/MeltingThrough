@@ -22,6 +22,8 @@ public class EnemyState : MonoBehaviour
 
     private float onEdgeCheckingDistance = 1f;
 
+    [SerializeField] private float collisionDamage;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -107,5 +109,13 @@ public class EnemyState : MonoBehaviour
         StartAttack(attackAction.AnimationDuration);
         animator.SetTrigger(attackAction.AnimationTrigger);
         SoundManager.instance.PlaySound(attackAction.AnimationSound);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerState>().TakeDamage(collisionDamage);
+        }
     }
 }
