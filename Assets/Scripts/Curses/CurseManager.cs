@@ -4,33 +4,19 @@ using UnityEngine.InputSystem;
 
 public class CurseManager : MonoBehaviour
 {
-    [SerializeField] private List<Curse> activeCurses = new List<Curse>();
+    [SerializeField] private List<AbstractCurse> activeCurses = new List<AbstractCurse>();
     [SerializeField] private float maxCurseValue = 10f;
-
-    
-    private PlayerMovement playerMovement;
-    private PlayerAttack playerAttack;
-    private Health playerHealth;
-    private PlayerMana playerMana;
-    private PlayerState playerState;
-
     
     private InputAction exchangeCursesAction;
 
     
-    private float speedModifier = 1f;
-    private float jumpModifier = 1f;
-    private float damageModifier = 1f;
-    private float healthModifier = 1f;
-    private float manaRegenModifier = 1f;
-    private float fallDamageModifier = 1f;
-    private float attackSpeedModifier = 1f;
-
-    
-    public System.Action<List<Curse>> OnCursesChanged;
+    public System.Action<List<AbstractCurse>> OnCursesChanged;
     public System.Action<int> OnRelicsAvailable;
 
     public static CurseManager Instance { get; private set; }
+
+    private GameObject player;
+    private CurseFactory curseFactory;
 
     private void Awake()
     {
@@ -45,10 +31,9 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-       
-        FindPlayerComponents();
+        player = GameObject.FindGameObjectWithTag("Player");
+        curseFactory = new CurseFactory(player);
 
-       
         SetupInput();
     }
 
@@ -75,112 +60,27 @@ public class CurseManager : MonoBehaviour
         Debug.Log("Настроен input для обмена проклятий (клавиша M)");
     }
 
-    private void FindPlayerComponents()
-    {
-     
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            playerMovement = player.GetComponent<PlayerMovement>();
-            playerAttack = player.GetComponent<PlayerAttack>();
-            playerHealth = player.GetComponent<Health>();
-            playerMana = player.GetComponent<PlayerMana>();
-            playerState = player.GetComponent<PlayerState>();
-
-            Debug.Log($"Найдены компоненты игрока: Movement={playerMovement != null}, Attack={playerAttack != null}, Health={playerHealth != null}, Mana={playerMana != null}, State={playerState != null}");
-        }
-        else
-        {
-            Debug.LogWarning("Игрок с тегом 'Player' не найден!");
-        }
-    }
-
     public void AddCurse(CurseType type, float value)
     {
-        string name = GetCurseName(type);
-        string description = GetCurseDescription(type);
+        AbstractCurse newCurse = curseFactory.createCurse(type, 1);
 
-        Curse newCurse = new Curse(type, value, CalculateIntensity(value), name, description);
         activeCurses.Add(newCurse);
 
-        ApplyCurse(newCurse);
+        newCurse.Activate();
 
         
         OnCursesChanged?.Invoke(activeCurses);
         OnRelicsAvailable?.Invoke(GetRelicsToReceive());
 
-        Debug.Log($"Добавлено проклятие: {name} (значение: {value}, интенсивность: {newCurse.intensity:F2})");
+        Debug.Log($"Добавлено проклятие: {name} (значение: {value}, интенсивность: {newCurse.Intensity:F2})");
     }
 
-    private string GetCurseName(CurseType type)
+    public void DeactivateAll()
     {
-        switch (type)
+        for (int i = activeCurses.Count; i >= 0; i--)
         {
-            case CurseType.SlowMovement: return "Проклятие замедления";
-            case CurseType.WeakAttack: return "Проклятие слабости";
-            case CurseType.LowHealth: return "Проклятие хрупкости";
-            case CurseType.SlowMana: return "Проклятие истощения";
-            case CurseType.HeavyFall: return "Проклятие тяжести";
-            case CurseType.ShortJump: return "Проклятие слабого прыжка";
-            default: return "Неизвестное проклятие";
+            activeCurses[i].Deactivate();
         }
-    }
-
-    private string GetCurseDescription(CurseType type)
-    {
-        switch (type)
-        {
-            case CurseType.SlowMovement: return "Снижает скорость передвижения";
-            case CurseType.WeakAttack: return "Снижает урон атаки";
-            case CurseType.LowHealth: return "Снижает максимальное здоровье";
-            case CurseType.SlowMana: return "Замедляет регенерацию маны";
-            case CurseType.HeavyFall: return "Увеличивает урон от падения";
-            case CurseType.ShortJump: return "Снижает силу прыжка";
-            default: return "Неизвестный эффект";
-        }
-    }
-
-    private float CalculateIntensity(float value)
-    {
-        return Mathf.Clamp(value / 2f, 0.1f, 1f);
-    }
-
-    private void ApplyCurse(Curse curse)
-    {
-        switch (curse.type)
-        {
-            case CurseType.SlowMovement:
-                speedModifier -= curse.intensity * 0.3f;
-                break;
-            case CurseType.WeakAttack:
-                damageModifier -= curse.intensity * 0.25f;
-                break;
-            case CurseType.LowHealth:
-                healthModifier -= curse.intensity * 0.2f;
-                break;
-            case CurseType.SlowMana:
-                manaRegenModifier -= curse.intensity * 0.3f;
-                break;
-            case CurseType.HeavyFall:
-                fallDamageModifier += curse.intensity * 0.5f;
-                break;
-            case CurseType.ShortJump:
-                jumpModifier -= curse.intensity * 0.2f;
-                break;
-        }
-
-        ClampModifiers();
-        Debug.Log($"Применено проклятие {curse.name}. Модификаторы: скорость={speedModifier:F2}, прыжок={jumpModifier:F2}, урон={damageModifier:F2}");
-    }
-
-    private void ClampModifiers()
-    {
-        speedModifier = Mathf.Clamp(speedModifier, 0.1f, 2f);
-        jumpModifier = Mathf.Clamp(jumpModifier, 0.1f, 2f);
-        damageModifier = Mathf.Clamp(damageModifier, 0.1f, 2f);
-        healthModifier = Mathf.Clamp(healthModifier, 0.1f, 2f);
-        manaRegenModifier = Mathf.Clamp(manaRegenModifier, 0.1f, 2f);
-        fallDamageModifier = Mathf.Clamp(fallDamageModifier, 0.5f, 5f);
     }
 
     public float GetTotalCurseValue()
@@ -188,7 +88,7 @@ public class CurseManager : MonoBehaviour
         float total = 0f;
         foreach (var curse in activeCurses)
         {
-            total += curse.value;
+            total += curse.Value;
         }
         return total;
     }
@@ -225,42 +125,10 @@ public class CurseManager : MonoBehaviour
 
     private void ClearAllCurses()
     {
+        DeactivateAll();
         activeCurses.Clear();
-        ResetModifiers();
         OnCursesChanged?.Invoke(activeCurses);
         OnRelicsAvailable?.Invoke(0);
-    }
-
-    private void ResetModifiers()
-    {
-        speedModifier = 1f;
-        jumpModifier = 1f;
-        damageModifier = 1f;
-        healthModifier = 1f;
-        manaRegenModifier = 1f;
-        fallDamageModifier = 1f;
-        attackSpeedModifier = 1f;
-
-        Debug.Log("Все проклятия сняты, параметры восстановлены");
-    }
-
-    public List<Curse> GetActiveCurses()
-    {
-        return new List<Curse>(activeCurses);
-    }
-
-    
-    public float GetSpeedModifier() => speedModifier;
-    public float GetJumpModifier() => jumpModifier;
-    public float GetDamageModifier() => damageModifier;
-    public float GetHealthModifier() => healthModifier;
-    public float GetManaRegenModifier() => manaRegenModifier;
-    public float GetFallDamageModifier() => fallDamageModifier;
-    public float GetAttackSpeedModifier() => attackSpeedModifier;
-
-    public void RefreshPlayerComponents()
-    {
-        FindPlayerComponents();
     }
 
     private void OnDestroy()
@@ -271,7 +139,6 @@ public class CurseManager : MonoBehaviour
             exchangeCursesAction.Dispose();
         }
     }
-
     
     [ContextMenu("Добавить тестовое проклятие")]
     public void AddTestCurse()
@@ -288,7 +155,7 @@ public class CurseManager : MonoBehaviour
         ClearAllCurses();
     }
 
-    [ContextMenu("Показать информацию о проклятиях")]
+    /*[ContextMenu("Показать информацию о проклятиях")]
     public void ShowCursesInfo()
     {
         Debug.Log($"Активных проклятий: {activeCurses.Count}");
@@ -299,5 +166,5 @@ public class CurseManager : MonoBehaviour
         {
             Debug.Log($"- {curse.name}: {curse.value:F1} (интенсивность: {curse.intensity:F2})");
         }
-    }
+    }*/
 }
