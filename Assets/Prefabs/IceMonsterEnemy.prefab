@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6507184926801248456}
   - component: {fileID: 5960308249420203150}
   - component: {fileID: 5391300263974231109}
+  - component: {fileID: 6418699131985923563}
   m_Layer: 11
   m_Name: IceMonsterEnemy
   m_TagString: Untagged
@@ -308,6 +309,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.01, y: 1.29}
   m_EdgeRadius: 0
+--- !u!114 &6418699131985923563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686474680888498587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eabf6e493a74f1f4c8d331124d59b74b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropChance: 0.1
+  minCurseValue: 0.3
+  maxCurseValue: 2
+  cursePickupPrefab: {fileID: 0}
 --- !u!1 &2734480641166505268
 GameObject:
   m_ObjectHideFlags: 0
