@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMana : MonoBehaviour
 {
     [SerializeField] private float maxMana;
-    [SerializeField] private float regenerationRate;
+    [SerializeField] public float regenerationRate;
     [SerializeField] private float regenerationDelay;
     private float currentMana;
 

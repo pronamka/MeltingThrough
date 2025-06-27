@@ -4,8 +4,8 @@ using Vector2 = UnityEngine.Vector2;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float jumpForce = 2.5f;
+    [SerializeField] public float speed = 10f;
+    [SerializeField] public float jumpForce = 2.5f;
 
     private InputAction moveAction;
     private InputAction jumpAction;

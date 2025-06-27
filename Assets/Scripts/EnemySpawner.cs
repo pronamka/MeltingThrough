@@ -10,6 +10,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 8;
     [SerializeField] private float spawnDistance = 20f;
 
+
+    [Header("Cleaner Settings")]
+    [SerializeField] private float checkInterval = 1.0f;
+    [SerializeField] private float screenDistanceMultiplier = 1.05f;
+
     [Header("Detection Layers")]
     [SerializeField] private LayerMask groundLayer = 1 << 6;
     [SerializeField] private LayerMask obstacleLayer = -1;
@@ -34,6 +39,8 @@ public class EnemySpawner : MonoBehaviour
             player = playerObj.transform;
         }
 
+        InvokeRepeating(nameof(CleanFarEnemies), checkInterval, checkInterval);
+
         StartCoroutine(SpawnRoutine());
     }
 
@@ -46,6 +53,29 @@ public class EnemySpawner : MonoBehaviour
             if (CountLivingEnemies() < maxEnemies)
             {
                 TrySpawnSafely();
+            }
+        }
+    }
+
+    public void CleanFarEnemies()
+    {
+        if (player == null || mainCamera == null) return;
+
+        float vertSize = mainCamera.orthographicSize;
+        float horizSize = vertSize * mainCamera.aspect;
+
+        float maxDist = Mathf.Sqrt(vertSize * vertSize + horizSize * horizSize) * screenDistanceMultiplier;
+
+        EnemyState[] enemies = FindObjectsOfType<EnemyState>();
+        foreach (var enemy in enemies)
+        {
+            if (enemy == null || enemy.IsDead()) continue;
+
+            float dist = Vector2.Distance(enemy.transform.position, player.position);
+            if (dist >= maxDist)
+            {
+                Debug.Log("Enemy destoyed");
+                Destroy(enemy.gameObject);
             }
         }
     }
