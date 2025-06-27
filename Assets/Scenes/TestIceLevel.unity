@@ -164,66 +164,63 @@ Transform:
   - {fileID: 965030043}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &207868084
-GameObject:
+--- !u!1001 &196516275
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 207868086}
-  - component: {fileID: 207868085}
-  m_Layer: 0
-  m_Name: TileGenerator
-  m_TagString: Ground
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &207868085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207868084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6840966b8b0b2904bbde0025d951eb94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  islandTilemap: {fileID: 965030045}
-  islandTile: {fileID: 11400000, guid: a67dfcb78927f634bb9f288e7e9bc44f, type: 2}
-  islandCount: 12
-  minIslandWidth: 4
-  maxIslandWidth: 8
-  minIslandHeight: 2
-  maxIslandHeight: 6
-  levelMinX: -25
-  levelMaxX: 15
-  levelMinY: -30
-  levelMaxY: 39
-  topBumpiness: 0.28
-  bottomBumpiness: 0.54
-  leftBumpiness: 0.7
-  rightBumpiness: 0.73
-  holeChance: 0.02
---- !u!4 &207868086
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207868084}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.20862, y: 2.69176, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 22.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826473026327079135, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5969253860548061359, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+      propertyPath: m_Name
+      value: IceBlock1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
 --- !u!1 &632666718 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2699705051268467294, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
@@ -608,7 +605,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1250081005}
-  - component: {fileID: 1250081004}
+  - component: {fileID: 1250081006}
   m_Layer: 0
   m_Name: LevelGenerator
   m_TagString: Untagged
@@ -616,72 +613,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1250081004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250081003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c768bdb5d8794c146944cd614be9d938, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileGenerator: {fileID: 0}
-  platformPrefab: {fileID: 5969253860548061359, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
-  totalPlatforms: 281
-  levelWidth: 753
-  startY: 10
-  endY: -18
-  minJumpDistance: 2.8
-  maxJumpDistance: 7.07
-  minVerticalGap: 4.5
-  maxVerticalGap: 4.9
-  clusterChance: 0.25
-  minClusterSize: 3
-  maxClusterSize: 6
-  spiralChance: 0.15
-  spiralPlatforms: 8
-  spiralRadius: 15
-  zigzagChance: 0.2
-  zigzagLength: 6
-  bridgeChance: 0.357
-  bridgeLength: 7
-  towerChance: 0.12
-  towerHeight: 5
-  diamondChance: 0.1
-  waveChance: 0.15
-  waveLength: 8
-  difficultyMultiplier: 1.2
-  chaosLevel: 0.3
-  difficultyProgression:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.2
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.95025635
-      value: 0.31373978
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  allowOverlaps: 0
-  minPlatformDistance: 2
-  seed: 0
 --- !u!4 &1250081005
 Transform:
   m_ObjectHideFlags: 0
@@ -697,6 +628,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250081006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250081003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c768bdb5d8794c146944cd614be9d938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  islandTilemap: {fileID: 965030045}
+  islandTile: {fileID: 11400000, guid: a67dfcb78927f634bb9f288e7e9bc44f, type: 2}
+  platformPrefab: {fileID: 5969253860548061359, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+  totalPlatforms: 400
+  platformLevelWidth: 20
+  platformStartY: 30
+  platformEndY: -1000
+  minJumpDistance: 3.15
+  maxJumpDistance: 6.1
+  minVerticalDrop: 2
+  maxVerticalDrop: 4.23
+  platformSafetyRadius: 2.88
+  maxHorizontalShift: 40
+  horizontalVariation: 0.927
+  extremeShiftChance: 0.591
+  straightPathChance: 0.073
+  zigzagChance: 0.175
+  spiralChance: 0.241
+  bridgeChance: 0.423
+  clusterChance: 0.518
+  islandCount: 101
+  minIslandWidth: 4
+  maxIslandWidth: 9
+  minIslandHeight: 3
+  maxIslandHeight: 6
+  topBumpiness: 0.3
+  bottomBumpiness: 0.3
+  leftBumpiness: 0.3
+  rightBumpiness: 0.3
+  holeChance: 0.05
+  islandLevelMinX: -30
+  islandLevelMaxX: 30
+  islandLevelMinY: -1000
+  islandLevelMaxY: 30
+  minDistanceFromPlatforms: 2.5
+  generationSeed: 0
+  debugVisualization: 0
+  difficultyProgression:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1597582204
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,13 +907,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: AllPlayerObjects
       objectReference: {fileID: 0}
+    - target: {fileID: 3545579711770226612, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: primaryAttackDamage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5508565006917410987, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: orthographic size
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8197542787171744943, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.40564
       objectReference: {fileID: 0}
     - target: {fileID: 8197542787171744943, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.15437
+      value: 26.8
       objectReference: {fileID: 0}
     - target: {fileID: 8197542787171744943, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -960,4 +972,4 @@ SceneRoots:
   - {fileID: 1250081005}
   - {fileID: 2365024811470368402}
   - {fileID: 1768169120}
-  - {fileID: 207868086}
+  - {fileID: 196516275}
