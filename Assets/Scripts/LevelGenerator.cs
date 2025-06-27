@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour
-
 {
+    public TileGenerator tileGenerator;
 
     [Header("Platform Settings")]
     [SerializeField] private GameObject platformPrefab;
@@ -12,7 +12,7 @@ public class LevelGenerator : MonoBehaviour
     private int totalPlatforms = 100;
 
     [Header("Level Dimensions")]
-    [SerializeField, Range(50f, 1000f)]
+    [SerializeField, Range(10f, 1000f)]
     private float levelWidth = 300f;
 
     [SerializeField]
@@ -70,10 +70,39 @@ public class LevelGenerator : MonoBehaviour
     private List<Vector3> spawnedPositions = new List<Vector3>();
     private List<GameObject> platforms = new List<GameObject>();
     private System.Random rng;
+    private Vector2 platformColliderSize = Vector2.one;
 
-    void Start()
+    void Awake()
     {
-        GenerateEpicLevel();
+        if (tileGenerator == null)
+        {
+            tileGenerator = FindObjectOfType<TileGenerator>();
+        }
+
+        if (platformPrefab != null)
+        {
+            var box = platformPrefab.GetComponent<BoxCollider2D>();
+            if (box != null)
+                platformColliderSize = box.size;
+            else
+            {
+                var col = platformPrefab.GetComponent<Collider2D>();
+                if (col != null)
+                    platformColliderSize = col.bounds.size;
+            }
+        }
+    }
+
+    void OnEnable()
+    {
+        if (tileGenerator != null)
+            tileGenerator.OnGenerationComplete += GenerateEpicLevel;
+    }
+
+    void OnDisable()
+    {
+        if (tileGenerator != null)
+            tileGenerator.OnGenerationComplete -= GenerateEpicLevel;
     }
 
     private void GenerateEpicLevel()
@@ -83,7 +112,6 @@ public class LevelGenerator : MonoBehaviour
 
         Vector3 currentPos = new Vector3(0f, startY, 0f);
         int platformsSpawned = 0;
-
       
         SpawnPlatform(currentPos);
         platformsSpawned++;
@@ -531,6 +559,24 @@ public class LevelGenerator : MonoBehaviour
 
     private bool IsValidPosition(Vector3 position)
     {
+        if (tileGenerator != null)
+        {
+            Vector3[] points = new Vector3[5];
+            Vector2 half = platformColliderSize * 0.5f;
+
+            points[0] = position;
+            points[1] = position + new Vector3(-half.x, -half.y, 0);
+            points[2] = position + new Vector3(half.x, -half.y, 0);
+            points[3] = position + new Vector3(-half.x, half.y, 0);
+            points[4] = position + new Vector3(half.x, half.y, 0);
+
+            foreach (var pt in points)
+            {
+                if (tileGenerator.IsPositionOnIsland(pt))
+                    return false;
+            }
+        }
+
         if (!allowOverlaps)
         {
             foreach (Vector3 existing in spawnedPositions)
