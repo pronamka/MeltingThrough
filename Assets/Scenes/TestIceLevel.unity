@@ -290,7 +290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1250081005}
-  - component: {fileID: 1250081004}
+  - component: {fileID: 1250081006}
   m_Layer: 0
   m_Name: LevelGenerator
   m_TagString: Untagged
@@ -298,71 +298,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1250081004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250081003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c768bdb5d8794c146944cd614be9d938, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 1777131381}
-  totalPlatforms: 500
-  levelWidth: 88
-  startY: 5
-  endY: -500
-  minJumpDistance: 2.7
-  maxJumpDistance: 7.07
-  minVerticalGap: 1.63
-  maxVerticalGap: 4.92
-  clusterChance: 0.25
-  minClusterSize: 3
-  maxClusterSize: 6
-  spiralChance: 0.15
-  spiralPlatforms: 8
-  spiralRadius: 15
-  zigzagChance: 0.2
-  zigzagLength: 6
-  bridgeChance: 0.18
-  bridgeLength: 7
-  towerChance: 0.12
-  towerHeight: 5
-  diamondChance: 0.1
-  waveChance: 0.15
-  waveLength: 8
-  difficultyMultiplier: 1.2
-  chaosLevel: 0.3
-  difficultyProgression:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.2
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.95025635
-      value: 0.31373978
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  allowOverlaps: 0
-  minPlatformDistance: 2
-  seed: 0
 --- !u!4 &1250081005
 Transform:
   m_ObjectHideFlags: 0
@@ -378,6 +313,83 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250081006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250081003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c768bdb5d8794c146944cd614be9d938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformPrefabs:
+  - {fileID: 4552561026782813745, guid: 47532b160c0886a4fbfc607bf1077406, type: 3}
+  - {fileID: 7268240190735046550, guid: 202a9e4f08943a949a7ef28846a8974e, type: 3}
+  - {fileID: 2698148659744282225, guid: 9d97c576b16799f4da6e8afe010e1343, type: 3}
+  - {fileID: 7035220318996847052, guid: 94a579201408bb340b27a1a17c966f5a, type: 3}
+  - {fileID: 1777131381}
+  totalPlatforms: 100
+  levelWidth: 99
+  startY: 10
+  endY: -500
+  minJumpDistance: 3
+  maxJumpDistance: 8
+  minVerticalGap: 5.7
+  maxVerticalGap: 6
+  clusterChance: 0.25
+  minClusterSize: 3
+  maxClusterSize: 6
+  clusterMinHeightGap: 5.47
+  spiralChance: 0.15
+  spiralPlatforms: 8
+  spiralRadius: 15
+  spiralMinHeightGap: 5.8
+  zigzagChance: 0.2
+  zigzagLength: 6
+  zigzagMinHeightGap: 5.6
+  bridgeChance: 0.18
+  bridgeLength: 7
+  bridgeMinHeightGap: 5.47
+  towerChance: 0.12
+  towerHeight: 5
+  towerMinHeightGap: 5.53
+  diamondChance: 0.1
+  diamondMinHeightGap: 3.43
+  waveChance: 0.15
+  waveLength: 8
+  waveMinHeightGap: 5.34
+  difficultyMultiplier: 1.2
+  chaosLevel: 0.3
+  difficultyProgression:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  allowOverlaps: 0
+  minPlatformDistance: 2
+  seed: 0
 --- !u!1001 &1297568658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -510,7 +522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0442dcd97832bf4e98345c2210418ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeCurses: []
   maxCurseValue: 10
 --- !u!1 &1597582204
 GameObject:
@@ -691,11 +702,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
+  - {fileID: 1686474680888498587, guid: c245aec8c270b1946ac6cffc26fdea82, type: 3}
   - {fileID: 2823568982631505413, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
   spawnCooldown: 1
-  maxEnemies: 15
+  maxEnemies: 10
   spawnDistance: 5
-  checkInterval: 5
+  checkInterval: 10
   screenDistanceMultiplier: 1.55
   groundLayer:
     serializedVersion: 2

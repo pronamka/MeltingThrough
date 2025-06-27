@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour
-
 {
-
     [Header("Platform Settings")]
-    [SerializeField] private GameObject platformPrefab;
+    [SerializeField] private GameObject[] platformPrefabs;
 
     [SerializeField, Range(10, 500)]
     private int totalPlatforms = 100;
@@ -38,24 +36,31 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float clusterChance = 0.25f;
     [SerializeField, Range(2, 8)] private int minClusterSize = 3;
     [SerializeField, Range(2, 8)] private int maxClusterSize = 6;
+    [SerializeField, Range(1f, 10f)] private float clusterMinHeightGap = 2f;
 
     [SerializeField, Range(0f, 1f)] private float spiralChance = 0.15f;
     [SerializeField, Range(4, 12)] private int spiralPlatforms = 8;
     [SerializeField, Range(5f, 25f)] private float spiralRadius = 15f;
+    [SerializeField, Range(1f, 10f)] private float spiralMinHeightGap = 2f;
 
     [SerializeField, Range(0f, 1f)] private float zigzagChance = 0.2f;
     [SerializeField, Range(3, 10)] private int zigzagLength = 6;
+    [SerializeField, Range(1f, 10f)] private float zigzagMinHeightGap = 2f;
 
     [SerializeField, Range(0f, 1f)] private float bridgeChance = 0.18f;
     [SerializeField, Range(3, 12)] private int bridgeLength = 7;
+    [SerializeField, Range(1f, 10f)] private float bridgeMinHeightGap = 3f;
 
     [SerializeField, Range(0f, 1f)] private float towerChance = 0.12f;
     [SerializeField, Range(3, 8)] private int towerHeight = 5;
+    [SerializeField, Range(1f, 10f)] private float towerMinHeightGap = 3f;
 
     [SerializeField, Range(0f, 1f)] private float diamondChance = 0.1f;
+    [SerializeField, Range(1f, 10f)] private float diamondMinHeightGap = 2f;
 
     [SerializeField, Range(0f, 1f)] private float waveChance = 0.15f;
     [SerializeField, Range(4, 15)] private int waveLength = 8;
+    [SerializeField, Range(1f, 10f)] private float waveMinHeightGap = 2f;
 
     [Header("Difficulty")]
     [SerializeField, Range(0f, 2f)] private float difficultyMultiplier = 1.2f;
@@ -84,7 +89,6 @@ public class LevelGenerator : MonoBehaviour
         Vector3 currentPos = new Vector3(0f, startY, 0f);
         int platformsSpawned = 0;
 
-      
         SpawnPlatform(currentPos);
         platformsSpawned++;
 
@@ -93,7 +97,6 @@ public class LevelGenerator : MonoBehaviour
             float progress = (float)platformsSpawned / totalPlatforms;
             float difficulty = difficultyProgression.Evaluate(progress) * difficultyMultiplier;
 
-      
             PatternType pattern = ChooseEpicPattern();
 
             int generatedCount = 0;
@@ -137,14 +140,11 @@ public class LevelGenerator : MonoBehaviour
             platformsSpawned += generatedCount;
             currentPos = nextPos;
 
-       
             if (Random.Range(0f, 1f) < chaosLevel)
             {
                 ApplyMegaChaos(ref currentPos, difficulty);
             }
         }
-
-       
     }
 
     private PatternType ChooseEpicPattern()
@@ -211,7 +211,7 @@ public class LevelGenerator : MonoBehaviour
             clusterPositions.Add(clusterCenter);
         }
 
-        nextPos = clusterCenter + Vector3.down * Random.Range(minVerticalGap * 2f, maxVerticalGap * 2f);
+        nextPos = clusterCenter + Vector3.down * Random.Range(clusterMinHeightGap, maxVerticalGap * 2f);
         return clusterPositions.Count;
     }
 
@@ -226,12 +226,12 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 0; i < platforms; i++)
         {
             float progress = (float)i / platforms;
-            float angle = progress * Mathf.PI * 4f; 
+            float angle = progress * Mathf.PI * 4f;
             float currentRadius = radius * (1f - progress * 0.7f);
 
             Vector3 pos = spiralStart + new Vector3(
                 Mathf.Cos(angle) * currentRadius,
-                -i * Random.Range(1f, 3f) + Mathf.Sin(angle * 2f) * 2f, 
+                -i * Random.Range(spiralMinHeightGap, 3f) + Mathf.Sin(angle * 2f) * 2f,
                 0f
             );
 
@@ -242,7 +242,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        nextPos = spiralStart + Vector3.down * (platforms * 2f + Random.Range(minVerticalGap, maxVerticalGap));
+        nextPos = spiralStart + Vector3.down * (platforms * 2f + Random.Range(spiralMinHeightGap, maxVerticalGap));
         return spiralPositions.Count;
     }
 
@@ -257,10 +257,9 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < length; i++)
         {
-            
             Vector3 mainPos = currentPos + new Vector3(
                 direction * Random.Range(minJumpDistance, maxJumpDistance) * (1f + difficulty),
-                -Random.Range(minVerticalGap, maxVerticalGap),
+                -Random.Range(zigzagMinHeightGap, maxVerticalGap),
                 0f
             );
 
@@ -269,7 +268,6 @@ public class LevelGenerator : MonoBehaviour
                 SpawnPlatform(mainPos);
                 platformCount++;
 
-                
                 if (i % 2 == 0 && Random.Range(0f, 1f) < 0.6f)
                 {
                     for (int j = 0; j < 2; j++)
@@ -290,10 +288,10 @@ public class LevelGenerator : MonoBehaviour
             }
 
             currentPos = mainPos;
-            direction *= -1f; 
+            direction *= -1f;
         }
 
-        nextPos = currentPos + Vector3.down * Random.Range(minVerticalGap, maxVerticalGap);
+        nextPos = currentPos + Vector3.down * Random.Range(zigzagMinHeightGap, maxVerticalGap);
         return platformCount;
     }
 
@@ -309,7 +307,6 @@ public class LevelGenerator : MonoBehaviour
         {
             float progress = (float)i / (length - 1);
 
- 
             Vector3 bridgePos = bridgeStart + new Vector3(
                 progress * bridgeWidth - bridgeWidth * 0.5f,
                 Mathf.Sin(progress * Mathf.PI) * Random.Range(5f, 12f),
@@ -321,10 +318,9 @@ public class LevelGenerator : MonoBehaviour
                 SpawnPlatform(bridgePos);
                 bridgePositions.Add(bridgePos);
 
-
                 if (i % 2 == 1 && Random.Range(0f, 1f) < 0.7f)
                 {
-                    Vector3 supportPos = bridgePos + Vector3.down * Random.Range(3f, 8f);
+                    Vector3 supportPos = bridgePos + Vector3.down * Random.Range(bridgeMinHeightGap, 8f);
                     if (IsValidPosition(supportPos))
                     {
                         SpawnPlatform(supportPos);
@@ -334,7 +330,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        nextPos = bridgeStart + Vector3.down * Random.Range(minVerticalGap * 2f, maxVerticalGap * 2f);
+        nextPos = bridgeStart + Vector3.down * Random.Range(bridgeMinHeightGap * 2f, maxVerticalGap * 2f);
         return bridgePositions.Count;
     }
 
@@ -348,8 +344,8 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 0; i < height; i++)
         {
             Vector3 mainTowerPos = towerBase + new Vector3(
-                Random.Range(-2f, 2f), 
-                i * Random.Range(3f, 6f),
+                Random.Range(-2f, 2f),
+                i * Random.Range(towerMinHeightGap, 6f),
                 0f
             );
 
@@ -357,7 +353,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 SpawnPlatform(mainTowerPos);
                 towerPositions.Add(mainTowerPos);
-               
+
                 if (i % 2 == 1)
                 {
                     for (int side = -1; side <= 1; side += 2)
@@ -378,7 +374,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        nextPos = towerBase + Vector3.down * Random.Range(minVerticalGap, maxVerticalGap);
+        nextPos = towerBase + Vector3.down * Random.Range(towerMinHeightGap, maxVerticalGap);
         return towerPositions.Count;
     }
 
@@ -389,13 +385,12 @@ public class LevelGenerator : MonoBehaviour
 
         List<Vector3> diamondPositions = new List<Vector3>();
 
-
         Vector3[] diamondPoints = {
-            diamondCenter + Vector3.up * size,           
-            diamondCenter + Vector3.right * size,        
-            diamondCenter + Vector3.down * size,         
-            diamondCenter + Vector3.left * size,         
-            diamondCenter                                
+            diamondCenter + Vector3.up * size,
+            diamondCenter + Vector3.right * size,
+            diamondCenter + Vector3.down * size,
+            diamondCenter + Vector3.left * size,
+            diamondCenter
         };
 
         foreach (Vector3 point in diamondPoints)
@@ -417,7 +412,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        nextPos = diamondCenter + Vector3.down * (size * 2f + Random.Range(minVerticalGap, maxVerticalGap));
+        nextPos = diamondCenter + Vector3.down * (size * 2f + Random.Range(diamondMinHeightGap, maxVerticalGap));
         return diamondPositions.Count;
     }
 
@@ -436,7 +431,7 @@ public class LevelGenerator : MonoBehaviour
 
             Vector3 wavePos = waveStart + new Vector3(
                 progress * waveWidth - waveWidth * 0.5f,
-                Mathf.Sin(progress * Mathf.PI * Random.Range(2f, 4f)) * amplitude - i * 2f,
+                Mathf.Sin(progress * Mathf.PI * Random.Range(2f, 4f)) * amplitude - i * waveMinHeightGap,
                 0f
             );
 
@@ -444,7 +439,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 SpawnPlatform(wavePos);
                 wavePositions.Add(wavePos);
-       
+
                 if (Random.Range(0f, 1f) < 0.4f)
                 {
                     Vector3 harmonic = wavePos + new Vector3(
@@ -462,7 +457,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        nextPos = waveStart + Vector3.down * (length * 2f + Random.Range(minVerticalGap, maxVerticalGap));
+        nextPos = waveStart + Vector3.down * (length * waveMinHeightGap + Random.Range(waveMinHeightGap, maxVerticalGap));
         return wavePositions.Count;
     }
 
@@ -501,30 +496,23 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnPlatform(Vector3 position)
     {
-        if (platformPrefab == null)
+        if (platformPrefabs == null || platformPrefabs.Length == 0)
         {
-            Debug.LogError("Platform prefab not assigned");
+            Debug.LogError("Platform prefabs not assigned or empty");
             return;
         }
 
-        GameObject platform = Instantiate(platformPrefab, position, Quaternion.identity);
-
-        
-        platform.layer = LayerMask.NameToLayer("Ground"); 
-
-        
-        Collider platformCollider = platform.GetComponent<Collider>();
-        if (platformCollider != null)
+        GameObject selectedPrefab = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
+        if (selectedPrefab == null)
         {
-            platformCollider.isTrigger = false; 
+            Debug.LogError("Selected platform prefab is null");
+            return;
         }
 
-     
-        Collider2D platformCollider2D = platform.GetComponent<Collider2D>();
-        if (platformCollider2D != null)
-        {
-            platformCollider2D.isTrigger = false; 
-        }
+        GameObject platform = Instantiate(selectedPrefab, position, Quaternion.identity);
+
+        platform.layer = LayerMask.NameToLayer("Ground");
+
         platforms.Add(platform);
         spawnedPositions.Add(position);
     }
@@ -597,7 +585,7 @@ public class LevelGenerator : MonoBehaviour
     }
 
     private void OnDrawGizmosSelected()
-    { 
+    {
         Gizmos.color = Color.cyan;
         Vector3 topLeft = new Vector3(-levelWidth * 0.5f, startY + 10f, 0f);
         Vector3 topRight = new Vector3(levelWidth * 0.5f, startY + 10f, 0f);
