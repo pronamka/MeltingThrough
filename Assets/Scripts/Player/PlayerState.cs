@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class PlayerState : MonoBehaviour
 {
@@ -26,6 +28,8 @@ public class PlayerState : MonoBehaviour
 
     private InputAction takeDamageAction;
 
+    private string menuSceneName = "MenuScene";
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -47,8 +51,13 @@ public class PlayerState : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < -1000)
+        {
+            TakeDamage(1000);
+        }
         if (IsDead())
         {
+            StartCoroutine(LoadNewScene());
             mana.enabled = false;
             return;
         }
@@ -77,6 +86,12 @@ public class PlayerState : MonoBehaviour
             }
         }
         
+    }
+
+    private IEnumerator LoadNewScene()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(menuSceneName);
     }
 
     public bool IsGrounded()

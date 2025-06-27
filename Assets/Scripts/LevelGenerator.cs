@@ -1,596 +1,667 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public TileGenerator tileGenerator;
-    [Header("Platform Settings")]
-    [SerializeField] private GameObject[] platformPrefabs;
 
-    [SerializeField, Range(10, 500)]
-    private int totalPlatforms = 100;
+    [Header("===== VISUAL SETTINGS =====")]
+    public Tilemap islandTilemap;
+    public TileBase islandTile;
+    public GameObject[] platformPrefabs;
 
-    [Header("Level Dimensions")]
-    [SerializeField, Range(10f, 1000f)]
-    private float levelWidth = 300f;
+    [Header("===== PLATFORM GENERATION (FIRST) =====")]
+    [SerializeField, Range(50, 30000)] private int totalPlatforms = 300;
+    [SerializeField] private float platformLevelWidth = 1000f;
+    [SerializeField] private float platformStartY = 200f;
+    [SerializeField] private float platformEndY = -300f;
 
-    [SerializeField]
-    private float startY = 10f;
+    [Header("Platform Movement Settings")]
+    [SerializeField, Range(3f, 15f)] private float minJumpDistance = 4f;
+    [SerializeField, Range(6f, 25f)] private float maxJumpDistance = 12f;
+    [SerializeField, Range(2f, 8f)] private float minVerticalDrop = 2f;
+    [SerializeField, Range(4f, 12f)] private float maxVerticalDrop = 5f;
+    [SerializeField, Range(2f, 8f)] private float platformSafetyRadius = 2f;
 
-    [SerializeField]
-    private float endY = -500f;
+    [Header("Horizontal Movement Settings")]
+    [SerializeField, Range(5f, 40f)] private float maxHorizontalShift = 20f;
+    [SerializeField, Range(0f, 1f)] private float horizontalVariation = 0.7f;
+    [SerializeField, Range(0f, 1f)] private float extremeShiftChance = 0.2f;
 
-    [Header("Basic Spacing")]
-    [SerializeField, Range(1f, 15f)]
-    private float minJumpDistance = 3f;
-
-    [SerializeField, Range(1f, 15f)]
-    private float maxJumpDistance = 8f;
-
-    [SerializeField, Range(1f, 20f)]
-    private float minVerticalGap = 2f;
-
-    [SerializeField, Range(1f, 20f)]
-    private float maxVerticalGap = 6f;
-
-    [Header("Epic Patterns")]
-    [SerializeField, Range(0f, 1f)] private float clusterChance = 0.25f;
-    [SerializeField, Range(2, 8)] private int minClusterSize = 3;
-    [SerializeField, Range(2, 8)] private int maxClusterSize = 6;
-    [SerializeField, Range(1f, 10f)] private float clusterMinHeightGap = 2f;
-
+    [Header("Platform Pattern Chances")]
+    [SerializeField, Range(0f, 1f)] private float straightPathChance = 0.4f;
+    [SerializeField, Range(0f, 1f)] private float zigzagChance = 0.3f;
     [SerializeField, Range(0f, 1f)] private float spiralChance = 0.15f;
-    [SerializeField, Range(4, 12)] private int spiralPlatforms = 8;
-    [SerializeField, Range(5f, 25f)] private float spiralRadius = 15f;
-    [SerializeField, Range(1f, 10f)] private float spiralMinHeightGap = 2f;
+    [SerializeField, Range(0f, 1f)] private float bridgeChance = 0.1f;
+    [SerializeField, Range(0f, 1f)] private float clusterChance = 0.05f;
 
-    [SerializeField, Range(0f, 1f)] private float zigzagChance = 0.2f;
-    [SerializeField, Range(3, 10)] private int zigzagLength = 6;
-    [SerializeField, Range(1f, 10f)] private float zigzagMinHeightGap = 2f;
+    [Header("===== ISLAND GENERATION (SECOND) =====")]
+    [SerializeField, Range(3, 1500)] private int islandCount = 15;
+    [SerializeField, Range(3, 15)] private int minIslandWidth = 4;
+    [SerializeField, Range(5, 25)] private int maxIslandWidth = 10;
+    [SerializeField, Range(2, 10)] private int minIslandHeight = 3;
+    [SerializeField, Range(3, 15)] private int maxIslandHeight = 7;
 
-    [SerializeField, Range(0f, 1f)] private float bridgeChance = 0.18f;
-    [SerializeField, Range(3, 12)] private int bridgeLength = 7;
-    [SerializeField, Range(1f, 10f)] private float bridgeMinHeightGap = 3f;
+    [Header("Island Shape Parameters")]
+    [Range(0, 1)] public float topBumpiness = 0.3f;
+    [Range(0, 1)] public float bottomBumpiness = 0.3f;
+    [Range(0, 1)] public float leftBumpiness = 0.3f;
+    [Range(0, 1)] public float rightBumpiness = 0.3f;
+    [Range(0, 0.2f)] public float holeChance = 0.05f;
 
-    [SerializeField, Range(0f, 1f)] private float towerChance = 0.12f;
-    [SerializeField, Range(3, 8)] private int towerHeight = 5;
-    [SerializeField, Range(1f, 10f)] private float towerMinHeightGap = 3f;
+    [Header("Island Placement")]
+    [SerializeField] private int islandLevelMinX = -400;
+    [SerializeField] private int islandLevelMaxX = 400;
+    [SerializeField] private int islandLevelMinY = -50;
+    [SerializeField] private int islandLevelMaxY = 150;
+    [SerializeField, Range(2f, 25f)] private float minDistanceFromPlatforms = 8f;
 
-    [SerializeField, Range(0f, 1f)] private float diamondChance = 0.1f;
-    [SerializeField, Range(1f, 10f)] private float diamondMinHeightGap = 2f;
+    [Header("===== ADVANCED SETTINGS =====")]
+    [SerializeField] private int generationSeed = 0;
+    [SerializeField] private bool debugVisualization = false;
 
-    [SerializeField, Range(0f, 1f)] private float waveChance = 0.15f;
-    [SerializeField, Range(4, 15)] private int waveLength = 8;
-    [SerializeField, Range(1f, 10f)] private float waveMinHeightGap = 2f;
-
-    [Header("Difficulty")]
-    [SerializeField, Range(0f, 2f)] private float difficultyMultiplier = 1.2f;
-    [SerializeField, Range(0f, 1f)] private float chaosLevel = 0.3f;
     [SerializeField] private AnimationCurve difficultyProgression = AnimationCurve.EaseInOut(0f, 0.2f, 1f, 1f);
 
-    [Header("Advanced Settings")]
-    [SerializeField] private bool allowOverlaps = false;
-    [SerializeField, Range(1f, 10f)] private float minPlatformDistance = 2f;
-    [SerializeField] private int seed = 0;
+    private List<Vector3> platformPositions = new List<Vector3>();
+    private List<GameObject> spawnedPlatforms = new List<GameObject>();
+    private List<IslandData> generatedIslands = new List<IslandData>();
+    private HashSet<Vector3Int> islandTiles = new HashSet<Vector3Int>();
 
-    private List<Vector3> spawnedPositions = new List<Vector3>();
-    private List<GameObject> platforms = new List<GameObject>();
-    private System.Random rng;
-    private Vector2 platformColliderSize = Vector2.one;
+
+    public HashSet<Vector3Int> OccupiedPositions { get; private set; } = new HashSet<Vector3Int>();
+    public event Action OnGenerationComplete;
+
+    private struct IslandData
+    {
+        public Vector3 center;
+        public Vector2 size;
+        public Bounds bounds;
+    }
+
 
     void Awake()
     {
-        if (tileGenerator == null)
-        {
-            tileGenerator = FindObjectOfType<TileGenerator>();
-        }
 
-        if (platformPrefab != null)
-        {
-            var box = platformPrefab.GetComponent<BoxCollider2D>();
-            if (box != null)
-                platformColliderSize = box.size;
-            else
-            {
-                var col = platformPrefab.GetComponent<Collider2D>();
-                if (col != null)
-                    platformColliderSize = col.bounds.size;
-            }
-        }
+        GeneratePerfectLevel();
     }
 
-    void OnEnable()
+    public void GeneratePerfectLevel()
     {
-        if (tileGenerator != null)
-            tileGenerator.OnGenerationComplete += GenerateEpicLevel;
+        InitializeGeneration();
+        ClearExistingLevel();
+        GenerateCompletePlatformLayout();
+        GenerateIslandsInEmptySpaces();
+        OnGenerationComplete?.Invoke();
+
     }
 
-    void OnDisable()
+    #region Platform Generation (First Phase)
+
+    private void GenerateCompletePlatformLayout()
     {
-        if (tileGenerator != null)
-            tileGenerator.OnGenerationComplete -= GenerateEpicLevel;
-    }
+        platformPositions.Clear();
 
-    private void GenerateEpicLevel()
-    {
-        InitializeGenerator();
-        ClearLevel();
 
-        Vector3 currentPos = new Vector3(0f, startY, 0f);
-        int platformsSpawned = 0;
-        
-        SpawnPlatform(currentPos);
-        platformsSpawned++;
+        Vector3 currentPosition = new Vector3(0, platformStartY, 0);
+        SpawnPlatformAt(currentPosition);
 
-        while (platformsSpawned < totalPlatforms && currentPos.y > endY)
+        int platformsCreated = 1;
+        int attempts = 0;
+        int maxAttempts = totalPlatforms * 3;
+
+
+        while (platformsCreated < totalPlatforms && attempts < maxAttempts)
         {
-            float progress = (float)platformsSpawned / totalPlatforms;
-            float difficulty = difficultyProgression.Evaluate(progress) * difficultyMultiplier;
 
-            PatternType pattern = ChooseEpicPattern();
+            attempts++;
+            float levelProgress = (float)platformsCreated / totalPlatforms;
+            float difficulty = difficultyProgression.Evaluate(levelProgress);
 
-            int generatedCount = 0;
-            Vector3 nextPos = currentPos;
+
+            PlatformPattern pattern = ChoosePlatformPattern(levelProgress);
+            Vector3 nextPosition;
+            int newPlatforms = 0;
 
             switch (pattern)
             {
-                case PatternType.MegaCluster:
-                    generatedCount = CreateMegaCluster(currentPos, difficulty, out nextPos);
+                case PlatformPattern.StraightPath:
+                    newPlatforms = CreateStraightPath(currentPosition, difficulty, out nextPosition);
                     break;
-
-                case PatternType.CrazySpiral:
-                    generatedCount = CreateCrazySpiral(currentPos, difficulty, out nextPos);
+                case PlatformPattern.ZigzagPath:
+                    newPlatforms = CreateZigzagPath(currentPosition, difficulty, out nextPosition);
                     break;
-
-                case PatternType.ZigzagMadness:
-                    generatedCount = CreateZigzagMadness(currentPos, difficulty, out nextPos);
+                case PlatformPattern.SpiralPattern:
+                    newPlatforms = CreateSpiralPattern(currentPosition, difficulty, out nextPosition);
                     break;
-
-                case PatternType.FloatingBridge:
-                    generatedCount = CreateFloatingBridge(currentPos, difficulty, out nextPos);
+                case PlatformPattern.BridgePattern:
+                    newPlatforms = CreateBridgePattern(currentPosition, difficulty, out nextPosition);
                     break;
-
-                case PatternType.SkyscraperTower:
-                    generatedCount = CreateSkyscraperTower(currentPos, difficulty, out nextPos);
+                case PlatformPattern.ClusterPattern:
+                    newPlatforms = CreateClusterPattern(currentPosition, difficulty, out nextPosition);
                     break;
-
-                case PatternType.DiamondFormation:
-                    generatedCount = CreateDiamondFormation(currentPos, difficulty, out nextPos);
-                    break;
-
-                case PatternType.SineWave:
-                    generatedCount = CreateSineWave(currentPos, difficulty, out nextPos);
-                    break;
-
                 default:
-                    generatedCount = CreateSingleJump(currentPos, difficulty, out nextPos);
+                    newPlatforms = CreateSimpleJump(currentPosition, difficulty, out nextPosition);
                     break;
             }
 
-            platformsSpawned += generatedCount;
-            currentPos = nextPos;
-
-            if (Random.Range(0f, 1f) < chaosLevel)
+            if (newPlatforms > 0)
             {
-                ApplyMegaChaos(ref currentPos, difficulty);
+                currentPosition = nextPosition;
+                platformsCreated += newPlatforms;
             }
-        }
-    }
-
-    private PatternType ChooseEpicPattern()
-    {
-        float roll = Random.Range(0f, 1f);
-
-        if (roll < clusterChance) return PatternType.MegaCluster;
-        roll -= clusterChance;
-
-        if (roll < spiralChance) return PatternType.CrazySpiral;
-        roll -= spiralChance;
-
-        if (roll < zigzagChance) return PatternType.ZigzagMadness;
-        roll -= zigzagChance;
-
-        if (roll < bridgeChance) return PatternType.FloatingBridge;
-        roll -= bridgeChance;
-
-        if (roll < towerChance) return PatternType.SkyscraperTower;
-        roll -= towerChance;
-
-        if (roll < diamondChance) return PatternType.DiamondFormation;
-        roll -= diamondChance;
-
-        if (roll < waveChance) return PatternType.SineWave;
-
-        return PatternType.SingleJump;
-    }
-
-    private int CreateMegaCluster(Vector3 center, float difficulty, out Vector3 nextPos)
-    {
-        int clusterSize = Random.Range(minClusterSize, maxClusterSize + 1);
-        clusterSize = Mathf.RoundToInt(clusterSize * (1f + difficulty * 0.5f));
-
-        Vector3 clusterCenter = GetNextPosition(center, difficulty);
-        float clusterRadius = Random.Range(8f, 20f) * (1f + difficulty);
-
-        List<Vector3> clusterPositions = new List<Vector3>();
-
-        for (int i = 0; i < clusterSize; i++)
-        {
-            float angle = (float)i / clusterSize * Mathf.PI * 2f;
-            float distance = Random.Range(clusterRadius * 0.3f, clusterRadius);
-
-            for (int ring = 0; ring < 2; ring++)
+            else
             {
-                Vector3 pos = clusterCenter + new Vector3(
-                    Mathf.Cos(angle + ring * 0.5f) * distance * (1f - ring * 0.3f),
-                    Random.Range(-3f, 3f) + ring * 2f,
+                currentPosition = FindAlternativePlatformPosition(currentPosition);
+            }
+
+
+            if (currentPosition.y < platformEndY)
+
+            {
+                currentPosition = new Vector3(
+                    UnityEngine.Random.Range(-platformLevelWidth * 0.4f, platformLevelWidth * 0.4f),
+                    currentPosition.y + UnityEngine.Random.Range(20f, 40f),
                     0f
                 );
+            }
+        }
+    }
 
-                if (IsValidPosition(pos))
-                {
-                    SpawnPlatform(pos);
-                    clusterPositions.Add(pos);
-                }
+    private PlatformPattern ChoosePlatformPattern(float levelProgress)
+    {
+        float roll = UnityEngine.Random.value;
+
+        if (roll < straightPathChance) return PlatformPattern.StraightPath;
+        roll -= straightPathChance;
+
+        if (roll < zigzagChance) return PlatformPattern.ZigzagPath;
+        roll -= zigzagChance;
+
+        if (roll < spiralChance) return PlatformPattern.SpiralPattern;
+        roll -= spiralChance;
+
+        if (roll < bridgeChance) return PlatformPattern.BridgePattern;
+        roll -= bridgeChance;
+
+        if (roll < clusterChance) return PlatformPattern.ClusterPattern;
+
+        return PlatformPattern.SimpleJump;
+    }
+
+    private int CreateStraightPath(Vector3 startPos, float difficulty, out Vector3 endPos)
+    {
+        int pathLength = UnityEngine.Random.Range(5, 12);
+        float baseDirection = UnityEngine.Random.Range(-1f, 1f);
+
+        List<Vector3> pathPositions = new List<Vector3>();
+        Vector3 currentPos = startPos;
+
+        for (int i = 0; i < pathLength; i++)
+        {
+            float horizontalShift = GetHorizontalShift(baseDirection);
+
+            Vector3 nextPos = currentPos + new Vector3(
+                horizontalShift,
+                -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop),
+                0f
+            );
+
+            if (IsValidPlatformPosition(nextPos))
+            {
+                SpawnPlatformAt(nextPos);
+                pathPositions.Add(nextPos);
+                currentPos = nextPos;
+            }
+            else
+            {
+                break;
             }
         }
 
-        if (IsValidPosition(clusterCenter))
-        {
-            SpawnPlatform(clusterCenter);
-            clusterPositions.Add(clusterCenter);
-        }
 
-        nextPos = clusterCenter + Vector3.down * Random.Range(clusterMinHeightGap, maxVerticalGap * 2f);
-        return clusterPositions.Count;
+        endPos = pathPositions.Count > 0 ? pathPositions.Last() : startPos + Vector3.down * minVerticalDrop;
+        return pathPositions.Count;
+
     }
 
-    private int CreateCrazySpiral(Vector3 start, float difficulty, out Vector3 nextPos)
+    private int CreateZigzagPath(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        Vector3 spiralStart = GetNextPosition(start, difficulty);
-        int platforms = Mathf.RoundToInt(spiralPlatforms * (1f + difficulty * 0.3f));
-        float radius = spiralRadius * (1f + difficulty * 0.5f);
+        int zigzagLength = UnityEngine.Random.Range(6, 15);
+        float direction = UnityEngine.Random.value > 0.5f ? 1f : -1f;
+
+        List<Vector3> zigzagPositions = new List<Vector3>();
+        Vector3 currentPos = startPos;
+
+        for (int i = 0; i < zigzagLength; i++)
+        {
+
+            float horizontalMove = direction * UnityEngine.Random.Range(minJumpDistance * 1.2f, maxJumpDistance * 1.5f);
+
+            if (UnityEngine.Random.value < extremeShiftChance)
+            {
+                horizontalMove *= UnityEngine.Random.Range(1.5f, 2.5f);
+            }
+
+            Vector3 nextPos = currentPos + new Vector3(
+                horizontalMove,
+                -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop),
+
+                0f
+            );
+
+            if (IsValidPlatformPosition(nextPos))
+            {
+                SpawnPlatformAt(nextPos);
+                zigzagPositions.Add(nextPos);
+                currentPos = nextPos;
+                direction *= -1f;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+
+        endPos = zigzagPositions.Count > 0 ? zigzagPositions.Last() : startPos + Vector3.down * minVerticalDrop;
+        return zigzagPositions.Count;
+
+    }
+
+    private int CreateSpiralPattern(Vector3 startPos, float difficulty, out Vector3 endPos)
+    {
+        int spiralSteps = UnityEngine.Random.Range(8, 18);
+        float radius = UnityEngine.Random.Range(15f, 35f);
 
         List<Vector3> spiralPositions = new List<Vector3>();
+        Vector3 spiralCenter = startPos + Vector3.down * minVerticalDrop;
 
-        for (int i = 0; i < platforms; i++)
+        for (int i = 0; i < spiralSteps; i++)
         {
-            float progress = (float)i / platforms;
-            float angle = progress * Mathf.PI * 4f;
-            float currentRadius = radius * (1f - progress * 0.7f);
 
-            Vector3 pos = spiralStart + new Vector3(
+            float angle = (float)i / spiralSteps * Mathf.PI * 3f;
+            float currentRadius = radius * (1f - (float)i / spiralSteps * 0.4f);
+
+            Vector3 position = spiralCenter + new Vector3(
                 Mathf.Cos(angle) * currentRadius,
-                -i * Random.Range(spiralMinHeightGap, 3f) + Mathf.Sin(angle * 2f) * 2f,
+                -i * UnityEngine.Random.Range(2f, 5f),
+
                 0f
             );
 
-            if (IsValidPosition(pos))
+            if (IsValidPlatformPosition(position))
             {
-                SpawnPlatform(pos);
-                spiralPositions.Add(pos);
+
+                SpawnPlatformAt(position);
+                spiralPositions.Add(position);
             }
         }
 
-        nextPos = spiralStart + Vector3.down * (platforms * 2f + Random.Range(spiralMinHeightGap, maxVerticalGap));
+        endPos = spiralPositions.Count > 0 ? spiralPositions.Last() : startPos + Vector3.down * maxVerticalDrop;
         return spiralPositions.Count;
+
     }
 
-    private int CreateZigzagMadness(Vector3 start, float difficulty, out Vector3 nextPos)
+    private int CreateBridgePattern(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        Vector3 zigzagStart = GetNextPosition(start, difficulty);
-        int length = Mathf.RoundToInt(zigzagLength * (1f + difficulty * 0.4f));
-
-        Vector3 currentPos = zigzagStart;
-        float direction = Random.Range(0f, 1f) > 0.5f ? 1f : -1f;
-        int platformCount = 0;
-
-        for (int i = 0; i < length; i++)
-        {
-            Vector3 mainPos = currentPos + new Vector3(
-                direction * Random.Range(minJumpDistance, maxJumpDistance) * (1f + difficulty),
-                -Random.Range(zigzagMinHeightGap, maxVerticalGap),
-                0f
-            );
-
-            if (IsValidPosition(mainPos))
-            {
-                SpawnPlatform(mainPos);
-                platformCount++;
-
-                if (i % 2 == 0 && Random.Range(0f, 1f) < 0.6f)
-                {
-                    for (int j = 0; j < 2; j++)
-                    {
-                        Vector3 extraPos = mainPos + new Vector3(
-                            Random.Range(-4f, 4f),
-                            Random.Range(-2f, 2f),
-                            0f
-                        );
-
-                        if (IsValidPosition(extraPos))
-                        {
-                            SpawnPlatform(extraPos);
-                            platformCount++;
-                        }
-                    }
-                }
-            }
-
-            currentPos = mainPos;
-            direction *= -1f;
-        }
-
-        nextPos = currentPos + Vector3.down * Random.Range(zigzagMinHeightGap, maxVerticalGap);
-        return platformCount;
-    }
-
-    private int CreateFloatingBridge(Vector3 start, float difficulty, out Vector3 nextPos)
-    {
-        Vector3 bridgeStart = GetNextPosition(start, difficulty);
-        int length = Mathf.RoundToInt(bridgeLength * (1f + difficulty * 0.3f));
-        float bridgeWidth = Random.Range(20f, 40f) * (1f + difficulty);
+        int bridgeLength = UnityEngine.Random.Range(8, 15);
+        float bridgeWidth = UnityEngine.Random.Range(35f, 65f);
 
         List<Vector3> bridgePositions = new List<Vector3>();
+        Vector3 bridgeStart = startPos + Vector3.down * UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop);
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < bridgeLength; i++)
         {
-            float progress = (float)i / (length - 1);
+            float progress = (float)i / (bridgeLength - 1);
 
-            Vector3 bridgePos = bridgeStart + new Vector3(
-                progress * bridgeWidth - bridgeWidth * 0.5f,
-                Mathf.Sin(progress * Mathf.PI) * Random.Range(5f, 12f),
+
+            Vector3 position = bridgeStart + new Vector3(
+                (progress - 0.5f) * bridgeWidth,
+                Mathf.Sin(progress * Mathf.PI) * UnityEngine.Random.Range(3f, 8f),
+
                 0f
             );
 
-            if (IsValidPosition(bridgePos))
+            if (IsValidPlatformPosition(position))
             {
-                SpawnPlatform(bridgePos);
-                bridgePositions.Add(bridgePos);
-
-                if (i % 2 == 1 && Random.Range(0f, 1f) < 0.7f)
-                {
-                    Vector3 supportPos = bridgePos + Vector3.down * Random.Range(bridgeMinHeightGap, 8f);
-                    if (IsValidPosition(supportPos))
-                    {
-                        SpawnPlatform(supportPos);
-                        bridgePositions.Add(supportPos);
-                    }
-                }
+                SpawnPlatformAt(position);
+                bridgePositions.Add(position);
             }
         }
 
-        nextPos = bridgeStart + Vector3.down * Random.Range(bridgeMinHeightGap * 2f, maxVerticalGap * 2f);
+        endPos = bridgePositions.Count > 0 ? bridgePositions.Last() : startPos + Vector3.down * maxVerticalDrop;
+
         return bridgePositions.Count;
     }
 
-    private int CreateSkyscraperTower(Vector3 start, float difficulty, out Vector3 nextPos)
+    private int CreateClusterPattern(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        Vector3 towerBase = GetNextPosition(start, difficulty);
-        int height = Mathf.RoundToInt(towerHeight * (1f + difficulty * 0.5f));
+        int clusterSize = UnityEngine.Random.Range(6, 12);
+        float clusterRadius = UnityEngine.Random.Range(12f, 28f);
 
-        List<Vector3> towerPositions = new List<Vector3>();
+        List<Vector3> clusterPositions = new List<Vector3>();
+        Vector3 clusterCenter = startPos + Vector3.down * UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop);
 
-        for (int i = 0; i < height; i++)
+        if (IsValidPlatformPosition(clusterCenter))
         {
-            Vector3 mainTowerPos = towerBase + new Vector3(
-                Random.Range(-2f, 2f),
-                i * Random.Range(towerMinHeightGap, 6f),
+            SpawnPlatformAt(clusterCenter);
+            clusterPositions.Add(clusterCenter);
+        }
+
+        for (int i = 0; i < clusterSize; i++)
+        {
+            float angle = (float)i / clusterSize * Mathf.PI * 2f + UnityEngine.Random.Range(-0.5f, 0.5f);
+            float distance = clusterRadius * UnityEngine.Random.Range(0.6f, 1.2f);
+
+            Vector3 position = clusterCenter + new Vector3(
+                Mathf.Cos(angle) * distance,
+                Mathf.Sin(angle) * distance * 0.4f + UnityEngine.Random.Range(-4f, 4f),
+
                 0f
             );
 
-            if (IsValidPosition(mainTowerPos))
+            if (IsValidPlatformPosition(position))
             {
-                SpawnPlatform(mainTowerPos);
-                towerPositions.Add(mainTowerPos);
 
-                if (i % 2 == 1)
-                {
-                    for (int side = -1; side <= 1; side += 2)
-                    {
-                        Vector3 balconyPos = mainTowerPos + new Vector3(
-                            side * Random.Range(4f, 8f),
-                            Random.Range(-1f, 1f),
-                            0f
-                        );
-
-                        if (IsValidPosition(balconyPos))
-                        {
-                            SpawnPlatform(balconyPos);
-                            towerPositions.Add(balconyPos);
-                        }
-                    }
-                }
+                SpawnPlatformAt(position);
+                clusterPositions.Add(position);
             }
         }
 
-        nextPos = towerBase + Vector3.down * Random.Range(towerMinHeightGap, maxVerticalGap);
-        return towerPositions.Count;
+        endPos = clusterCenter + Vector3.down * UnityEngine.Random.Range(maxVerticalDrop, maxVerticalDrop * 2f);
+        return clusterPositions.Count;
     }
 
-    private int CreateDiamondFormation(Vector3 start, float difficulty, out Vector3 nextPos)
+    private int CreateSimpleJump(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        Vector3 diamondCenter = GetNextPosition(start, difficulty);
-        float size = Random.Range(8f, 16f) * (1f + difficulty * 0.4f);
+        float horizontalShift = GetHorizontalShift();
 
-        List<Vector3> diamondPositions = new List<Vector3>();
-
-        Vector3[] diamondPoints = {
-            diamondCenter + Vector3.up * size,
-            diamondCenter + Vector3.right * size,
-            diamondCenter + Vector3.down * size,
-            diamondCenter + Vector3.left * size,
-            diamondCenter
-        };
-
-        foreach (Vector3 point in diamondPoints)
-        {
-            if (IsValidPosition(point))
-            {
-                SpawnPlatform(point);
-                diamondPositions.Add(point);
-            }
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            Vector3 midPoint = Vector3.Lerp(diamondPoints[i], diamondPoints[(i + 1) % 4], 0.5f);
-            if (IsValidPosition(midPoint))
-            {
-                SpawnPlatform(midPoint);
-                diamondPositions.Add(midPoint);
-            }
-        }
-
-        nextPos = diamondCenter + Vector3.down * (size * 2f + Random.Range(diamondMinHeightGap, maxVerticalGap));
-        return diamondPositions.Count;
-    }
-
-    private int CreateSineWave(Vector3 start, float difficulty, out Vector3 nextPos)
-    {
-        Vector3 waveStart = GetNextPosition(start, difficulty);
-        int length = Mathf.RoundToInt(waveLength * (1f + difficulty * 0.3f));
-        float waveWidth = Random.Range(25f, 50f);
-        float amplitude = Random.Range(8f, 16f) * (1f + difficulty);
-
-        List<Vector3> wavePositions = new List<Vector3>();
-
-        for (int i = 0; i < length; i++)
-        {
-            float progress = (float)i / length;
-
-            Vector3 wavePos = waveStart + new Vector3(
-                progress * waveWidth - waveWidth * 0.5f,
-                Mathf.Sin(progress * Mathf.PI * Random.Range(2f, 4f)) * amplitude - i * waveMinHeightGap,
-                0f
-            );
-
-            if (IsValidPosition(wavePos))
-            {
-                SpawnPlatform(wavePos);
-                wavePositions.Add(wavePos);
-
-                if (Random.Range(0f, 1f) < 0.4f)
-                {
-                    Vector3 harmonic = wavePos + new Vector3(
-                        0f,
-                        Mathf.Cos(progress * Mathf.PI * 6f) * 3f,
-                        0f
-                    );
-
-                    if (IsValidPosition(harmonic))
-                    {
-                        SpawnPlatform(harmonic);
-                        wavePositions.Add(harmonic);
-                    }
-                }
-            }
-        }
-
-        nextPos = waveStart + Vector3.down * (length * waveMinHeightGap + Random.Range(waveMinHeightGap, maxVerticalGap));
-        return wavePositions.Count;
-    }
-
-    private int CreateSingleJump(Vector3 start, float difficulty, out Vector3 nextPos)
-    {
-        nextPos = GetNextPosition(start, difficulty);
-        SpawnPlatform(nextPos);
-        return 1;
-    }
-
-    private Vector3 GetNextPosition(Vector3 current, float difficulty)
-    {
-        float enhancedJumpDistance = Mathf.Lerp(minJumpDistance, maxJumpDistance, difficulty);
-        float enhancedVerticalGap = Mathf.Lerp(minVerticalGap, maxVerticalGap, difficulty);
-
-        float deltaX = Random.Range(-enhancedJumpDistance, enhancedJumpDistance);
-        float deltaY = Random.Range(enhancedVerticalGap * 0.5f, enhancedVerticalGap);
-
-        Vector3 newPos = current + new Vector3(deltaX, -deltaY, 0f);
-        newPos.x = Mathf.Clamp(newPos.x, -levelWidth * 0.5f, levelWidth * 0.5f);
-
-        return newPos;
-    }
-
-    private void ApplyMegaChaos(ref Vector3 position, float difficulty)
-    {
-        Vector3 chaosOffset = new Vector3(
-            Random.Range(-15f, 15f) * chaosLevel * difficulty,
-            Random.Range(-8f, 8f) * chaosLevel * difficulty,
+        endPos = startPos + new Vector3(
+            horizontalShift,
+            -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop),
             0f
         );
 
-        position += chaosOffset;
-        position.x = Mathf.Clamp(position.x, -levelWidth * 0.5f, levelWidth * 0.5f);
-    }
 
-    private void SpawnPlatform(Vector3 position)
-    {
-        if (platformPrefabs == null || platformPrefabs.Length == 0)
+        if (IsValidPlatformPosition(endPos))
         {
-            Debug.LogError("Platform prefabs not assigned or empty");
-            return;
+            SpawnPlatformAt(endPos);
+            return 1;
         }
 
-        GameObject selectedPrefab = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
-        if (selectedPrefab == null)
-        {
-            Debug.LogError("Selected platform prefab is null");
-            return;
-        }
-
-        GameObject platform = Instantiate(selectedPrefab, position, Quaternion.identity);
-
-        platform.layer = LayerMask.NameToLayer("Ground");
-
-        platforms.Add(platform);
-        spawnedPositions.Add(position);
+        return 0;
     }
 
-    private bool IsValidPosition(Vector3 position)
+
+    private float GetHorizontalShift(float baseDirection = 0f)
     {
-        if (tileGenerator != null)
+        if (UnityEngine.Random.value > horizontalVariation)
         {
-            Vector3[] points = new Vector3[5];
-            Vector2 half = platformColliderSize * 0.5f;
+            if (baseDirection == 0f)
+                baseDirection = UnityEngine.Random.Range(-1f, 1f);
 
-            points[0] = position;
-            points[1] = position + new Vector3(-half.x, -half.y, 0);
-            points[2] = position + new Vector3(half.x, -half.y, 0);
-            points[3] = position + new Vector3(-half.x, half.y, 0);
-            points[4] = position + new Vector3(half.x, half.y, 0);
+            return baseDirection * UnityEngine.Random.Range(minJumpDistance, maxJumpDistance);
+        }
+        else
+        {
+            float direction = baseDirection != 0f ? baseDirection : (UnityEngine.Random.value > 0.5f ? 1f : -1f);
+            float baseShift = direction * UnityEngine.Random.Range(minJumpDistance, maxHorizontalShift);
 
-            foreach (var pt in points)
+            if (UnityEngine.Random.value < extremeShiftChance)
             {
-                if (tileGenerator.IsPositionOnIsland(pt))
-                    return false;
+                baseShift *= UnityEngine.Random.Range(1.5f, 2.5f);
+            }
+
+
+            return baseShift;
+        }
+
+    }
+
+    private bool IsValidPlatformPosition(Vector3 position)
+    {
+        float halfWidth = platformLevelWidth * 0.5f;
+        if (position.x < -halfWidth || position.x > halfWidth)
+            return false;
+
+        if (position.y < platformEndY || position.y > platformStartY + 20f)
+            return false;
+
+        foreach (var existingPos in platformPositions)
+        {
+            if (Vector3.Distance(position, existingPos) < platformSafetyRadius)
+                return false;
+        }
+
+        return true;
+    }
+
+    private Vector3 FindAlternativePlatformPosition(Vector3 currentPos)
+    {
+        for (int attempts = 0; attempts < 25; attempts++)
+        {
+            float horizontalShift = GetHorizontalShift();
+
+
+            Vector3 alternative = currentPos + new Vector3(
+                horizontalShift,
+                -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop * 2f),
+                0f
+            );
+
+            if (IsValidPlatformPosition(alternative))
+                return alternative;
+        }
+
+        return currentPos + Vector3.down * maxVerticalDrop;
+
+    }
+
+    #endregion
+
+    #region Island Generation (Second Phase)
+
+    private void GenerateIslandsInEmptySpaces()
+    {
+        if (islandTilemap == null) return;
+
+        islandTilemap.ClearAllTiles();
+        OccupiedPositions.Clear();
+        generatedIslands.Clear();
+        islandTiles.Clear();
+
+        int successfulIslands = 0;
+        int maxAttempts = islandCount * 10;
+
+        for (int attempt = 0; attempt < maxAttempts && successfulIslands < islandCount; attempt++)
+        {
+            Vector3 candidatePosition = FindEmptySpaceForIsland();
+
+            if (candidatePosition != Vector3.zero)
+            {
+                if (GenerateIslandAt(candidatePosition))
+                {
+                    successfulIslands++;
+                }
             }
         }
+    }
 
-        if (!allowOverlaps)
+    private Vector3 FindEmptySpaceForIsland()
+    {
+        for (int attempts = 0; attempts < 50; attempts++)
         {
-            foreach (Vector3 existing in spawnedPositions)
+            Vector3 candidate = new Vector3(
+                UnityEngine.Random.Range(islandLevelMinX + 15, islandLevelMaxX - 15),
+                UnityEngine.Random.Range(islandLevelMinY + 10, islandLevelMaxY - 10),
+                0f
+            );
+
+            if (IsGoodIslandPosition(candidate))
+                return candidate;
+        }
+
+        return Vector3.zero;
+    }
+
+    private bool IsGoodIslandPosition(Vector3 position)
+    {
+
+        foreach (var platformPos in platformPositions)
+        {
+            if (Vector3.Distance(position, platformPos) < minDistanceFromPlatforms)
+                return false;
+        }
+
+        foreach (var island in generatedIslands)
+        {
+            float safeDistance = (island.size.x + maxIslandWidth) * 0.5f + 10f;
+            if (Vector3.Distance(position, island.center) < safeDistance)
+                return false;
+        }
+
+        return true;
+    }
+
+    private bool GenerateIslandAt(Vector3 centerPosition)
+    {
+        int width = UnityEngine.Random.Range(minIslandWidth, maxIslandWidth + 1);
+        int height = UnityEngine.Random.Range(minIslandHeight, maxIslandHeight + 1);
+
+        if (centerPosition.x - width * 0.5f < islandLevelMinX ||
+            centerPosition.x + width * 0.5f > islandLevelMaxX ||
+            centerPosition.y - height * 0.5f < islandLevelMinY ||
+            centerPosition.y + height * 0.5f > islandLevelMaxY)
+        {
+            return false;
+        }
+
+        IslandData island = new IslandData
+        {
+            center = centerPosition,
+            size = new Vector2(width, height),
+            bounds = new Bounds(centerPosition, new Vector3(width + 4, height + 4, 0))
+        };
+
+        if (GenerateOriginalIslandShape(centerPosition, width, height))
+        {
+            generatedIslands.Add(island);
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private bool GenerateOriginalIslandShape(Vector3 center, int width, int height)
+    {
+
+        int startX = Mathf.RoundToInt(center.x - width * 0.5f);
+        int startY = Mathf.RoundToInt(center.y - height * 0.5f);
+
+        int sideRange = Mathf.Max(1, height / 2);
+        int topYBase = startY + height - 1;
+
+        int leftTop = topYBase + UnityEngine.Random.Range(-sideRange, sideRange + 1);
+        int leftBottom = leftTop - height + 1 + UnityEngine.Random.Range(-sideRange, sideRange + 1);
+        int rightTop = topYBase + UnityEngine.Random.Range(-sideRange, sideRange + 1);
+        int rightBottom = rightTop - height + 1 + UnityEngine.Random.Range(-sideRange, sideRange + 1);
+
+        leftTop = Mathf.Clamp(leftTop, startY + 1, startY + height);
+        rightTop = Mathf.Clamp(rightTop, startY + 1, startY + height);
+        leftBottom = Mathf.Clamp(leftBottom, startY, leftTop - 1);
+        rightBottom = Mathf.Clamp(rightBottom, startY, rightTop - 1);
+
+        int[] topY = new int[width];
+        int[] bottomY = new int[width];
+
+        for (int x = 0; x < width; x++)
+
+        {
+            float t = width > 1 ? x / (float)(width - 1) : 0f;
+
+            int interpTop = Mathf.RoundToInt(Mathf.Lerp(leftTop, rightTop, t));
+            int interpBottom = Mathf.RoundToInt(Mathf.Lerp(leftBottom, rightBottom, t));
+
+            if (x != 0 && x != width - 1 && UnityEngine.Random.value < topBumpiness)
+                interpTop = Mathf.Clamp(interpTop + UnityEngine.Random.Range(-1, 2), interpBottom + 1, startY + height);
+            if (x != 0 && x != width - 1 && UnityEngine.Random.value < bottomBumpiness)
+                interpBottom = Mathf.Clamp(interpBottom + UnityEngine.Random.Range(-1, 2), startY, interpTop - 1);
+
+            topY[x] = interpTop;
+            bottomY[x] = interpBottom;
+        }
+
+        List<Vector3Int> tilesToPlace = new List<Vector3Int>();
+
+        for (int x = 0; x < width; x++)
+        {
+            if (UnityEngine.Random.value < holeChance) continue;
+
+            for (int y = bottomY[x]; y <= topY[x]; y++)
             {
-                if (Vector3.Distance(position, existing) < minPlatformDistance)
+                Vector3Int tilePos = new Vector3Int(startX + x, y, 0);
+                Vector3 worldPos = new Vector3(tilePos.x, tilePos.y, 0);
+
+                bool tooCloseToPlat = false;
+                foreach (var platformPos in platformPositions)
                 {
-                    return false;
+                    if (Vector3.Distance(worldPos, platformPos) < minDistanceFromPlatforms * 0.5f)
+                    {
+                        tooCloseToPlat = true;
+                        break;
+                    }
+                }
+
+                if (!tooCloseToPlat)
+                {
+                    tilesToPlace.Add(tilePos);
                 }
             }
         }
 
-        return position.x >= -levelWidth * 0.5f && position.x <= levelWidth * 0.5f;
+        if (tilesToPlace.Count > width * height * 0.3f)
+        {
+            foreach (var tilePos in tilesToPlace)
+            {
+                islandTilemap.SetTile(tilePos, islandTile);
+                OccupiedPositions.Add(tilePos);
+                islandTiles.Add(tilePos);
+            }
+            return true;
+        }
+
+        return false;
     }
 
-    private void InitializeGenerator()
+    public bool IsPositionOnIsland(Vector3 worldPosition)
     {
-        if (seed == 0) seed = Random.Range(1, 999999);
-        Random.InitState(seed);
-        rng = new System.Random(seed);
+        if (islandTilemap == null) return false;
+        Vector3Int cell = islandTilemap.WorldToCell(worldPosition);
+        return OccupiedPositions.Contains(cell);
     }
 
-    private void ClearLevel()
+    #endregion
+
+    #region Utility Methods
+
+    private void SpawnPlatformAt(Vector3 position)
     {
-        foreach (GameObject platform in platforms)
+        if (platformPrefabs == null || platformPrefabs.Length == 0) return;
+
+        GameObject selectedPrefab = platformPrefabs[UnityEngine.Random.Range(0, platformPrefabs.Length)];
+        if (selectedPrefab == null) return;
+
+        GameObject platform = Instantiate(selectedPrefab, position, Quaternion.identity);
+        spawnedPlatforms.Add(platform);
+        platformPositions.Add(position);
+    }
+
+    private void ClearExistingLevel()
+    {
+        foreach (var platform in spawnedPlatforms)
         {
             if (platform != null)
             {
@@ -600,61 +671,92 @@ public class LevelGenerator : MonoBehaviour
                     DestroyImmediate(platform);
             }
         }
-        platforms.Clear();
-        spawnedPositions.Clear();
+        spawnedPlatforms.Clear();
+        platformPositions.Clear();
+
+        if (islandTilemap != null)
+            islandTilemap.ClearAllTiles();
+
+        generatedIslands.Clear();
+        islandTiles.Clear();
+        OccupiedPositions.Clear();
     }
 
-    private int CountPatterns()
+    private void InitializeGeneration()
     {
-        return System.Enum.GetValues(typeof(PatternType)).Length;
+        if (generationSeed == 0)
+            generationSeed = UnityEngine.Random.Range(1, 999999);
+
+        UnityEngine.Random.InitState(generationSeed);
     }
 
-    [ContextMenu("Generate Epic Level")]
-    private void RegenerateLevel()
+    #endregion
+
+    #region Public Interface
+
+    [ContextMenu("Generate Perfect Level")]
+    public void RegenerateLevel()
     {
-        GenerateEpicLevel();
+        GeneratePerfectLevel();
     }
 
     [ContextMenu("Random Seed")]
-    private void RandomizeSeed()
+    public void RandomizeSeed()
     {
-        seed = Random.Range(1, 999999);
-        GenerateEpicLevel();
+        generationSeed = UnityEngine.Random.Range(1, 999999);
+        GeneratePerfectLevel();
     }
 
-    private void OnValidate()
-    {
-        totalPlatforms = Mathf.Max(1, totalPlatforms);
-        levelWidth = Mathf.Max(10f, levelWidth);
-        minJumpDistance = Mathf.Max(0.1f, minJumpDistance);
-        maxJumpDistance = Mathf.Max(minJumpDistance, maxJumpDistance);
-        minVerticalGap = Mathf.Max(0.1f, minVerticalGap);
-        maxVerticalGap = Mathf.Max(minVerticalGap, maxVerticalGap);
-    }
+    #endregion
 
+    #region Debug Visualization
+
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.cyan;
-        Vector3 topLeft = new Vector3(-levelWidth * 0.5f, startY + 10f, 0f);
-        Vector3 topRight = new Vector3(levelWidth * 0.5f, startY + 10f, 0f);
-        Vector3 bottomLeft = new Vector3(-levelWidth * 0.5f, endY, 0f);
-        Vector3 bottomRight = new Vector3(levelWidth * 0.5f, endY, 0f);
 
-        Gizmos.DrawLine(topLeft, topRight);
-        Gizmos.DrawLine(topRight, bottomRight);
-        Gizmos.DrawLine(bottomRight, bottomLeft);
-        Gizmos.DrawLine(bottomLeft, topLeft);
+        if (!debugVisualization) return;
+
+        Gizmos.color = Color.green;
+        foreach (var pos in platformPositions)
+        {
+            Gizmos.DrawWireSphere(pos, platformSafetyRadius);
+        }
+
+        Gizmos.color = Color.yellow;
+        for (int i = 1; i < platformPositions.Count; i++)
+        {
+            Gizmos.DrawLine(platformPositions[i-1], platformPositions[i]);
+        }
+
+        Gizmos.color = Color.red;
+        foreach (var island in generatedIslands)
+        {
+            Gizmos.DrawWireCube(island.center, new Vector3(island.size.x, island.size.y, 0));
+        }
+
+        Gizmos.color = Color.blue;
+        Vector3 platformBounds = new Vector3(platformLevelWidth, platformStartY - platformEndY, 0);
+        Vector3 platformCenter = new Vector3(0, (platformStartY + platformEndY) * 0.5f, 0);
+        Gizmos.DrawWireCube(platformCenter, platformBounds);
+
+
+        Gizmos.color = Color.cyan;
+        Vector3 islandBounds = new Vector3(islandLevelMaxX - islandLevelMinX, islandLevelMaxY - islandLevelMinY, 0);
+        Vector3 islandCenter = new Vector3((islandLevelMaxX + islandLevelMinX) * 0.5f, (islandLevelMaxY + islandLevelMinY) * 0.5f, 0);
+        Gizmos.DrawWireCube(islandCenter, islandBounds);
     }
+#endif
+
+    #endregion
 }
 
-public enum PatternType
+public enum PlatformPattern
 {
-    SingleJump,
-    MegaCluster,
-    CrazySpiral,
-    ZigzagMadness,
-    FloatingBridge,
-    SkyscraperTower,
-    DiamondFormation,
-    SineWave
+    SimpleJump,
+    StraightPath,
+    ZigzagPath,
+    SpiralPattern,
+    BridgePattern,
+    ClusterPattern
 }

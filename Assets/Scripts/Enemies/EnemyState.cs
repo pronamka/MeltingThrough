@@ -7,14 +7,14 @@ public class EnemyState : MonoBehaviour
 {
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
-    private Animator animator;
+    protected Animator animator;
 
     [SerializeField] private LayerMask groundLayer;
 
     public int scaleValue = 5;
 
     public bool isAttacking = false;
-    private float attackTimeLeft = 0;
+    protected float attackTimeLeft = 0;
 
     private Health health;
 
@@ -23,6 +23,8 @@ public class EnemyState : MonoBehaviour
     private float onEdgeCheckingDistance = 1f;
 
     [SerializeField] private float collisionDamage;
+    [SerializeField] private float collisionDamageCooldown = 5f;
+    private float timeSinceCollisionDamage = 0f;
 
     private void Awake()
     {
@@ -33,13 +35,14 @@ public class EnemyState : MonoBehaviour
         health = GetComponent<Health>();
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (IsDead())
         {
             return;
         }
 
+        timeSinceCollisionDamage += Time.deltaTime;
         if (isAttacking)
         {
             attackTimeLeft -= Time.deltaTime;
@@ -69,7 +72,7 @@ public class EnemyState : MonoBehaviour
         return (body.linearVelocityX != 0) || (body.linearVelocityY != 0);
     }
 
-    public bool CanPrimaryAttack()
+    public virtual bool CanPrimaryAttack()
     {
         return IsGrounded() && !isAttacking && !IsDead();
     }
@@ -111,11 +114,14 @@ public class EnemyState : MonoBehaviour
         SoundManager.instance.PlaySound(attackAction.AnimationSound);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void OnChildTrigger(TriggerData data)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log($"{data.type}; {data.playerCollider}");
+        if (data.type == EnemyPlayerOverlapDetector.ColliderType.Body)
         {
-            other.GetComponent<PlayerState>().TakeDamage(collisionDamage);
+            if (timeSinceCollisionDamage < collisionDamageCooldown) return;
+            data.playerCollider.GetComponent<PlayerState>().TakeDamage(collisionDamage);
+            timeSinceCollisionDamage = 0;
         }
     }
 }

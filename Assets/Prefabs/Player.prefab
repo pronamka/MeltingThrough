@@ -913,6 +913,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5833978551194027495, guid: 16cafed0e7d407e459a3286cea29d071, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5225453
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833978551194027495, guid: 16cafed0e7d407e459a3286cea29d071, type: 3}
+      propertyPath: m_Size.y
+      value: 0.51273525
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833978551194027495, guid: 16cafed0e7d407e459a3286cea29d071, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.37917134
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833978551194027495, guid: 16cafed0e7d407e459a3286cea29d071, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.013369769
+      objectReference: {fileID: 0}
     - target: {fileID: 6063878925026747513, guid: 16cafed0e7d407e459a3286cea29d071, type: 3}
       propertyPath: m_Name
       value: SwordAttackZone
