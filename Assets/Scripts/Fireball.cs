@@ -76,7 +76,7 @@ public class Fireball : MonoBehaviour
         float atAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Deg2Rad;
         transform.rotation = Quaternion.AngleAxis(atAngle, Vector3.forward);
 
-        body.linearVelocity = direction*speed+additionalSpeed;
+        body.linearVelocity = direction*speed;
 
         timeFlying = 0;
     }

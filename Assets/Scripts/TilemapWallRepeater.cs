@@ -9,7 +9,7 @@ public class TilemapWallRepeater : MonoBehaviour
 
     void Start()
     {
-        for (int i = -1; i < repeatCount; i++)
+        for (int i = -3; i < repeatCount; i++)
         {
             Vector3 position = new Vector3(0f, -i*gridHeight, 0f);
             Instantiate(wallGridPrefab, position, Quaternion.identity);
