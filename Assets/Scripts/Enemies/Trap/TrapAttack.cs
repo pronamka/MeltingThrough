@@ -9,7 +9,7 @@ public class TrapAttack : MonoBehaviour
     [SerializeField] private float cooldown;
     [SerializeField] private LayerMask playerLayer;
 
-    [SerializeField] private bool facingLeft = true;
+    [SerializeField] private bool facingLeft;
     [SerializeField] private Transform firePoint;
 
     [SerializeField] private AudioClip attackSound;
@@ -26,6 +26,7 @@ public class TrapAttack : MonoBehaviour
 
     private void Awake()
     {
+        facingLeft = (Random.Range(0f, 1f) < 0.5f) ? true : false;
         state = GetComponent<EnemyState>();
 
         attackAction = new AttackAction(
