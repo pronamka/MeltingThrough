@@ -6,6 +6,7 @@ using System.Linq;
 
 public class LevelGenerator : MonoBehaviour
 {
+
     [Header("===== VISUAL SETTINGS =====")]
     public Tilemap islandTilemap;
     public TileBase islandTile;
@@ -60,12 +61,14 @@ public class LevelGenerator : MonoBehaviour
     [Header("===== ADVANCED SETTINGS =====")]
     [SerializeField] private int generationSeed = 0;
     [SerializeField] private bool debugVisualization = false;
+
     [SerializeField] private AnimationCurve difficultyProgression = AnimationCurve.EaseInOut(0f, 0.2f, 1f, 1f);
 
     private List<Vector3> platformPositions = new List<Vector3>();
     private List<GameObject> spawnedPlatforms = new List<GameObject>();
     private List<IslandData> generatedIslands = new List<IslandData>();
     private HashSet<Vector3Int> islandTiles = new HashSet<Vector3Int>();
+
 
     public HashSet<Vector3Int> OccupiedPositions { get; private set; } = new HashSet<Vector3Int>();
     public event Action OnGenerationComplete;
@@ -77,8 +80,10 @@ public class LevelGenerator : MonoBehaviour
         public Bounds bounds;
     }
 
-    void Start()
+
+    void Awake()
     {
+
         GeneratePerfectLevel();
     }
 
@@ -89,6 +94,7 @@ public class LevelGenerator : MonoBehaviour
         GenerateCompletePlatformLayout();
         GenerateIslandsInEmptySpaces();
         OnGenerationComplete?.Invoke();
+
     }
 
     #region Platform Generation (First Phase)
@@ -97,6 +103,7 @@ public class LevelGenerator : MonoBehaviour
     {
         platformPositions.Clear();
 
+
         Vector3 currentPosition = new Vector3(0, platformStartY, 0);
         SpawnPlatformAt(currentPosition);
 
@@ -104,11 +111,14 @@ public class LevelGenerator : MonoBehaviour
         int attempts = 0;
         int maxAttempts = totalPlatforms * 3;
 
+
         while (platformsCreated < totalPlatforms && attempts < maxAttempts)
         {
+
             attempts++;
             float levelProgress = (float)platformsCreated / totalPlatforms;
             float difficulty = difficultyProgression.Evaluate(levelProgress);
+
 
             PlatformPattern pattern = ChoosePlatformPattern(levelProgress);
             Vector3 nextPosition;
@@ -146,7 +156,9 @@ public class LevelGenerator : MonoBehaviour
                 currentPosition = FindAlternativePlatformPosition(currentPosition);
             }
 
+
             if (currentPosition.y < platformEndY)
+
             {
                 currentPosition = new Vector3(
                     UnityEngine.Random.Range(-platformLevelWidth * 0.4f, platformLevelWidth * 0.4f),
@@ -208,8 +220,10 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+
         endPos = pathPositions.Count > 0 ? pathPositions.Last() : startPos + Vector3.down * minVerticalDrop;
         return pathPositions.Count;
+
     }
 
     private int CreateZigzagPath(Vector3 startPos, float difficulty, out Vector3 endPos)
@@ -222,6 +236,7 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < zigzagLength; i++)
         {
+
             float horizontalMove = direction * UnityEngine.Random.Range(minJumpDistance * 1.2f, maxJumpDistance * 1.5f);
 
             if (UnityEngine.Random.value < extremeShiftChance)
@@ -232,6 +247,7 @@ public class LevelGenerator : MonoBehaviour
             Vector3 nextPos = currentPos + new Vector3(
                 horizontalMove,
                 -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop),
+
                 0f
             );
 
@@ -248,8 +264,10 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+
         endPos = zigzagPositions.Count > 0 ? zigzagPositions.Last() : startPos + Vector3.down * minVerticalDrop;
         return zigzagPositions.Count;
+
     }
 
     private int CreateSpiralPattern(Vector3 startPos, float difficulty, out Vector3 endPos)
@@ -262,17 +280,20 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < spiralSteps; i++)
         {
+
             float angle = (float)i / spiralSteps * Mathf.PI * 3f;
             float currentRadius = radius * (1f - (float)i / spiralSteps * 0.4f);
 
             Vector3 position = spiralCenter + new Vector3(
                 Mathf.Cos(angle) * currentRadius,
                 -i * UnityEngine.Random.Range(2f, 5f),
+
                 0f
             );
 
             if (IsValidPlatformPosition(position))
             {
+
                 SpawnPlatformAt(position);
                 spiralPositions.Add(position);
             }
@@ -280,6 +301,7 @@ public class LevelGenerator : MonoBehaviour
 
         endPos = spiralPositions.Count > 0 ? spiralPositions.Last() : startPos + Vector3.down * maxVerticalDrop;
         return spiralPositions.Count;
+
     }
 
     private int CreateBridgePattern(Vector3 startPos, float difficulty, out Vector3 endPos)
@@ -294,9 +316,11 @@ public class LevelGenerator : MonoBehaviour
         {
             float progress = (float)i / (bridgeLength - 1);
 
+
             Vector3 position = bridgeStart + new Vector3(
                 (progress - 0.5f) * bridgeWidth,
                 Mathf.Sin(progress * Mathf.PI) * UnityEngine.Random.Range(3f, 8f),
+
                 0f
             );
 
@@ -308,6 +332,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         endPos = bridgePositions.Count > 0 ? bridgePositions.Last() : startPos + Vector3.down * maxVerticalDrop;
+
         return bridgePositions.Count;
     }
 
@@ -333,11 +358,13 @@ public class LevelGenerator : MonoBehaviour
             Vector3 position = clusterCenter + new Vector3(
                 Mathf.Cos(angle) * distance,
                 Mathf.Sin(angle) * distance * 0.4f + UnityEngine.Random.Range(-4f, 4f),
+
                 0f
             );
 
             if (IsValidPlatformPosition(position))
             {
+
                 SpawnPlatformAt(position);
                 clusterPositions.Add(position);
             }
@@ -357,6 +384,7 @@ public class LevelGenerator : MonoBehaviour
             0f
         );
 
+
         if (IsValidPlatformPosition(endPos))
         {
             SpawnPlatformAt(endPos);
@@ -365,6 +393,7 @@ public class LevelGenerator : MonoBehaviour
 
         return 0;
     }
+
 
     private float GetHorizontalShift(float baseDirection = 0f)
     {
@@ -385,8 +414,10 @@ public class LevelGenerator : MonoBehaviour
                 baseShift *= UnityEngine.Random.Range(1.5f, 2.5f);
             }
 
+
             return baseShift;
         }
+
     }
 
     private bool IsValidPlatformPosition(Vector3 position)
@@ -413,6 +444,7 @@ public class LevelGenerator : MonoBehaviour
         {
             float horizontalShift = GetHorizontalShift();
 
+
             Vector3 alternative = currentPos + new Vector3(
                 horizontalShift,
                 -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop * 2f),
@@ -424,6 +456,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return currentPos + Vector3.down * maxVerticalDrop;
+
     }
 
     #endregion
@@ -475,6 +508,7 @@ public class LevelGenerator : MonoBehaviour
 
     private bool IsGoodIslandPosition(Vector3 position)
     {
+
         foreach (var platformPos in platformPositions)
         {
             if (Vector3.Distance(position, platformPos) < minDistanceFromPlatforms)
@@ -518,10 +552,12 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return false;
+
     }
 
     private bool GenerateOriginalIslandShape(Vector3 center, int width, int height)
     {
+
         int startX = Mathf.RoundToInt(center.x - width * 0.5f);
         int startY = Mathf.RoundToInt(center.y - height * 0.5f);
 
@@ -542,6 +578,7 @@ public class LevelGenerator : MonoBehaviour
         int[] bottomY = new int[width];
 
         for (int x = 0; x < width; x++)
+
         {
             float t = width > 1 ? x / (float)(width - 1) : 0f;
 
@@ -677,6 +714,7 @@ public class LevelGenerator : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
+
         if (!debugVisualization) return;
 
         Gizmos.color = Color.green;
@@ -701,6 +739,7 @@ public class LevelGenerator : MonoBehaviour
         Vector3 platformBounds = new Vector3(platformLevelWidth, platformStartY - platformEndY, 0);
         Vector3 platformCenter = new Vector3(0, (platformStartY + platformEndY) * 0.5f, 0);
         Gizmos.DrawWireCube(platformCenter, platformBounds);
+
 
         Gizmos.color = Color.cyan;
         Vector3 islandBounds = new Vector3(islandLevelMaxX - islandLevelMinX, islandLevelMaxY - islandLevelMinY, 0);

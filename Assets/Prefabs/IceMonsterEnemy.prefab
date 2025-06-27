@@ -359,12 +359,14 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7383275, y: 1.01737}
   m_EdgeRadius: 0
+
 --- !u!114 &5267004906648353186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+
   m_GameObject: {fileID: 2734480641166505268}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -374,6 +376,7 @@ MonoBehaviour:
   type: 1
   enemyObject: {fileID: 1686474680888498587}
 --- !u!1 &4139227682113746256
+
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
