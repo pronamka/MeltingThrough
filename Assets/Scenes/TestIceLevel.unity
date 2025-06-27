@@ -644,23 +644,23 @@ MonoBehaviour:
   islandTile: {fileID: 11400000, guid: a67dfcb78927f634bb9f288e7e9bc44f, type: 2}
   platformPrefab: {fileID: 5969253860548061359, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
   totalPlatforms: 400
-  platformLevelWidth: 60
+  platformLevelWidth: 90
   platformStartY: 30
-  platformEndY: -1000
+  platformEndY: -1100
   minJumpDistance: 3.15
   maxJumpDistance: 6.1
   minVerticalDrop: 2
   maxVerticalDrop: 4.23
   platformSafetyRadius: 2.88
-  maxHorizontalShift: 40
-  horizontalVariation: 0.927
-  extremeShiftChance: 0.591
+  maxHorizontalShift: 24.8
+  horizontalVariation: 0.406
+  extremeShiftChance: 0.478
   straightPathChance: 0.073
   zigzagChance: 0.175
   spiralChance: 0.241
   bridgeChance: 0.423
   clusterChance: 0.518
-  islandCount: 101
+  islandCount: 213
   minIslandWidth: 4
   maxIslandWidth: 9
   minIslandHeight: 3
@@ -672,7 +672,7 @@ MonoBehaviour:
   holeChance: 0.05
   islandLevelMinX: -30
   islandLevelMaxX: 60
-  islandLevelMinY: -1000
+  islandLevelMinY: -1100
   islandLevelMaxY: 30
   minDistanceFromPlatforms: 2.5
   generationSeed: 0
@@ -885,10 +885,10 @@ MonoBehaviour:
   - {fileID: 1992816280256527373, guid: 02db192956350af4ba07bb65a62d828a, type: 3}
   - {fileID: 1786206856872896041, guid: df656acafb5c8154680c5bff3c8f7e2f, type: 3}
   spawnCooldown: 1
-  maxEnemies: 15
+  maxEnemies: 30
   spawnDistance: 5
-  checkInterval: 5
-  screenDistanceMultiplier: 1.55
+  checkInterval: 10
+  screenDistanceMultiplier: 2.55
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

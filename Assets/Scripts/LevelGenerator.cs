@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
 using System.Collections.Generic;
@@ -9,39 +9,39 @@ public class LevelGenerator : MonoBehaviour
     [Header("===== VISUAL SETTINGS =====")]
     public Tilemap islandTilemap;
     public TileBase islandTile;
-    public GameObject platformPrefab;
+    public GameObject[] platformPrefabs;
 
     [Header("===== PLATFORM GENERATION (FIRST) =====")]
-    [SerializeField, Range(50, 30000)] private int totalPlatforms = 120;
-    [SerializeField] private float platformLevelWidth = 500f; // Увеличил ширину уровня
-    [SerializeField] private float platformStartY = 100f;
-    [SerializeField] private float platformEndY = -100f;
+    [SerializeField, Range(50, 30000)] private int totalPlatforms = 300;
+    [SerializeField] private float platformLevelWidth = 1000f;
+    [SerializeField] private float platformStartY = 200f;
+    [SerializeField] private float platformEndY = -300f;
 
     [Header("Platform Movement Settings")]
-    [SerializeField, Range(3f, 15f)] private float minJumpDistance = 5f;
-    [SerializeField, Range(6f, 25f)] private float maxJumpDistance = 15f; // Увеличил максимальное расстояние
-    [SerializeField, Range(2f, 8f)] private float minVerticalDrop = 3f;
-    [SerializeField, Range(4f, 12f)] private float maxVerticalDrop = 7f;
-    [SerializeField, Range(2f, 8f)] private float platformSafetyRadius = 3f;
+    [SerializeField, Range(3f, 15f)] private float minJumpDistance = 4f;
+    [SerializeField, Range(6f, 25f)] private float maxJumpDistance = 12f;
+    [SerializeField, Range(2f, 8f)] private float minVerticalDrop = 2f;
+    [SerializeField, Range(4f, 12f)] private float maxVerticalDrop = 5f;
+    [SerializeField, Range(2f, 8f)] private float platformSafetyRadius = 2f;
 
     [Header("Horizontal Movement Settings")]
-    [SerializeField, Range(5f, 40f)] private float maxHorizontalShift = 25f; // Новый параметр для горизонтального смещения
-    [SerializeField, Range(0f, 1f)] private float horizontalVariation = 0.8f; // Вероятность горизонтального смещения
-    [SerializeField, Range(0f, 1f)] private float extremeShiftChance = 0.3f; // Шанс экстремального смещения
+    [SerializeField, Range(5f, 40f)] private float maxHorizontalShift = 20f;
+    [SerializeField, Range(0f, 1f)] private float horizontalVariation = 0.7f;
+    [SerializeField, Range(0f, 1f)] private float extremeShiftChance = 0.2f;
 
     [Header("Platform Pattern Chances")]
-    [SerializeField, Range(0f, 1f)] private float straightPathChance = 0.3f;
-    [SerializeField, Range(0f, 1f)] private float zigzagChance = 0.25f;
-    [SerializeField, Range(0f, 1f)] private float spiralChance = 0.2f;
-    [SerializeField, Range(0f, 1f)] private float bridgeChance = 0.15f;
-    [SerializeField, Range(0f, 1f)] private float clusterChance = 0.1f;
+    [SerializeField, Range(0f, 1f)] private float straightPathChance = 0.4f;
+    [SerializeField, Range(0f, 1f)] private float zigzagChance = 0.3f;
+    [SerializeField, Range(0f, 1f)] private float spiralChance = 0.15f;
+    [SerializeField, Range(0f, 1f)] private float bridgeChance = 0.1f;
+    [SerializeField, Range(0f, 1f)] private float clusterChance = 0.05f;
 
     [Header("===== ISLAND GENERATION (SECOND) =====")]
-    [SerializeField, Range(3, 1500)] private int islandCount = 8;
-    [SerializeField, Range(3, 15)] private int minIslandWidth = 5;
-    [SerializeField, Range(5, 25)] private int maxIslandWidth = 12;
-    [SerializeField, Range(2, 10)] private int minIslandHeight = 4;
-    [SerializeField, Range(3, 15)] private int maxIslandHeight = 8;
+    [SerializeField, Range(3, 1500)] private int islandCount = 15;
+    [SerializeField, Range(3, 15)] private int minIslandWidth = 4;
+    [SerializeField, Range(5, 25)] private int maxIslandWidth = 10;
+    [SerializeField, Range(2, 10)] private int minIslandHeight = 3;
+    [SerializeField, Range(3, 15)] private int maxIslandHeight = 7;
 
     [Header("Island Shape Parameters")]
     [Range(0, 1)] public float topBumpiness = 0.3f;
@@ -51,18 +51,17 @@ public class LevelGenerator : MonoBehaviour
     [Range(0, 0.2f)] public float holeChance = 0.05f;
 
     [Header("Island Placement")]
-    [SerializeField] private int islandLevelMinX = -200; // Увеличил границы для островов
-    [SerializeField] private int islandLevelMaxX = 200;
-    [SerializeField] private int islandLevelMinY = 10;
-    [SerializeField] private int islandLevelMaxY = 80;
-    [SerializeField, Range(2f, 25f)] private float minDistanceFromPlatforms = 12f;
+    [SerializeField] private int islandLevelMinX = -400;
+    [SerializeField] private int islandLevelMaxX = 400;
+    [SerializeField] private int islandLevelMinY = -50;
+    [SerializeField] private int islandLevelMaxY = 150;
+    [SerializeField, Range(2f, 25f)] private float minDistanceFromPlatforms = 8f;
 
     [Header("===== ADVANCED SETTINGS =====")]
     [SerializeField] private int generationSeed = 0;
     [SerializeField] private bool debugVisualization = false;
     [SerializeField] private AnimationCurve difficultyProgression = AnimationCurve.EaseInOut(0f, 0.2f, 1f, 1f);
 
-    // Internal systems
     private List<Vector3> platformPositions = new List<Vector3>();
     private List<GameObject> spawnedPlatforms = new List<GameObject>();
     private List<IslandData> generatedIslands = new List<IslandData>();
@@ -87,15 +86,9 @@ public class LevelGenerator : MonoBehaviour
     {
         InitializeGeneration();
         ClearExistingLevel();
-
-        // СНАЧАЛА генерируем все платформы
         GenerateCompletePlatformLayout();
-
-        // ПОТОМ добавляем острова в пустые места
         GenerateIslandsInEmptySpaces();
-
         OnGenerationComplete?.Invoke();
-        Debug.Log($"Perfect level generated! Platforms: {platformPositions.Count}, Islands: {generatedIslands.Count}");
     }
 
     #region Platform Generation (First Phase)
@@ -150,22 +143,18 @@ public class LevelGenerator : MonoBehaviour
             }
             else
             {
-                // Пробуем альтернативную позицию с большим горизонтальным смещением
                 currentPosition = FindAlternativePlatformPosition(currentPosition);
             }
 
-            // Проверяем что не ушли слишком далеко вниз
             if (currentPosition.y < platformEndY)
             {
                 currentPosition = new Vector3(
-                    UnityEngine.Random.Range(-platformLevelWidth * 0.4f, platformLevelWidth * 0.4f), // Увеличил диапазон
+                    UnityEngine.Random.Range(-platformLevelWidth * 0.4f, platformLevelWidth * 0.4f),
                     currentPosition.y + UnityEngine.Random.Range(20f, 40f),
                     0f
                 );
             }
         }
-
-        Debug.Log($"Generated {platformsCreated} platforms in {attempts} attempts");
     }
 
     private PlatformPattern ChoosePlatformPattern(float levelProgress)
@@ -191,7 +180,7 @@ public class LevelGenerator : MonoBehaviour
 
     private int CreateStraightPath(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        int pathLength = UnityEngine.Random.Range(3, 7);
+        int pathLength = UnityEngine.Random.Range(5, 12);
         float baseDirection = UnityEngine.Random.Range(-1f, 1f);
 
         List<Vector3> pathPositions = new List<Vector3>();
@@ -199,7 +188,6 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < pathLength; i++)
         {
-            // Добавляем большее горизонтальное смещение
             float horizontalShift = GetHorizontalShift(baseDirection);
 
             Vector3 nextPos = currentPos + new Vector3(
@@ -226,7 +214,7 @@ public class LevelGenerator : MonoBehaviour
 
     private int CreateZigzagPath(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        int zigzagLength = UnityEngine.Random.Range(4, 10); // Увеличил длину зигзага
+        int zigzagLength = UnityEngine.Random.Range(6, 15);
         float direction = UnityEngine.Random.value > 0.5f ? 1f : -1f;
 
         List<Vector3> zigzagPositions = new List<Vector3>();
@@ -234,10 +222,8 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < zigzagLength; i++)
         {
-            // Более агрессивное горизонтальное смещение для зигзага
             float horizontalMove = direction * UnityEngine.Random.Range(minJumpDistance * 1.2f, maxJumpDistance * 1.5f);
 
-            // Добавляем экстремальные смещения
             if (UnityEngine.Random.value < extremeShiftChance)
             {
                 horizontalMove *= UnityEngine.Random.Range(1.5f, 2.5f);
@@ -254,7 +240,7 @@ public class LevelGenerator : MonoBehaviour
                 SpawnPlatformAt(nextPos);
                 zigzagPositions.Add(nextPos);
                 currentPos = nextPos;
-                direction *= -1f; // Меняем направление
+                direction *= -1f;
             }
             else
             {
@@ -268,20 +254,20 @@ public class LevelGenerator : MonoBehaviour
 
     private int CreateSpiralPattern(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        int spiralSteps = UnityEngine.Random.Range(5, 12); // Увеличил количество шагов
-        float radius = UnityEngine.Random.Range(12f, 25f); // Увеличил радиус
+        int spiralSteps = UnityEngine.Random.Range(8, 18);
+        float radius = UnityEngine.Random.Range(15f, 35f);
 
         List<Vector3> spiralPositions = new List<Vector3>();
         Vector3 spiralCenter = startPos + Vector3.down * minVerticalDrop;
 
         for (int i = 0; i < spiralSteps; i++)
         {
-            float angle = (float)i / spiralSteps * Mathf.PI * 3f; // Больше оборотов
+            float angle = (float)i / spiralSteps * Mathf.PI * 3f;
             float currentRadius = radius * (1f - (float)i / spiralSteps * 0.4f);
 
             Vector3 position = spiralCenter + new Vector3(
                 Mathf.Cos(angle) * currentRadius,
-                -i * UnityEngine.Random.Range(2f, 5f), // Больше вертикального смещения
+                -i * UnityEngine.Random.Range(2f, 5f),
                 0f
             );
 
@@ -298,8 +284,8 @@ public class LevelGenerator : MonoBehaviour
 
     private int CreateBridgePattern(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        int bridgeLength = UnityEngine.Random.Range(5, 10); // Увеличил длину моста
-        float bridgeWidth = UnityEngine.Random.Range(25f, 45f); // Увеличил ширину моста
+        int bridgeLength = UnityEngine.Random.Range(8, 15);
+        float bridgeWidth = UnityEngine.Random.Range(35f, 65f);
 
         List<Vector3> bridgePositions = new List<Vector3>();
         Vector3 bridgeStart = startPos + Vector3.down * UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop);
@@ -310,7 +296,7 @@ public class LevelGenerator : MonoBehaviour
 
             Vector3 position = bridgeStart + new Vector3(
                 (progress - 0.5f) * bridgeWidth,
-                Mathf.Sin(progress * Mathf.PI) * UnityEngine.Random.Range(3f, 8f), // Больше вариации по высоте
+                Mathf.Sin(progress * Mathf.PI) * UnityEngine.Random.Range(3f, 8f),
                 0f
             );
 
@@ -327,28 +313,26 @@ public class LevelGenerator : MonoBehaviour
 
     private int CreateClusterPattern(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        int clusterSize = UnityEngine.Random.Range(4, 8); // Увеличил размер кластера
-        float clusterRadius = UnityEngine.Random.Range(8f, 18f); // Увеличил радиус кластера
+        int clusterSize = UnityEngine.Random.Range(6, 12);
+        float clusterRadius = UnityEngine.Random.Range(12f, 28f);
 
         List<Vector3> clusterPositions = new List<Vector3>();
         Vector3 clusterCenter = startPos + Vector3.down * UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop);
 
-        // Центральная платформа
         if (IsValidPlatformPosition(clusterCenter))
         {
             SpawnPlatformAt(clusterCenter);
             clusterPositions.Add(clusterCenter);
         }
 
-        // Окружающие платформы с большим разбросом
         for (int i = 0; i < clusterSize; i++)
         {
             float angle = (float)i / clusterSize * Mathf.PI * 2f + UnityEngine.Random.Range(-0.5f, 0.5f);
-            float distance = clusterRadius * UnityEngine.Random.Range(0.6f, 1.2f); // Больше вариации расстояния
+            float distance = clusterRadius * UnityEngine.Random.Range(0.6f, 1.2f);
 
             Vector3 position = clusterCenter + new Vector3(
                 Mathf.Cos(angle) * distance,
-                Mathf.Sin(angle) * distance * 0.4f + UnityEngine.Random.Range(-4f, 4f), // Больше вертикальной вариации
+                Mathf.Sin(angle) * distance * 0.4f + UnityEngine.Random.Range(-4f, 4f),
                 0f
             );
 
@@ -365,7 +349,6 @@ public class LevelGenerator : MonoBehaviour
 
     private int CreateSimpleJump(Vector3 startPos, float difficulty, out Vector3 endPos)
     {
-        // Простой прыжок с большим горизонтальным смещением
         float horizontalShift = GetHorizontalShift();
 
         endPos = startPos + new Vector3(
@@ -383,12 +366,10 @@ public class LevelGenerator : MonoBehaviour
         return 0;
     }
 
-    // Новый метод для вычисления горизонтального смещения
     private float GetHorizontalShift(float baseDirection = 0f)
     {
         if (UnityEngine.Random.value > horizontalVariation)
         {
-            // Обычное смещение
             if (baseDirection == 0f)
                 baseDirection = UnityEngine.Random.Range(-1f, 1f);
 
@@ -396,11 +377,9 @@ public class LevelGenerator : MonoBehaviour
         }
         else
         {
-            // Увеличенное горизонтальное смещение
             float direction = baseDirection != 0f ? baseDirection : (UnityEngine.Random.value > 0.5f ? 1f : -1f);
             float baseShift = direction * UnityEngine.Random.Range(minJumpDistance, maxHorizontalShift);
 
-            // Шанс экстремального смещения
             if (UnityEngine.Random.value < extremeShiftChance)
             {
                 baseShift *= UnityEngine.Random.Range(1.5f, 2.5f);
@@ -412,7 +391,6 @@ public class LevelGenerator : MonoBehaviour
 
     private bool IsValidPlatformPosition(Vector3 position)
     {
-        // Проверяем границы уровня (увеличенные)
         float halfWidth = platformLevelWidth * 0.5f;
         if (position.x < -halfWidth || position.x > halfWidth)
             return false;
@@ -420,7 +398,6 @@ public class LevelGenerator : MonoBehaviour
         if (position.y < platformEndY || position.y > platformStartY + 20f)
             return false;
 
-        // Проверяем минимальное расстояние до других платформ
         foreach (var existingPos in platformPositions)
         {
             if (Vector3.Distance(position, existingPos) < platformSafetyRadius)
@@ -432,9 +409,8 @@ public class LevelGenerator : MonoBehaviour
 
     private Vector3 FindAlternativePlatformPosition(Vector3 currentPos)
     {
-        for (int attempts = 0; attempts < 25; attempts++) // Увеличил количество попыток
+        for (int attempts = 0; attempts < 25; attempts++)
         {
-            // Более агрессивный поиск альтернативной позиции
             float horizontalShift = GetHorizontalShift();
 
             Vector3 alternative = currentPos + new Vector3(
@@ -478,8 +454,6 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log($"Successfully placed {successfulIslands} islands out of {islandCount} requested");
     }
 
     private Vector3 FindEmptySpaceForIsland()
@@ -496,19 +470,17 @@ public class LevelGenerator : MonoBehaviour
                 return candidate;
         }
 
-        return Vector3.zero; // Не найдено подходящее место
+        return Vector3.zero;
     }
 
     private bool IsGoodIslandPosition(Vector3 position)
     {
-        // Проверяем что достаточно далеко от всех платформ
         foreach (var platformPos in platformPositions)
         {
             if (Vector3.Distance(position, platformPos) < minDistanceFromPlatforms)
                 return false;
         }
 
-        // Проверяем что не пересекается с другими островами
         foreach (var island in generatedIslands)
         {
             float safeDistance = (island.size.x + maxIslandWidth) * 0.5f + 10f;
@@ -524,7 +496,6 @@ public class LevelGenerator : MonoBehaviour
         int width = UnityEngine.Random.Range(minIslandWidth, maxIslandWidth + 1);
         int height = UnityEngine.Random.Range(minIslandHeight, maxIslandHeight + 1);
 
-        // Проверяем что остров поместится в границы
         if (centerPosition.x - width * 0.5f < islandLevelMinX ||
             centerPosition.x + width * 0.5f > islandLevelMaxX ||
             centerPosition.y - height * 0.5f < islandLevelMinY ||
@@ -533,7 +504,6 @@ public class LevelGenerator : MonoBehaviour
             return false;
         }
 
-        // Создаём данные острова
         IslandData island = new IslandData
         {
             center = centerPosition,
@@ -541,7 +511,6 @@ public class LevelGenerator : MonoBehaviour
             bounds = new Bounds(centerPosition, new Vector3(width + 4, height + 4, 0))
         };
 
-        // Генерируем остров оригинальным алгоритмом
         if (GenerateOriginalIslandShape(centerPosition, width, height))
         {
             generatedIslands.Add(island);
@@ -556,7 +525,6 @@ public class LevelGenerator : MonoBehaviour
         int startX = Mathf.RoundToInt(center.x - width * 0.5f);
         int startY = Mathf.RoundToInt(center.y - height * 0.5f);
 
-        // Оригинальный алгоритм генерации формы острова
         int sideRange = Mathf.Max(1, height / 2);
         int topYBase = startY + height - 1;
 
@@ -589,7 +557,6 @@ public class LevelGenerator : MonoBehaviour
             bottomY[x] = interpBottom;
         }
 
-        // Проверяем что тайлы острова не конфликтуют с платформами
         List<Vector3Int> tilesToPlace = new List<Vector3Int>();
 
         for (int x = 0; x < width; x++)
@@ -601,7 +568,6 @@ public class LevelGenerator : MonoBehaviour
                 Vector3Int tilePos = new Vector3Int(startX + x, y, 0);
                 Vector3 worldPos = new Vector3(tilePos.x, tilePos.y, 0);
 
-                // Проверяем что тайл не слишком близко к платформам
                 bool tooCloseToPlat = false;
                 foreach (var platformPos in platformPositions)
                 {
@@ -619,8 +585,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        // Размещаем тайлы
-        if (tilesToPlace.Count > width * height * 0.3f) // Остров должен быть достаточно большим
+        if (tilesToPlace.Count > width * height * 0.3f)
         {
             foreach (var tilePos in tilesToPlace)
             {
@@ -647,9 +612,12 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnPlatformAt(Vector3 position)
     {
-        if (platformPrefab == null) return;
+        if (platformPrefabs == null || platformPrefabs.Length == 0) return;
 
-        GameObject platform = Instantiate(platformPrefab, position, Quaternion.identity);
+        GameObject selectedPrefab = platformPrefabs[UnityEngine.Random.Range(0, platformPrefabs.Length)];
+        if (selectedPrefab == null) return;
+
+        GameObject platform = Instantiate(selectedPrefab, position, Quaternion.identity);
         spawnedPlatforms.Add(platform);
         platformPositions.Add(position);
     }
@@ -711,34 +679,29 @@ public class LevelGenerator : MonoBehaviour
     {
         if (!debugVisualization) return;
 
-        // Рисуем платформы
         Gizmos.color = Color.green;
         foreach (var pos in platformPositions)
         {
             Gizmos.DrawWireSphere(pos, platformSafetyRadius);
         }
 
-        // Рисуем связи между платформами
         Gizmos.color = Color.yellow;
         for (int i = 1; i < platformPositions.Count; i++)
         {
             Gizmos.DrawLine(platformPositions[i-1], platformPositions[i]);
         }
 
-        // Рисуем границы островов
         Gizmos.color = Color.red;
         foreach (var island in generatedIslands)
         {
             Gizmos.DrawWireCube(island.center, new Vector3(island.size.x, island.size.y, 0));
         }
 
-        // Рисуем границы уровня платформ
         Gizmos.color = Color.blue;
         Vector3 platformBounds = new Vector3(platformLevelWidth, platformStartY - platformEndY, 0);
         Vector3 platformCenter = new Vector3(0, (platformStartY + platformEndY) * 0.5f, 0);
         Gizmos.DrawWireCube(platformCenter, platformBounds);
 
-        // Рисуем границы уровня островов
         Gizmos.color = Color.cyan;
         Vector3 islandBounds = new Vector3(islandLevelMaxX - islandLevelMinX, islandLevelMaxY - islandLevelMinY, 0);
         Vector3 islandCenter = new Vector3((islandLevelMaxX + islandLevelMinX) * 0.5f, (islandLevelMaxY + islandLevelMinY) * 0.5f, 0);
