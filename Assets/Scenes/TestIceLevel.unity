@@ -881,6 +881,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 2823568982631505413, guid: e727981a6fbeb0846a6c0bd4b9b916e2, type: 3}
+  - {fileID: 1686474680888498587, guid: c245aec8c270b1946ac6cffc26fdea82, type: 3}
+  - {fileID: 1992816280256527373, guid: 02db192956350af4ba07bb65a62d828a, type: 3}
+  - {fileID: 1786206856872896041, guid: df656acafb5c8154680c5bff3c8f7e2f, type: 3}
   spawnCooldown: 1
   maxEnemies: 15
   spawnDistance: 5
@@ -973,13 +976,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1413117424020580087, guid: 422ac89a41ca1af46bcf645e058dd159, type: 3}
+      propertyPath: repeatCount
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5104560164967942299, guid: 422ac89a41ca1af46bcf645e058dd159, type: 3}
       propertyPath: m_Name
       value: WallTilemapController
       objectReference: {fileID: 0}
     - target: {fileID: 5104560164967942299, guid: 422ac89a41ca1af46bcf645e058dd159, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8676655556261746021, guid: 422ac89a41ca1af46bcf645e058dd159, type: 3}
       propertyPath: m_LocalPosition.x
