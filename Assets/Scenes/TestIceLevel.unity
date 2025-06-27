@@ -282,7 +282,7 @@ Transform:
   m_LocalScale: {x: 0.8928572, y: 0.97943187, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 179716170}
+  m_Father: {fileID: 95910484}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &965030044
 TilemapRenderer:
@@ -977,6 +977,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallTilemapController
       objectReference: {fileID: 0}
+    - target: {fileID: 5104560164967942299, guid: 422ac89a41ca1af46bcf645e058dd159, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8676655556261746021, guid: 422ac89a41ca1af46bcf645e058dd159, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.52025
@@ -1093,3 +1097,5 @@ SceneRoots:
   - {fileID: 2365024811470368402}
   - {fileID: 1768169120}
   - {fileID: 196516275}
+  - {fileID: 3256766939509986325}
+  - {fileID: 95910484}

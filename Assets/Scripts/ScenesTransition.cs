@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ScenesTransition : MonoBehaviour
 {
-    private string gameSceneName = "PlayerScene";
+    private string gameSceneName = "TestIceLevel";
     private string menuSceneName = "MenuScene";
 
     [SerializeField] private Button startGameButton;
