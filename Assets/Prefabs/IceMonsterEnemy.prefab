@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8644826513752439858}
   - component: {fileID: 6507184926801248456}
   - component: {fileID: 5960308249420203150}
+  - component: {fileID: 4108266441445966574}
   m_Layer: 11
   m_Name: IceMonsterEnemy
   m_TagString: Untagged
@@ -263,6 +264,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4108266441445966574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686474680888498587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eabf6e493a74f1f4c8d331124d59b74b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropChance: 0.12
+  minCurseValue: 0.3
+  maxCurseValue: 2
+  cursePickupPrefab: {fileID: 0}
 --- !u!1 &2734480641166505268
 GameObject:
   m_ObjectHideFlags: 0
