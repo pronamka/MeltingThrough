@@ -130,12 +130,12 @@ GameObject:
   - component: {fileID: 95910484}
   - component: {fileID: 95910483}
   m_Layer: 0
-  m_Name: Grid (1)
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &95910483
 Grid:
   m_ObjectHideFlags: 0
@@ -644,7 +644,7 @@ MonoBehaviour:
   islandTile: {fileID: 11400000, guid: a67dfcb78927f634bb9f288e7e9bc44f, type: 2}
   platformPrefab: {fileID: 5969253860548061359, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
   totalPlatforms: 400
-  platformLevelWidth: 20
+  platformLevelWidth: 60
   platformStartY: 30
   platformEndY: -1000
   minJumpDistance: 3.15
@@ -671,7 +671,7 @@ MonoBehaviour:
   rightBumpiness: 0.3
   holeChance: 0.05
   islandLevelMinX: -30
-  islandLevelMaxX: 30
+  islandLevelMaxX: 60
   islandLevelMinY: -1000
   islandLevelMaxY: 30
   minDistanceFromPlatforms: 2.5
@@ -915,6 +915,22 @@ PrefabInstance:
     - target: {fileID: 73109166713813222, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -76
+      objectReference: {fileID: 0}
+    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1034001669843640848, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_AnchoredPosition.x
