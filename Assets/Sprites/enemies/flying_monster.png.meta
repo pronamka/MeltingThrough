@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ad99f643179803c4abc431431d6cada4
+guid: 11902be557a9f1e4d93517acb0e65099
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -173,6 +173,48 @@ TextureImporter:
   - first:
       213: -610946125683922727
     second: flying_monster_56
+  - first:
+      213: -2631666864858522324
+    second: flying_monster_57
+  - first:
+      213: 4388556817700357799
+    second: flying_monster_58
+  - first:
+      213: 5538617274992211732
+    second: flying_monster_59
+  - first:
+      213: 1345062821549227053
+    second: flying_monster_60
+  - first:
+      213: -2687037183526224531
+    second: flying_monster_61
+  - first:
+      213: -6276871060524988281
+    second: flying_monster_62
+  - first:
+      213: -4447549700343429281
+    second: flying_monster_63
+  - first:
+      213: -2088310183441972037
+    second: flying_monster_64
+  - first:
+      213: -1120011962346076788
+    second: flying_monster_65
+  - first:
+      213: -6422906101670505944
+    second: flying_monster_66
+  - first:
+      213: -3025338238979752257
+    second: flying_monster_67
+  - first:
+      213: -1899893766668400383
+    second: flying_monster_68
+  - first:
+      213: -3892899247219577580
+    second: flying_monster_69
+  - first:
+      213: 8059038971655501210
+    second: flying_monster_70
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -281,15 +323,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flying_monster_0
+      name: elemental_attack_0
       rect:
         serializedVersion: 2
-        x: 66
-        y: 806
-        width: 87
-        height: 114
+        x: 69
+        y: 804
+        width: 82
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -303,15 +345,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_1
+      name: elemental_attack_1
       rect:
         serializedVersion: 2
-        x: 256
-        y: 822
-        width: 80
-        height: 100
+        x: 257
+        y: 800
+        width: 78
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -325,15 +367,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_2
+      name: elemental_attack_2
       rect:
         serializedVersion: 2
-        x: 300
-        y: 806
-        width: 17
-        height: 18
+        x: 349
+        y: 799
+        width: 190
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -347,15 +389,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_3
+      name: elemental_attack_3
       rect:
         serializedVersion: 2
-        x: 345
-        y: 816
-        width: 195
-        height: 106
+        x: 541
+        y: 799
+        width: 190
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -369,147 +411,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_4
-      rect:
-        serializedVersion: 2
-        x: 539
-        y: 808
-        width: 193
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f2a8a3bba45346de0800000000000000
-      internalID: -1340888193964537297
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_5
-      rect:
-        serializedVersion: 2
-        x: 287
-        y: 798
-        width: 10
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2795013ff7de98060800000000000000
-      internalID: 6956352233245006194
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_6
-      rect:
-        serializedVersion: 2
-        x: 494
-        y: 798
-        width: 10
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4caf9ef8b44cf0aa0800000000000000
-      internalID: -6192515133795075388
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_7
-      rect:
-        serializedVersion: 2
-        x: 464
-        y: 727
-        width: 17
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 07bb5f8828ae3bb60800000000000000
-      internalID: 7760804429253950320
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_8
-      rect:
-        serializedVersion: 2
-        x: 647
-        y: 742
-        width: 9
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0ecf46e706fd3b090800000000000000
-      internalID: -8019820905886319392
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_9
+      name: elemental_death_0
       rect:
         serializedVersion: 2
         x: 68
-        y: 614
-        width: 85
-        height: 113
+        y: 612
+        width: 82
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5226eb7cbaf712590800000000000000
-      internalID: -7700733512059559387
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_10
-      rect:
-        serializedVersion: 2
-        x: 244
-        y: 697
-        width: 29
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -523,169 +433,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_11
+      name: elemental_death_1
       rect:
         serializedVersion: 2
-        x: 260
-        y: 630
-        width: 84
-        height: 108
+        x: 245
+        y: 606
+        width: 101
+        height: 131
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 53d577b436710c1b0800000000000000
-      internalID: -5638481018232545995
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_12
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 698
-        width: 28
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 73d2411ed08905fc0800000000000000
-      internalID: -3508136924343423689
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_13
-      rect:
-        serializedVersion: 2
-        x: 432
-        y: 710
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ffedfa16334c69b50800000000000000
-      internalID: 6599678028919332607
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_14
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 615
-        width: 64
-        height: 107
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 67ea874c9465038b0800000000000000
-      internalID: -5174541097019855242
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_15
-      rect:
-        serializedVersion: 2
-        x: 524
-        y: 710
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dfe106255ca523620800000000000000
-      internalID: 2752362125813882621
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_16
-      rect:
-        serializedVersion: 2
-        x: 650
-        y: 710
-        width: 18
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 266433d7e4557c810800000000000000
-      internalID: 1785489572872013410
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_17
-      rect:
-        serializedVersion: 2
-        x: 703
-        y: 702
-        width: 9
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0301d95802e5c16d0800000000000000
-      internalID: -3018434156471447504
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_18
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 656
-        width: 24
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -699,15 +455,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_19
+      name: elemental_death_2
       rect:
         serializedVersion: 2
-        x: 624
-        y: 638
-        width: 85
-        height: 56
+        x: 432
+        y: 607
+        width: 110
+        height: 137
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -721,81 +477,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_20
+      name: elemental_death_3
       rect:
         serializedVersion: 2
-        x: 664
-        y: 622
-        width: 40
-        height: 35
+        x: 625
+        y: 609
+        width: 110
+        height: 139
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1fb1b19aec12b4960800000000000000
-      internalID: 7587195168719838193
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_21
-      rect:
-        serializedVersion: 2
-        x: 713
-        y: 638
-        width: 23
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 36c10cf08576d0780800000000000000
-      internalID: -8715196075973010333
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_22
-      rect:
-        serializedVersion: 2
-        x: 812
-        y: 630
-        width: 33
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: feb9ee60b35068660800000000000000
-      internalID: 7387597989825387503
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_23
-      rect:
-        serializedVersion: 2
-        x: 852
-        y: 655
-        width: 20
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -809,59 +499,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_24
+      name: elemental_death_4
       rect:
         serializedVersion: 2
-        x: 881
-        y: 647
-        width: 25
-        height: 25
+        x: 813
+        y: 608
+        width: 113
+        height: 136
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e767b16c9813f9a60800000000000000
-      internalID: 7682913957121324670
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_25
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 614
-        width: 17
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d603b136fe18b62b0800000000000000
-      internalID: -5590231647290445715
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_26
-      rect:
-        serializedVersion: 2
-        x: 514
-        y: 622
-        width: 22
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -875,477 +521,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_27
-      rect:
-        serializedVersion: 2
-        x: 631
-        y: 608
-        width: 17
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3adcca6a887cd4400800000000000000
-      internalID: 310123339084254627
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_28
-      rect:
-        serializedVersion: 2
-        x: 663
-        y: 606
-        width: 18
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 68ee1415b31f40060800000000000000
-      internalID: 6918920164616564358
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_29
-      rect:
-        serializedVersion: 2
-        x: 847
-        y: 615
-        width: 18
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c639f52ca21cb2840800000000000000
-      internalID: 5200462584123200364
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_30
-      rect:
-        serializedVersion: 2
-        x: 890
-        y: 614
-        width: 12
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8677b975433be0010800000000000000
-      internalID: 1157059191670273896
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_31
-      rect:
-        serializedVersion: 2
-        x: 912
-        y: 624
-        width: 17
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0304b3579e0b94060800000000000000
-      internalID: 6938271217681645616
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_32
-      rect:
-        serializedVersion: 2
-        x: 287
-        y: 606
-        width: 10
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 72bc4b028908363f0800000000000000
-      internalID: -908741308926604505
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_33
-      rect:
-        serializedVersion: 2
-        x: 495
-        y: 606
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3549df5e4566cce00800000000000000
-      internalID: 1066339726601851987
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_34
-      rect:
-        serializedVersion: 2
-        x: 724
-        y: 607
-        width: 8
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 322a953cc4bdfe130800000000000000
-      internalID: 3598335750033744419
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_35
-      rect:
-        serializedVersion: 2
-        x: 817
-        y: 606
-        width: 15
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f06b22cfeef1db660800000000000000
-      internalID: 7403108473759774223
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_36
+      name: elemental_hurt_0
       rect:
         serializedVersion: 2
         x: 71
-        y: 442
-        width: 81
-        height: 102
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 00a3421abb82422d0800000000000000
-      internalID: -3304471440255600128
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_37
-      rect:
-        serializedVersion: 2
-        x: 260
-        y: 430
-        width: 89
-        height: 108
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e5699ffd1b87736e0800000000000000
-      internalID: -1857883615904819618
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_38
-      rect:
-        serializedVersion: 2
-        x: 95
-        y: 414
-        width: 9
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 849d7215b2b5b9f60800000000000000
-      internalID: 8042121801203439944
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_39
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 422
-        width: 17
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 903b812b5aa976fb0800000000000000
-      internalID: -4654581653415873783
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_40
-      rect:
-        serializedVersion: 2
-        x: 307
         y: 415
-        width: 10
-        height: 11
+        width: 78
+        height: 125
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 318a18fa2803ed070800000000000000
-      internalID: 8132991314926086163
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_41
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 230
-        width: 86
-        height: 114
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9499cd28b03a044e0800000000000000
-      internalID: -1999418964717037239
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_42
-      rect:
-        serializedVersion: 2
-        x: 260
-        y: 246
-        width: 81
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: aa7272e8377e64cd0800000000000000
-      internalID: -2574115653503473750
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_43
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 230
-        width: 17
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d3dbe5b36c9bb9540800000000000000
-      internalID: 5015806871057907005
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_44
-      rect:
-        serializedVersion: 2
-        x: 452
-        y: 239
-        width: 84
-        height: 107
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c87daed3773237c40800000000000000
-      internalID: 5508785764251129740
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_45
-      rect:
-        serializedVersion: 2
-        x: 642
-        y: 232
-        width: 90
-        height: 111
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 781dc3430a5b4f950800000000000000
-      internalID: 6482005463368782215
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_46
-      rect:
-        serializedVersion: 2
-        x: 287
-        y: 222
-        width: 10
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: be5e9d443b7a1aec0800000000000000
-      internalID: -3557377842249865749
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_47
-      rect:
-        serializedVersion: 2
-        x: 496
-        y: 222
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 35f712ca1b9bbf4f0800000000000000
-      internalID: -793836736552534189
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_48
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 38
-        width: 89
-        height: 108
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1359,15 +543,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_49
+      name: elemental_hurt_1
       rect:
         serializedVersion: 2
-        x: 252
-        y: 57
-        width: 84
-        height: 97
+        x: 261
+        y: 416
+        width: 86
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1381,81 +565,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_50
+      name: elemental_idle_0
       rect:
         serializedVersion: 2
-        x: 440
-        y: 48
-        width: 88
-        height: 106
+        x: 69
+        y: 226
+        width: 82
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c19e6a3d5f1ed5460800000000000000
-      internalID: 7232185022561052956
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_51
-      rect:
-        serializedVersion: 2
-        x: 631
-        y: 46
-        width: 93
-        height: 106
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0c7a42fc2168621b0800000000000000
-      internalID: -5681706464538482752
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_52
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 31
-        width: 9
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b4a9476a85154ea50800000000000000
-      internalID: 6549449199295175243
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_53
-      rect:
-        serializedVersion: 2
-        x: 299
-        y: 30
-        width: 11
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1469,37 +587,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_54
+      name: elemental_idle_1
       rect:
         serializedVersion: 2
-        x: 312
-        y: 38
-        width: 17
-        height: 18
+        x: 261
+        y: 223
+        width: 78
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 74c08f32612407370800000000000000
-      internalID: 8318221174613478471
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flying_monster_55
-      rect:
-        serializedVersion: 2
-        x: 516
-        y: 31
-        width: 8
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1513,15 +609,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flying_monster_56
+      name: elemental_idle_2
       rect:
         serializedVersion: 2
-        x: 692
-        y: 38
-        width: 16
-        height: 16
+        x: 452
+        y: 224
+        width: 82
+        height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1534,11 +630,121 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: elemental_idle_3
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 226
+        width: 86
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2d11f8fde07a7bd0800000000000000
+      internalID: -2631666864858522324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elemental_walk_0
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 31
+        width: 86
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6d37a90be9b5bad0800000000000000
+      internalID: -2687037183526224531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elemental_walk_1
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 31
+        width: 82
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7888a78d60314e8a0800000000000000
+      internalID: -6276871060524988281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elemental_walk_2
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 33
+        width: 86
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5782269c112742c0800000000000000
+      internalID: -4447549700343429281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elemental_walk_3
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 35
+        width: 90
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb44c17d3f4d403e0800000000000000
+      internalID: -2088310183441972037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fdfd9c5f6cc7b9147ac143d6e498d1f2
     internalID: 0
     vertices: []
     indices: 
@@ -1548,9 +754,25 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      flying_monster_0: 4810125125271654775
-      flying_monster_1: -3229280681580118081
-      flying_monster_10: 1318921408512751529
+      elemental_attack_0: 4810125125271654775
+      elemental_attack_1: -3229280681580118081
+      elemental_attack_2: 4054768621034253162
+      elemental_attack_3: -7953671203268360152
+      elemental_death_0: 1318921408512751529
+      elemental_death_1: -3215862556813807217
+      elemental_death_2: -3898711427420026117
+      elemental_death_3: 1259914448366089283
+      elemental_death_4: 1618954892541890424
+      elemental_hurt_0: 7423318668024179387
+      elemental_hurt_1: 7129302560274821633
+      elemental_idle_0: -5665751099769584360
+      elemental_idle_1: 8491254928608994484
+      elemental_idle_2: -610946125683922727
+      elemental_idle_3: -2631666864858522324
+      elemental_walk_0: -2687037183526224531
+      elemental_walk_1: -6276871060524988281
+      elemental_walk_2: -4447549700343429281
+      elemental_walk_3: -2088310183441972037
       flying_monster_11: -5638481018232545995
       flying_monster_12: -3508136924343423689
       flying_monster_13: 6599678028919332607
@@ -1558,20 +780,14 @@ TextureImporter:
       flying_monster_15: 2752362125813882621
       flying_monster_16: 1785489572872013410
       flying_monster_17: -3018434156471447504
-      flying_monster_18: -3215862556813807217
-      flying_monster_19: -3898711427420026117
-      flying_monster_2: 4054768621034253162
       flying_monster_20: 7587195168719838193
       flying_monster_21: -8715196075973010333
       flying_monster_22: 7387597989825387503
-      flying_monster_23: 1259914448366089283
       flying_monster_24: 7682913957121324670
       flying_monster_25: -5590231647290445715
-      flying_monster_26: 1618954892541890424
       flying_monster_27: 310123339084254627
       flying_monster_28: 6918920164616564358
       flying_monster_29: 5200462584123200364
-      flying_monster_3: -7953671203268360152
       flying_monster_30: 1157059191670273896
       flying_monster_31: 6938271217681645616
       flying_monster_32: -908741308926604505
@@ -1591,18 +807,22 @@ TextureImporter:
       flying_monster_45: 6482005463368782215
       flying_monster_46: -3557377842249865749
       flying_monster_47: -793836736552534189
-      flying_monster_48: 7423318668024179387
-      flying_monster_49: 7129302560274821633
       flying_monster_5: 6956352233245006194
       flying_monster_50: 7232185022561052956
       flying_monster_51: -5681706464538482752
       flying_monster_52: 6549449199295175243
-      flying_monster_53: -5665751099769584360
       flying_monster_54: 8318221174613478471
-      flying_monster_55: 8491254928608994484
-      flying_monster_56: -610946125683922727
+      flying_monster_58: 4388556817700357799
+      flying_monster_59: 5538617274992211732
       flying_monster_6: -6192515133795075388
+      flying_monster_60: 1345062821549227053
+      flying_monster_65: -1120011962346076788
+      flying_monster_66: -6422906101670505944
+      flying_monster_67: -3025338238979752257
+      flying_monster_68: -1899893766668400383
+      flying_monster_69: -3892899247219577580
       flying_monster_7: 7760804429253950320
+      flying_monster_70: 8059038971655501210
       flying_monster_8: -8019820905886319392
       flying_monster_9: -7700733512059559387
   mipmapLimitGroupName: 
