@@ -51,6 +51,10 @@ public class PlayerState : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < -1000)
+        {
+            TakeDamage(1000);
+        }
         if (IsDead())
         {
             StartCoroutine(LoadNewScene());
