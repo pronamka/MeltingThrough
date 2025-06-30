@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabf6e493a74f1f4c8d331124d59b74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropChance: 0.12
+  dropChance: 1
   minCurseValue: 0.3
   maxCurseValue: 2
   cursePickupPrefab: {fileID: 0}
@@ -359,24 +359,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7383275, y: 1.01737}
   m_EdgeRadius: 0
-
 --- !u!114 &5267004906648353186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-
   m_GameObject: {fileID: 2734480641166505268}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99c57717160ec274eaa61b71a4bea61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
-  enemyObject: {fileID: 1686474680888498587}
+  type: 0
+  enemyObject: {fileID: 0}
 --- !u!1 &4139227682113746256
-
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

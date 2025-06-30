@@ -8,7 +8,7 @@ public enum CurseType
     LowHealth,         
     SlowMana,          
     HeavyFall,         
-    ShortJump          
+    ShortJump
 }
 
 [System.Serializable]
