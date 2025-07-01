@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// Tracks the player's level progress based on vertical position relative to level start/end points.
+/// Calculates progress as: (startY - currentPlayerY) / (startY - endY)
+/// Returns a value between 0 (at start) and 1 (at end).
+/// </summary>
 public class LevelProgress : MonoBehaviour
 {
     [SerializeField] private LevelGenerator levelGenerator;
@@ -11,6 +16,10 @@ public class LevelProgress : MonoBehaviour
         if (levelGenerator == null)
         {
             levelGenerator = FindFirstObjectByType<LevelGenerator>();
+            if (levelGenerator == null)
+            {
+                Debug.LogWarning("LevelProgress: No LevelGenerator found in scene!");
+            }
         }
         
         // Find player if not assigned
@@ -20,6 +29,10 @@ public class LevelProgress : MonoBehaviour
             if (playerObject != null)
             {
                 player = playerObject.transform;
+            }
+            else
+            {
+                Debug.LogWarning("LevelProgress: No GameObject with 'Player' tag found!");
             }
         }
     }
