@@ -72,6 +72,10 @@ public class LevelGenerator : MonoBehaviour
 
     public HashSet<Vector3Int> OccupiedPositions { get; private set; } = new HashSet<Vector3Int>();
     public event Action OnGenerationComplete;
+    
+    // Public properties for level progress tracking
+    public float PlatformStartY => platformStartY;
+    public float PlatformEndY => platformEndY;
 
     private struct IslandData
     {
