@@ -18,6 +18,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float platformStartY = 200f;
     [SerializeField] private float platformEndY = -300f;
 
+    public float PlatformStartY => platformStartY;
+    public float PlatformEndY => platformEndY;
+
     [Header("Platform Movement Settings")]
     [SerializeField, Range(3f, 15f)] private float minJumpDistance = 4f;
     [SerializeField, Range(6f, 25f)] private float maxJumpDistance = 12f;
@@ -660,8 +663,6 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int attempts = 0; attempts < 100; attempts++)
         {
-            // Use the level boundaries properly for altar generation
-            // Ensure altars stay within the level bounds with padding for the island
             float padding = Mathf.Max(altarIslandX, altarIslandY) + 5f;
 
             Vector3 candidate = new Vector3(
@@ -679,35 +680,29 @@ public class LevelGenerator : MonoBehaviour
 
     private bool IsValidAltarPosition(Vector3 position)
     {
-        // Check if altar island would fit within level boundaries
         float halfIslandX = altarIslandX * 0.5f;
         float halfIslandY = altarIslandY * 0.5f;
 
-        // Check horizontal bounds (use platform level width)
         if (position.x - halfIslandX < -platformLevelWidth * 0.5f ||
             position.x + halfIslandX > platformLevelWidth * 0.5f)
             return false;
 
-        // Check vertical bounds (use platform level height)
         if (position.y - halfIslandY < platformEndY ||
             position.y + halfIslandY > platformStartY)
             return false;
 
-        // Check distance from platforms
         foreach (var platformPos in platformPositions)
         {
             if (Vector3.Distance(position, platformPos) < minDistanceFromPlatformsAltar)
                 return false;
         }
 
-        // Check distance from existing islands
         foreach (var island in generatedIslands)
         {
             if (Vector3.Distance(position, island.center) < minDistanceFromIslandsAltar)
                 return false;
         }
 
-        // Check distance from other altars (minimum distance requirement)
         foreach (var altar in generatedAltars)
         {
             if (Vector3.Distance(position, altar.position) < minAltarDistance)
@@ -724,9 +719,12 @@ public class LevelGenerator : MonoBehaviour
         if (!GenerateAltarIsland(islandCenter))
             return false;
 
-        // Calculate the top surface of the altar island
-        Vector3 islandTopSurface = new Vector3(islandCenter.x, islandCenter.y + (altarIslandY / 2f), islandCenter.z);
-        Vector3 finalAltarPosition = islandTopSurface + Vector3.up * altarVerticalOffset + new Vector3(altarHorizontalOffsetX, 0f, altarHorizontalOffsetZ);
+        float topTileY = Mathf.RoundToInt(islandCenter.y) + (altarIslandY / 2);
+        Vector3 finalAltarPosition = new Vector3(
+            islandCenter.x + altarHorizontalOffsetX,
+            topTileY + altarVerticalOffset,
+            islandCenter.z + altarHorizontalOffsetZ
+        );
 
         GameObject altar = Instantiate(altarPrefab, finalAltarPosition, Quaternion.identity);
         spawnedAltars.Add(altar);
@@ -751,7 +749,6 @@ public class LevelGenerator : MonoBehaviour
 
         List<Vector3Int> tilesToPlace = new List<Vector3Int>();
 
-        // Generate the altar island (perfect rectangle)
         for (int x = 0; x < altarIslandX; x++)
         {
             for (int y = 0; y < altarIslandY; y++)
@@ -759,14 +756,12 @@ public class LevelGenerator : MonoBehaviour
                 Vector3Int tilePos = new Vector3Int(startX + x, startY + y, 0);
                 Vector3 worldPos = new Vector3(tilePos.x, tilePos.y, 0);
 
-                // Double-check boundaries to prevent wall spawning
                 if (worldPos.x < -platformLevelWidth * 0.5f || worldPos.x > platformLevelWidth * 0.5f ||
                     worldPos.y < platformEndY || worldPos.y > platformStartY)
                 {
-                    continue; // Skip tiles that are outside level bounds
+                    continue;
                 }
 
-                // Check distance from platforms
                 bool tooCloseToPlat = false;
                 foreach (var platformPos in platformPositions)
                 {
@@ -784,7 +779,6 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        // Only place the island if we can place most of the tiles
         if (tilesToPlace.Count >= (altarIslandX * altarIslandY) * 0.8f)
         {
             foreach (var tilePos in tilesToPlace)
