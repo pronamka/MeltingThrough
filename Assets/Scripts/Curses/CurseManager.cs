@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,10 +6,10 @@ public class CurseManager : MonoBehaviour
 {
     [SerializeField] private List<AbstractCurse> activeCurses = new List<AbstractCurse>();
     [SerializeField] private float maxCurseValue = 10f;
-    
+
     private InputAction exchangeCursesAction;
 
-    
+
     public System.Action<List<AbstractCurse>> OnCursesChanged;
     public System.Action<int> OnRelicsAvailable;
 
@@ -39,12 +39,12 @@ public class CurseManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("CurseManager запущен. Клавиша обмена проклятий: M");
+        Debug.Log("CurseManager пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: M");
     }
 
     private void Update()
     {
-      
+
         if (exchangeCursesAction != null && exchangeCursesAction.triggered)
         {
             ExchangeCursesForRelics();
@@ -53,11 +53,11 @@ public class CurseManager : MonoBehaviour
 
     private void SetupInput()
     {
-     
+
         exchangeCursesAction = new InputAction("ExchangeCurses", binding: "<Keyboard>/m");
         exchangeCursesAction.Enable();
 
-        Debug.Log("Настроен input для обмена проклятий (клавиша M)");
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ input пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ M)");
     }
 
     public void AddCurse(CurseType type, float value)
@@ -68,11 +68,11 @@ public class CurseManager : MonoBehaviour
 
         newCurse.Activate();
 
-        
+
         OnCursesChanged?.Invoke(activeCurses);
         OnRelicsAvailable?.Invoke(GetRelicsToReceive());
 
-        Debug.Log($"Добавлено проклятие: {name} (значение: {value}, интенсивность: {newCurse.Intensity:F2})");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {name} (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {value}, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {newCurse.Intensity:F2})");
     }
 
     public void DeactivateAll()
@@ -103,11 +103,11 @@ public class CurseManager : MonoBehaviour
         int relicsCount = GetRelicsToReceive();
         if (relicsCount <= 0)
         {
-            Debug.Log("Недостаточно проклятий для обмена");
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
             return;
         }
 
-        Debug.Log($"Обмениваем {activeCurses.Count} проклятий (общая ценность: {GetTotalCurseValue():F1}) на {relicsCount} реликвий");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {activeCurses.Count} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {GetTotalCurseValue():F1}) пїЅпїЅ {relicsCount} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 
         ClearAllCurses();
         /*
@@ -117,10 +117,10 @@ public class CurseManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("RelicManager не найден!");
+            Debug.LogWarning("RelicManager пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!");
         }
         */
-        Debug.Log($"Обменяно проклятий на {relicsCount} реликвий!");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ {relicsCount} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
     }
 
     private void ClearAllCurses()
@@ -139,8 +139,8 @@ public class CurseManager : MonoBehaviour
             exchangeCursesAction.Dispose();
         }
     }
-    
-    [ContextMenu("Добавить тестовое проклятие")]
+
+    [ContextMenu("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public void AddTestCurse()
     {
         CurseType[] types = (CurseType[])System.Enum.GetValues(typeof(CurseType));
@@ -149,22 +149,22 @@ public class CurseManager : MonoBehaviour
         AddCurse(randomType, randomValue);
     }
 
-    [ContextMenu("Очистить все проклятия")]
+    [ContextMenu("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public void ClearAllCursesDebug()
     {
         ClearAllCurses();
     }
 
-    /*[ContextMenu("Показать информацию о проклятиях")]
+    /*[ContextMenu("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public void ShowCursesInfo()
     {
-        Debug.Log($"Активных проклятий: {activeCurses.Count}");
-        Debug.Log($"Общая ценность: {GetTotalCurseValue():F1}");
-        Debug.Log($"Реликвий к получению: {GetRelicsToReceive()}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {activeCurses.Count}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {GetTotalCurseValue():F1}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {GetRelicsToReceive()}");
 
         foreach (var curse in activeCurses)
         {
-            Debug.Log($"- {curse.name}: {curse.value:F1} (интенсивность: {curse.intensity:F2})");
+            Debug.Log($"- {curse.name}: {curse.value:F1} (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {curse.intensity:F2})");
         }
     }*/
 }

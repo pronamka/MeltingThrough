@@ -6,6 +6,7 @@ using System.Linq;
 
 public class LevelGenerator : MonoBehaviour
 {
+
     [Header("===== VISUAL SETTINGS =====")]
     public Tilemap islandTilemap;
     public TileBase islandTile;
@@ -16,6 +17,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float platformLevelWidth = 1000f;
     [SerializeField] private float platformStartY = 200f;
     [SerializeField] private float platformEndY = -300f;
+
+    public float PlatformStartY => platformStartY;
+    public float PlatformEndY => platformEndY;
 
     [Header("Platform Movement Settings")]
     [SerializeField, Range(3f, 15f)] private float minJumpDistance = 4f;
@@ -57,15 +61,30 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int islandLevelMaxY = 150;
     [SerializeField, Range(2f, 25f)] private float minDistanceFromPlatforms = 8f;
 
+    [Header("===== ALTAR GENERATION (THIRD) =====")]
+    [SerializeField] public GameObject altarPrefab;
+    [SerializeField, Range(1, 50)] private int maxAltarCount = 10;
+    [SerializeField] private float minAltarDistance = 500f;
+    [SerializeField] private int altarIslandX = 3;
+    [SerializeField] private int altarIslandY = 3;
+    [SerializeField] private float altarVerticalOffset = 0.5f;
+    [SerializeField] private float altarHorizontalOffsetX = 0f;
+    [SerializeField] private float altarHorizontalOffsetZ = 0f;
+    [SerializeField, Range(5f, 50f)] private float minDistanceFromPlatformsAltar = 15f;
+    [SerializeField, Range(5f, 50f)] private float minDistanceFromIslandsAltar = 10f;
+
     [Header("===== ADVANCED SETTINGS =====")]
     [SerializeField] private int generationSeed = 0;
     [SerializeField] private bool debugVisualization = false;
+
     [SerializeField] private AnimationCurve difficultyProgression = AnimationCurve.EaseInOut(0f, 0.2f, 1f, 1f);
 
     private List<Vector3> platformPositions = new List<Vector3>();
     private List<GameObject> spawnedPlatforms = new List<GameObject>();
     private List<IslandData> generatedIslands = new List<IslandData>();
     private HashSet<Vector3Int> islandTiles = new HashSet<Vector3Int>();
+    private List<AltarData> generatedAltars = new List<AltarData>();
+    private List<GameObject> spawnedAltars = new List<GameObject>();
 
     public HashSet<Vector3Int> OccupiedPositions { get; private set; } = new HashSet<Vector3Int>();
     public event Action OnGenerationComplete;
@@ -77,7 +96,14 @@ public class LevelGenerator : MonoBehaviour
         public Bounds bounds;
     }
 
-    void Start()
+    private struct AltarData
+    {
+        public Vector3 position;
+        public Vector3 islandCenter;
+        public Bounds bounds;
+    }
+
+    void Awake()
     {
         GeneratePerfectLevel();
     }
@@ -88,6 +114,7 @@ public class LevelGenerator : MonoBehaviour
         ClearExistingLevel();
         GenerateCompletePlatformLayout();
         GenerateIslandsInEmptySpaces();
+        GenerateAltars();
         OnGenerationComplete?.Invoke();
     }
 
@@ -608,6 +635,186 @@ public class LevelGenerator : MonoBehaviour
 
     #endregion
 
+    #region Altar Generation (Third Phase)
+
+    private void GenerateAltars()
+    {
+        if (altarPrefab == null) return;
+
+        generatedAltars.Clear();
+        int successfulAltars = 0;
+        int maxAttempts = maxAltarCount * 20;
+
+        for (int attempt = 0; attempt < maxAttempts && successfulAltars < maxAltarCount; attempt++)
+        {
+            Vector3 candidatePosition = FindValidAltarPosition();
+
+            if (candidatePosition != Vector3.zero)
+            {
+                if (GenerateAltarWithIsland(candidatePosition))
+                {
+                    successfulAltars++;
+                }
+            }
+        }
+    }
+
+    private Vector3 FindValidAltarPosition()
+    {
+        for (int attempts = 0; attempts < 100; attempts++)
+        {
+            float padding = Mathf.Max(altarIslandX, altarIslandY) + 5f;
+
+            Vector3 candidate = new Vector3(
+                UnityEngine.Random.Range(-platformLevelWidth * 0.5f + padding, platformLevelWidth * 0.5f - padding),
+                UnityEngine.Random.Range(platformEndY + padding, platformStartY - padding),
+                0f
+            );
+
+            if (IsValidAltarPosition(candidate))
+                return candidate;
+        }
+
+        return Vector3.zero;
+    }
+
+    private bool IsValidAltarPosition(Vector3 position)
+    {
+        float halfIslandX = altarIslandX * 0.5f;
+        float halfIslandY = altarIslandY * 0.5f;
+
+        if (position.x - halfIslandX < -platformLevelWidth * 0.5f ||
+            position.x + halfIslandX > platformLevelWidth * 0.5f)
+            return false;
+
+        if (position.y - halfIslandY < platformEndY ||
+            position.y + halfIslandY > platformStartY)
+            return false;
+
+        foreach (var platformPos in platformPositions)
+        {
+            if (Vector3.Distance(position, platformPos) < minDistanceFromPlatformsAltar)
+                return false;
+        }
+
+        foreach (var island in generatedIslands)
+        {
+            if (Vector3.Distance(position, island.center) < minDistanceFromIslandsAltar)
+                return false;
+        }
+
+        foreach (var altar in generatedAltars)
+        {
+            if (Vector3.Distance(position, altar.position) < minAltarDistance)
+                return false;
+        }
+
+        return true;
+    }
+
+    private bool GenerateAltarWithIsland(Vector3 altarPosition)
+    {
+        Vector3 islandCenter = altarPosition;
+
+        if (!GenerateAltarIsland(islandCenter))
+            return false;
+
+        float topTileY = Mathf.RoundToInt(islandCenter.y) + (altarIslandY / 2);
+        Vector3 finalAltarPosition = new Vector3(
+            islandCenter.x + altarHorizontalOffsetX,
+            topTileY + altarVerticalOffset,
+            islandCenter.z + altarHorizontalOffsetZ
+        );
+
+        GameObject altar = Instantiate(altarPrefab, finalAltarPosition, Quaternion.identity);
+        spawnedAltars.Add(altar);
+
+        AltarData altarData = new AltarData
+        {
+            position = finalAltarPosition,
+            islandCenter = islandCenter,
+            bounds = new Bounds(finalAltarPosition, new Vector3(altarIslandX + 4, altarIslandY + 4, 0))
+        };
+
+        generatedAltars.Add(altarData);
+        return true;
+    }
+
+    private bool GenerateAltarIsland(Vector3 center)
+    {
+        if (islandTilemap == null) return false;
+
+        int startX = Mathf.RoundToInt(center.x) - altarIslandX / 2;
+        int startY = Mathf.RoundToInt(center.y) - altarIslandY / 2;
+
+        List<Vector3Int> tilesToPlace = new List<Vector3Int>();
+
+        for (int x = 0; x < altarIslandX; x++)
+        {
+            for (int y = 0; y < altarIslandY; y++)
+            {
+                Vector3Int tilePos = new Vector3Int(startX + x, startY + y, 0);
+                Vector3 worldPos = new Vector3(tilePos.x, tilePos.y, 0);
+
+                if (worldPos.x < -platformLevelWidth * 0.5f || worldPos.x > platformLevelWidth * 0.5f ||
+                    worldPos.y < platformEndY || worldPos.y > platformStartY)
+                {
+                    continue;
+                }
+
+                bool tooCloseToPlat = false;
+                foreach (var platformPos in platformPositions)
+                {
+                    if (Vector3.Distance(worldPos, platformPos) < minDistanceFromPlatformsAltar * 0.5f)
+                    {
+                        tooCloseToPlat = true;
+                        break;
+                    }
+                }
+
+                if (!tooCloseToPlat && !OccupiedPositions.Contains(tilePos))
+                {
+                    tilesToPlace.Add(tilePos);
+                }
+            }
+        }
+
+        if (tilesToPlace.Count >= (altarIslandX * altarIslandY) * 0.8f)
+        {
+            foreach (var tilePos in tilesToPlace)
+            {
+                islandTilemap.SetTile(tilePos, islandTile);
+                OccupiedPositions.Add(tilePos);
+                islandTiles.Add(tilePos);
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsPositionNearAltar(Vector3 worldPosition, float radius = 5f)
+    {
+        foreach (var altar in generatedAltars)
+        {
+            if (Vector3.Distance(worldPosition, altar.position) < radius)
+                return true;
+        }
+        return false;
+    }
+
+    public List<Vector3> GetAltarPositions()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        foreach (var altar in generatedAltars)
+        {
+            positions.Add(altar.position);
+        }
+        return positions;
+    }
+
+    #endregion
+
     #region Utility Methods
 
     private void SpawnPlatformAt(Vector3 position)
@@ -637,10 +844,23 @@ public class LevelGenerator : MonoBehaviour
         spawnedPlatforms.Clear();
         platformPositions.Clear();
 
+        foreach (var altar in spawnedAltars)
+        {
+            if (altar != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(altar);
+                else
+                    DestroyImmediate(altar);
+            }
+        }
+        spawnedAltars.Clear();
+
         if (islandTilemap != null)
             islandTilemap.ClearAllTiles();
 
         generatedIslands.Clear();
+        generatedAltars.Clear();
         islandTiles.Clear();
         OccupiedPositions.Clear();
     }
@@ -695,6 +915,19 @@ public class LevelGenerator : MonoBehaviour
         foreach (var island in generatedIslands)
         {
             Gizmos.DrawWireCube(island.center, new Vector3(island.size.x, island.size.y, 0));
+        }
+
+        // Draw altar gizmos
+        Gizmos.color = Color.magenta;
+        foreach (var altar in generatedAltars)
+        {
+            Gizmos.DrawWireCube(altar.position, Vector3.one * 2f);
+            Gizmos.DrawWireCube(altar.islandCenter, new Vector3(altarIslandX, altarIslandY, 0));
+            
+            // Draw minimum distance sphere
+            Gizmos.color = new Color(1f, 0f, 1f, 0.1f);
+            Gizmos.DrawSphere(altar.position, minAltarDistance);
+            Gizmos.color = Color.magenta;
         }
 
         Gizmos.color = Color.blue;

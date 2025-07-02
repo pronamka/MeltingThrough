@@ -18,17 +18,17 @@ public class CursePickup : MonoBehaviour
     private bool playerInRange = false;
     private bool hasLanded = false;
 
-    
-    private SpriteRenderer spriteRenderer;
-    private CircleCollider2D triggerCollider; 
 
-    
+    private SpriteRenderer spriteRenderer;
+    private CircleCollider2D triggerCollider;
+
+
     private ParticleSystem particles;
 
-    
+
     private GameObject pickupHint;
 
-    
+
     private InputAction interactAction;
 
     private void Awake()
@@ -42,17 +42,17 @@ public class CursePickup : MonoBehaviour
 
     private void Start()
     {
-        
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             playerTransform = player.transform;
         }
 
-        
+
         StartFalling();
 
-        
+
         Destroy(gameObject, 30f);
     }
 
@@ -62,33 +62,33 @@ public class CursePickup : MonoBehaviour
 
         timeAlive += Time.deltaTime;
 
-        
+
         if (!hasLanded)
         {
             CheckLanding();
         }
         else
         {
-        
+
             FloatingAnimation();
         }
 
-        
+
         CheckPlayerDistance();
 
-        
+
         if (playerInRange && interactAction != null && interactAction.triggered)
         {
             PickupCurse();
         }
 
-        
+
         HandleBlinking();
     }
 
     private void StartFalling()
     {
-       
+
         StartCoroutine(FallToGround());
     }
 
@@ -96,22 +96,22 @@ public class CursePickup : MonoBehaviour
     {
         Vector3 startPos = transform.position;
 
-        
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 50f, groundLayer);
 
         Vector3 targetPos;
         if (hit.collider != null)
         {
-        
+
             targetPos = new Vector3(startPos.x, hit.point.y + 0.5f, startPos.z);
         }
         else
         {
-        
+
             targetPos = new Vector3(startPos.x, startPos.y - 5f, startPos.z);
         }
 
-        
+
         float fallDuration = 1f;
         float elapsedTime = 0f;
 
@@ -120,8 +120,8 @@ public class CursePickup : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / fallDuration;
 
-            
-            t = 1f - (1f - t) * (1f - t); 
+
+            t = 1f - (1f - t) * (1f - t);
 
             transform.position = Vector3.Lerp(startPos, targetPos, t);
             yield return null;
@@ -131,13 +131,13 @@ public class CursePickup : MonoBehaviour
         startPosition = targetPos;
         hasLanded = true;
 
-        
+
         CreateLandingEffect();
     }
 
     private void CheckLanding()
     {
-        
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayer);
         if (hit.collider != null && !hasLanded)
         {
@@ -149,7 +149,7 @@ public class CursePickup : MonoBehaviour
 
     private void CreateLandingEffect()
     {
-        
+
         GameObject effect = new GameObject("LandingEffect");
         effect.transform.position = transform.position;
 
@@ -176,14 +176,14 @@ public class CursePickup : MonoBehaviour
 
     private void SetupInput()
     {
-        
+
         interactAction = new InputAction("Interact", binding: "<Keyboard>/e");
         interactAction.Enable();
     }
 
     private void SetupTrigger()
     {
-        
+
         triggerCollider = gameObject.AddComponent<CircleCollider2D>();
         triggerCollider.radius = pickupRange;
         triggerCollider.isTrigger = true;
@@ -432,7 +432,7 @@ public class CursePickup : MonoBehaviour
         {
             pickupHint.SetActive(playerInRange);
 
-            
+
             if (playerInRange && Camera.main != null)
             {
                 pickupHint.transform.LookAt(Camera.main.transform);
@@ -500,7 +500,7 @@ public class CursePickup : MonoBehaviour
         }
     }
 
-   
+
     public void SetPlayerInRange(bool inRange)
     {
         playerInRange = inRange;
