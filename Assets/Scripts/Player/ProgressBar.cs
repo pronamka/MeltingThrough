@@ -37,6 +37,5 @@ public class LevelProgressBar : MonoBehaviour
             progressDot.position.z);
         
         progressBarFull.fillAmount = progress+0.1f;
-        Debug.Log($"{barHeight}; {progress}; {originalY}; {originalY - progress * barHeight}");
     }
 }

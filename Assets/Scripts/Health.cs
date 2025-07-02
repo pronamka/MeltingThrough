@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
 
     [SerializeField] private float invincibilityPeriod;
 
-    private float timeSinceTakenDamage = 0;
+    public float timeSinceTakenDamage = 0;
 
     private Animator animator;
     private SpriteRenderer playerRenderer;
@@ -20,6 +20,8 @@ public class Health : MonoBehaviour
 
     [SerializeField] private AudioClip hurtSound;
     [SerializeField] private AudioClip deathSound;
+
+    private float hurtAnimationDuration;
 
     public bool isDead { get; private set; }
 
@@ -30,6 +32,7 @@ public class Health : MonoBehaviour
         playerRenderer = GetComponent<SpriteRenderer>();
 
         utils = new AnimationUtils(animator);
+        hurtAnimationDuration = utils.GetAnimationDuration("Hurt");
     }
 
     private void Update()
@@ -46,9 +49,9 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool playHurtAnimation = true)
     {
-        if (IsInvincible()){}
+        if (IsInvincible()) return;
 
         timeSinceTakenDamage = 0;
         float health = currentHealth - damage;
@@ -63,7 +66,10 @@ public class Health : MonoBehaviour
             return;
         }
 
-        animator.SetTrigger(AnimationParameters.Hurt);
+        if (playHurtAnimation)
+        {
+            animator.SetTrigger(AnimationParameters.Hurt);
+        }
         SoundManager.instance.PlaySound(hurtSound);
     }
 
@@ -81,5 +87,10 @@ public class Health : MonoBehaviour
     public float GetHealthPercentage()
     {
         return currentHealth / maxHealth;
+    }
+
+    public bool IsBeingHurt()
+    {
+        return timeSinceTakenDamage < hurtAnimationDuration;
     }
 }
