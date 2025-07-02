@@ -25,6 +25,7 @@ public class DeerMovement : MonoBehaviour
     {
         if (enemyState.IsDead()) return;
         if (enemyState.isAttacking) return;
+        if (enemyState.IsStunned()) return;
         timePassed += Time.deltaTime;
         HandleMovement();
     }

@@ -5,15 +5,15 @@ using System.Collections;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] public float maxHealth = 100f;
+    [SerializeField] public float maxHealth;
     [SerializeField] private float currentHealth;
 
-    [SerializeField] private float regenerationRate = 5f;
-    [SerializeField] private float regenerationDelay = 3f;
+    [SerializeField] private float regenerationRate;
+    [SerializeField] private float regenerationDelay;
 
-    [SerializeField] private float invincibilityPeriod = 1f;
+    [SerializeField] private float invincibilityPeriod;
 
-    private float timeSinceTakenDamage = 0;
+    public float timeSinceTakenDamage = 0;
 
     private Animator animator;
     private SpriteRenderer playerRenderer;
@@ -28,6 +28,8 @@ public class Health : MonoBehaviour
     [SerializeField] private float showCanvasDelay = 2f; 
     [SerializeField] private float canvasDisplayTime = 60f; 
     [SerializeField] private string menuSceneName = "MenuScene"; 
+
+    private float hurtAnimationDuration;
 
     public bool isDead { get; private set; }
 
@@ -47,9 +49,7 @@ public class Health : MonoBehaviour
         playerRenderer = GetComponent<SpriteRenderer>();
 
         utils = new AnimationUtils(animator);
-
-        if (deathCanvas != null)
-            deathCanvas.SetActive(false);
+        hurtAnimationDuration = utils.GetAnimationDuration("Hurt");
     }
 
     private void Start()
@@ -81,7 +81,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool playHurtAnimation = true)
     {
         if (IsInvincible()) return;
 
@@ -123,6 +123,12 @@ public class Health : MonoBehaviour
             deathCanvas.SetActive(true);
     
         }
+        if (playHurtAnimation)
+        {
+            animator.SetTrigger(AnimationParameters.Hurt);
+        }
+        SoundManager.instance.PlaySound(hurtSound);
+    }
 
     
         yield return new WaitForSeconds(canvasDisplayTime);
@@ -177,4 +183,10 @@ public class Health : MonoBehaviour
     }
 
    
+}
+
+    public bool IsBeingHurt()
+    {
+        return timeSinceTakenDamage < hurtAnimationDuration;
+    }
 }

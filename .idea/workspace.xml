@@ -1,7 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0da2c615-0c47-4f57-9413-77dc437f2f2a" name="Changes" comment="" />
+    <list default="true" id="0da2c615-0c47-4f57-9413-77dc437f2f2a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Altar.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Altar.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/CursePickup.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/CursePickup.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 1.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 1.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 2.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 2.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 3.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 3.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 4.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock1 4.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock2.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock2.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock3.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock3.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock4.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock4.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock5.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/IceBlock5.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/LevelProgress.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/LevelProgress.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/ProgressBar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/ProgressBar.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/chains_of_time.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/chains_of_time.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/curse_of_guilt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/curse_of_guilt.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/devastation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/devastation.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/echo_of_doubt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/echo_of_doubt.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/fallen_angel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/fallen_angel.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/pyromania.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/pyromania.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/resonance_of_tribute.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/resonance_of_tribute.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/the_hollow_vow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/the_hollow_vow.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/thirst_for_pain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/thirst_for_pain.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/veil_of_oblivion.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Curses/veil_of_oblivion.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/altar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/altar.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UpgradeLog4.htm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Pallets/Base.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Pallets/Base.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/DeerEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/DeerEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ElementalEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ElementalEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Fireball.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Fireball.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Grid.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Grid.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/IceMonsterEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/IceMonsterEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TrapEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/TrapEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Player.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Player.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestIceLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TestIceLevel.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseDrop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseDrop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Curses/CursePickup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Curses/CursePickup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Curses/CurseType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/healthbar_full.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/healthbar_full.png.meta" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,11 +84,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "C:/Users/Yuriy/Desktop/youtube_downloader"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yuriy/Desktop/youtube_downloader&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

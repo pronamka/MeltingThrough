@@ -221,33 +221,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
---- !u!1 &632666718 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2699705051268467294, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-  m_PrefabInstance: {fileID: 2365024811470368402}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &632666720
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632666718}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 24664bb10a88e34468a5f4f34ffaf5d9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &965030042
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,49 +1135,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 73109166713813222, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -6
+    - target: {fileID: 1830334597909753454, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: maxHealth
+      value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 73109166713813222, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -76
-      objectReference: {fileID: 0}
-    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 939790211010170970, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1034001669843640848, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1034001669843640848, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -63
+    - target: {fileID: 1830334597909753454, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
+      propertyPath: currentHealth
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2699705051268467294, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_Name
       value: AllPlayerObjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 3545579711770226612, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: primaryAttackDamage
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5508565006917410987, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      propertyPath: orthographic size
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8197542787171744943, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1249,10 +1190,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2699705051268467294, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 632666720}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
 --- !u!1001 &3256766939509986325
 PrefabInstance:

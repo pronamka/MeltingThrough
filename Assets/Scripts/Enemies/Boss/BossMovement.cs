@@ -1,6 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class ElementalMovement : MonoBehaviour
+public class BossMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float playerDetectionDistance = 10f;
@@ -44,6 +45,14 @@ public class ElementalMovement : MonoBehaviour
 
         Vector2 newPosition = transform.position;
         float x = (newPosition - lastPosition).x;
+        if (x != 0)
+        {
+            animator.SetBool("walking", true);
+        }
+        else
+        {
+            animator.SetBool("walking", false);
+        }
 
 
         if (x > 0.01f) transform.localScale = new Vector3(-1, 1, 1) * enemyState.scaleValue;
@@ -65,11 +74,55 @@ public class ElementalMovement : MonoBehaviour
             playerDetected = true;
             MoveTowardsPlayer();
         }
+        else
+        {
+            MoveIdly();
+        }
+    }
+
+    private void MoveIdly()
+    {
+        if (direction == 0 && timePassed > idle_time)
+        {
+            direction = -old_direction;
+        }
+
+        HandleHorizontalMovement(direction);
+        if (direction != 0 && enemyState.IsOnEdge())
+        {
+            OnEdgeReached();
+        }
+    }
+
+    private void HandleHorizontalMovement(float x)
+    {
+        if (x > 0.01f) transform.localScale = new Vector3(-1, 1, 1) * enemyState.scaleValue;
+        else if (x < -0.01f) transform.localScale = new Vector3(1, 1, 1) * enemyState.scaleValue;
+
+        body.linearVelocityX = x * speed;
+    }
+
+    private void OnEdgeReached()
+    {
+        old_direction = direction;
+        direction = 0f;
+        timePassed = 0f;
     }
 
     private void MoveTowardsPlayer()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        Vector2 newPosition = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        Debug.Log($"{enemyState.IsOnEdge()}; {transform.localScale.x}; {transform.position.x} > {newPosition.x} = {transform.position.x > newPosition.x}");
+        if (enemyState.IsOnEdge() && transform.localScale.x > 0 && transform.position.x > newPosition.x)
+        {
+            return;
+        }
+
+        if (enemyState.IsOnEdge() && transform.localScale.x < 0 && transform.position.x < newPosition.x)
+        {
+            return;
+        }
+        transform.position = new Vector2(newPosition.x, transform.position.y);
     }
 
 }
