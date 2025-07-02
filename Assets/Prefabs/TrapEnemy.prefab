@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabf6e493a74f1f4c8d331124d59b74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropChance: 0.1
+  dropChance: 1
   minCurseValue: 0.3
   maxCurseValue: 2
   cursePickupPrefab: {fileID: 0}
