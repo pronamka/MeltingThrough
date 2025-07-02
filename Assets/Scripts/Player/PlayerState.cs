@@ -55,13 +55,7 @@ public class PlayerState : MonoBehaviour
         {
             TakeDamage(1000);
         }
-        if (IsDead())
-        {
-            StartCoroutine(LoadNewScene());
-            mana.enabled = false;
-            return;
-        }
-
+        
         fallSpeed = body.linearVelocityY;
 
         if (takeDamageAction.triggered)
