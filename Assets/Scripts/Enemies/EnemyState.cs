@@ -16,7 +16,7 @@ public class EnemyState : MonoBehaviour
     public bool isAttacking = false;
     protected float attackTimeLeft = 0;
 
-    private Health health;
+    protected Health health;
 
     [SerializeField] private Transform groundCheck;
 
@@ -25,6 +25,7 @@ public class EnemyState : MonoBehaviour
     [SerializeField] private float collisionDamage;
     [SerializeField] private float collisionDamageCooldown = 5f;
     private float timeSinceCollisionDamage = 0f;
+
 
     private void Awake()
     {
@@ -84,7 +85,7 @@ public class EnemyState : MonoBehaviour
         attackTimeLeft = attackTime;
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if (IsDead()) return;
         isAttacking = false;
@@ -123,5 +124,10 @@ public class EnemyState : MonoBehaviour
             data.playerCollider.GetComponent<PlayerState>().TakeDamage(collisionDamage);
             timeSinceCollisionDamage = 0;
         }
+    }
+
+    public bool IsStunned()
+    {
+        return health.IsBeingHurt();
     }
 }

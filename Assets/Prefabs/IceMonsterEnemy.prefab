@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 8644826513752439858}
   - component: {fileID: 6507184926801248456}
   - component: {fileID: 5960308249420203150}
-  - component: {fileID: 4108266441445966574}
   m_Layer: 11
   m_Name: IceMonsterEnemy
   m_TagString: Untagged
@@ -183,13 +182,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89c89cd286285f4c8024fd8fe1ef05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDropCurse: 0
+  curseDropChance: -1
   maxHealth: 200
   currentHealth: 200
   regenerationRate: 0
   regenerationDelay: 0
   invincibilityPeriod: 0
+  timeSinceTakenDamage: 0
   hurtSound: {fileID: 8300000, guid: 9670f54af04088145a5e52614a70c4d4, type: 3}
   deathSound: {fileID: 8300000, guid: 21ebe0b3037b3ac4aaa2d30dee7aac86, type: 3}
+  deathCanvas: {fileID: 0}
+  showCanvasDelay: 2
+  canvasDisplayTime: 60
+  menuSceneName: MenuScene
 --- !u!114 &370645119903061856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,22 +270,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4108266441445966574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686474680888498587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabf6e493a74f1f4c8d331124d59b74b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropChance: 0.12
-  minCurseValue: 0.3
-  maxCurseValue: 2
-  cursePickupPrefab: {fileID: 0}
 --- !u!1 &2734480641166505268
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,24 +349,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7383275, y: 1.01737}
   m_EdgeRadius: 0
-
 --- !u!114 &5267004906648353186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-
   m_GameObject: {fileID: 2734480641166505268}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99c57717160ec274eaa61b71a4bea61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
-  enemyObject: {fileID: 1686474680888498587}
+  type: 0
+  enemyObject: {fileID: 0}
 --- !u!1 &4139227682113746256
-
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

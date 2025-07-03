@@ -1,8 +1,17 @@
-using System;
+﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Health : MonoBehaviour
+
+
 {
+
+    [Header("Curse Drop Settings")]
+    [SerializeField] private bool canDropCurse = false; // �� ��������� false ��� ������
+    [SerializeField] private float curseDropChance = -1f; // -1 = ������������ ��������� CurseManager
+
     [SerializeField] public float maxHealth;
     [SerializeField] private float currentHealth;
 
@@ -11,7 +20,7 @@ public class Health : MonoBehaviour
 
     [SerializeField] private float invincibilityPeriod;
 
-    private float timeSinceTakenDamage = 0;
+    public float timeSinceTakenDamage = 0;
 
     private Animator animator;
     private SpriteRenderer playerRenderer;
@@ -21,45 +30,75 @@ public class Health : MonoBehaviour
     [SerializeField] private AudioClip hurtSound;
     [SerializeField] private AudioClip deathSound;
 
+    [Header("Death UI Settings")]
+    [SerializeField] private GameObject deathCanvas;
+    [SerializeField] private float showCanvasDelay = 2f;
+    [SerializeField] private float canvasDisplayTime = 60f;
+    [SerializeField] private string menuSceneName = "MenuScene";
+
+    private float hurtAnimationDuration;
+
     public bool isDead { get; private set; }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (currentHealth <= 0)
+            currentHealth = maxHealth;
+    }
+#endif
 
     private void Awake()
     {
         isDead = false;
+        currentHealth = maxHealth;
         animator = GetComponent<Animator>();
         playerRenderer = GetComponent<SpriteRenderer>();
 
         utils = new AnimationUtils(animator);
+        hurtAnimationDuration = utils.GetAnimationDuration("Hurt");
+    }
+
+    private void Start()
+    {
+        if (deathCanvas == null)
+        {
+            GameObject foundCanvas = GameObject.FindGameObjectWithTag("DeathUI");
+            if (foundCanvas == null)
+                foundCanvas = GameObject.Find("DeathCanvas");
+
+            if (foundCanvas != null)
+            {
+                deathCanvas = foundCanvas;
+                deathCanvas.SetActive(false);
+            }
+        }
     }
 
     private void Update()
     {
         if (isDead) return;
 
-
         timeSinceTakenDamage += Time.deltaTime;
-        if (currentHealth == maxHealth) return;
+        if (currentHealth >= maxHealth) return;
 
         if (timeSinceTakenDamage > regenerationDelay)
         {
-            currentHealth = Math.Min(maxHealth, currentHealth+regenerationRate * Time.deltaTime);
+            currentHealth = Math.Min(maxHealth, currentHealth + regenerationRate * Time.deltaTime);
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool playHurtAnimation = true)
     {
-        if (IsInvincible()){}
+        if (IsInvincible()) return;
 
         timeSinceTakenDamage = 0;
         float health = currentHealth - damage;
         currentHealth = Math.Max(0, health);
+
         if (health <= 0)
         {
-            isDead = true;
-            animator.SetTrigger(AnimationParameters.Death);
-            SoundManager.instance.PlaySound(deathSound);
-
-            Invoke(nameof(DisableEntity), utils.GetAnimationDuration(AnimationNames.Death));
+            HandleDeath();
             return;
         }
 
@@ -67,10 +106,85 @@ public class Health : MonoBehaviour
         SoundManager.instance.PlaySound(hurtSound);
     }
 
+    private void HandleDeath()
+    {
+        isDead = true;
+        animator.SetTrigger(AnimationParameters.Death);
+        SoundManager.instance.PlaySound(deathSound);
+
+
+        if (canDropCurse)
+        {
+            if (curseDropChance >= 0)
+            {
+
+                if (UnityEngine.Random.value <= curseDropChance)
+                {
+                    CurseManager.Instance?.DropRandomCurse(transform.position);
+                    Debug.Log($"[Health] {gameObject.name} dropped curse (custom chance: {curseDropChance:P0})");
+                }
+            }
+            else
+            {
+
+                CurseManager.Instance?.TryDropCurse(transform.position);
+                Debug.Log($"[Health] {gameObject.name} trying to drop curse (manager chance)");
+            }
+        }
+
+        StartCoroutine(DeathSequence());
+        float deathAnimationDuration = utils.GetAnimationDuration(AnimationNames.Death);
+        Invoke(nameof(DisableEntity), deathAnimationDuration);
+    }
+
+    private IEnumerator DeathSequence()
+    {
+
+        yield return new WaitForSeconds(showCanvasDelay);
+
+
+        if (deathCanvas != null)
+        {
+            deathCanvas.SetActive(true);
+
+        }
+
+        animator.SetTrigger(AnimationParameters.Hurt);
+
+        SoundManager.instance.PlaySound(hurtSound);
+
+        yield return new WaitForSeconds(canvasDisplayTime);
+
+
+
+        SceneManager.LoadScene(menuSceneName);
+    }
+
     private void DisableEntity()
     {
         playerRenderer.enabled = false;
-        Destroy(this.gameObject);
+
+        Collider2D[] colliders = GetComponents<Collider2D>();
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = false;
+        }
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.isKinematic = true;
+        }
+
+        MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
+        foreach (MonoBehaviour script in scripts)
+        {
+            if (script != this && script != null)
+            {
+                script.enabled = false;
+            }
+        }
     }
 
     private bool IsInvincible()
@@ -81,5 +195,18 @@ public class Health : MonoBehaviour
     public float GetHealthPercentage()
     {
         return currentHealth / maxHealth;
+    }
+
+
+    public void GoToMenuNow()
+    {
+        StopAllCoroutines();
+        SceneManager.LoadScene(menuSceneName);
+    }
+
+
+    public bool IsBeingHurt()
+    {
+        return timeSinceTakenDamage < hurtAnimationDuration;
     }
 }

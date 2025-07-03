@@ -18,6 +18,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float platformStartY = 200f;
     [SerializeField] private float platformEndY = -300f;
 
+    public float PlatformStartY => platformStartY;
+    public float PlatformEndY => platformEndY;
+
     [Header("Platform Movement Settings")]
     [SerializeField, Range(3f, 15f)] private float minJumpDistance = 4f;
     [SerializeField, Range(6f, 25f)] private float maxJumpDistance = 12f;
@@ -58,6 +61,18 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int islandLevelMaxY = 150;
     [SerializeField, Range(2f, 25f)] private float minDistanceFromPlatforms = 8f;
 
+    [Header("===== ALTAR GENERATION (THIRD) =====")]
+    [SerializeField] public GameObject altarPrefab;
+    [SerializeField, Range(1, 50)] private int maxAltarCount = 10;
+    [SerializeField] private float minAltarDistance = 500f;
+    [SerializeField] private int altarIslandX = 3;
+    [SerializeField] private int altarIslandY = 3;
+    [SerializeField] private float altarVerticalOffset = 0.5f;
+    [SerializeField] private float altarHorizontalOffsetX = 0f;
+    [SerializeField] private float altarHorizontalOffsetZ = 0f;
+    [SerializeField, Range(5f, 50f)] private float minDistanceFromPlatformsAltar = 15f;
+    [SerializeField, Range(5f, 50f)] private float minDistanceFromIslandsAltar = 10f;
+
     [Header("===== ADVANCED SETTINGS =====")]
     [SerializeField] private int generationSeed = 0;
     [SerializeField] private bool debugVisualization = false;
@@ -68,7 +83,8 @@ public class LevelGenerator : MonoBehaviour
     private List<GameObject> spawnedPlatforms = new List<GameObject>();
     private List<IslandData> generatedIslands = new List<IslandData>();
     private HashSet<Vector3Int> islandTiles = new HashSet<Vector3Int>();
-
+    private List<AltarData> generatedAltars = new List<AltarData>();
+    private List<GameObject> spawnedAltars = new List<GameObject>();
 
     public HashSet<Vector3Int> OccupiedPositions { get; private set; } = new HashSet<Vector3Int>();
     public event Action OnGenerationComplete;
@@ -80,10 +96,15 @@ public class LevelGenerator : MonoBehaviour
         public Bounds bounds;
     }
 
+    private struct AltarData
+    {
+        public Vector3 position;
+        public Vector3 islandCenter;
+        public Bounds bounds;
+    }
 
     void Awake()
     {
-
         GeneratePerfectLevel();
     }
 
@@ -93,8 +114,8 @@ public class LevelGenerator : MonoBehaviour
         ClearExistingLevel();
         GenerateCompletePlatformLayout();
         GenerateIslandsInEmptySpaces();
+        GenerateAltars();
         OnGenerationComplete?.Invoke();
-
     }
 
     #region Platform Generation (First Phase)
@@ -103,7 +124,6 @@ public class LevelGenerator : MonoBehaviour
     {
         platformPositions.Clear();
 
-
         Vector3 currentPosition = new Vector3(0, platformStartY, 0);
         SpawnPlatformAt(currentPosition);
 
@@ -111,14 +131,11 @@ public class LevelGenerator : MonoBehaviour
         int attempts = 0;
         int maxAttempts = totalPlatforms * 3;
 
-
         while (platformsCreated < totalPlatforms && attempts < maxAttempts)
         {
-
             attempts++;
             float levelProgress = (float)platformsCreated / totalPlatforms;
             float difficulty = difficultyProgression.Evaluate(levelProgress);
-
 
             PlatformPattern pattern = ChoosePlatformPattern(levelProgress);
             Vector3 nextPosition;
@@ -156,9 +173,7 @@ public class LevelGenerator : MonoBehaviour
                 currentPosition = FindAlternativePlatformPosition(currentPosition);
             }
 
-
             if (currentPosition.y < platformEndY)
-
             {
                 currentPosition = new Vector3(
                     UnityEngine.Random.Range(-platformLevelWidth * 0.4f, platformLevelWidth * 0.4f),
@@ -220,10 +235,8 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-
         endPos = pathPositions.Count > 0 ? pathPositions.Last() : startPos + Vector3.down * minVerticalDrop;
         return pathPositions.Count;
-
     }
 
     private int CreateZigzagPath(Vector3 startPos, float difficulty, out Vector3 endPos)
@@ -236,7 +249,6 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < zigzagLength; i++)
         {
-
             float horizontalMove = direction * UnityEngine.Random.Range(minJumpDistance * 1.2f, maxJumpDistance * 1.5f);
 
             if (UnityEngine.Random.value < extremeShiftChance)
@@ -247,7 +259,6 @@ public class LevelGenerator : MonoBehaviour
             Vector3 nextPos = currentPos + new Vector3(
                 horizontalMove,
                 -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop),
-
                 0f
             );
 
@@ -264,10 +275,8 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-
         endPos = zigzagPositions.Count > 0 ? zigzagPositions.Last() : startPos + Vector3.down * minVerticalDrop;
         return zigzagPositions.Count;
-
     }
 
     private int CreateSpiralPattern(Vector3 startPos, float difficulty, out Vector3 endPos)
@@ -280,20 +289,17 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < spiralSteps; i++)
         {
-
             float angle = (float)i / spiralSteps * Mathf.PI * 3f;
             float currentRadius = radius * (1f - (float)i / spiralSteps * 0.4f);
 
             Vector3 position = spiralCenter + new Vector3(
                 Mathf.Cos(angle) * currentRadius,
                 -i * UnityEngine.Random.Range(2f, 5f),
-
                 0f
             );
 
             if (IsValidPlatformPosition(position))
             {
-
                 SpawnPlatformAt(position);
                 spiralPositions.Add(position);
             }
@@ -301,7 +307,6 @@ public class LevelGenerator : MonoBehaviour
 
         endPos = spiralPositions.Count > 0 ? spiralPositions.Last() : startPos + Vector3.down * maxVerticalDrop;
         return spiralPositions.Count;
-
     }
 
     private int CreateBridgePattern(Vector3 startPos, float difficulty, out Vector3 endPos)
@@ -316,11 +321,9 @@ public class LevelGenerator : MonoBehaviour
         {
             float progress = (float)i / (bridgeLength - 1);
 
-
             Vector3 position = bridgeStart + new Vector3(
                 (progress - 0.5f) * bridgeWidth,
                 Mathf.Sin(progress * Mathf.PI) * UnityEngine.Random.Range(3f, 8f),
-
                 0f
             );
 
@@ -332,7 +335,6 @@ public class LevelGenerator : MonoBehaviour
         }
 
         endPos = bridgePositions.Count > 0 ? bridgePositions.Last() : startPos + Vector3.down * maxVerticalDrop;
-
         return bridgePositions.Count;
     }
 
@@ -358,13 +360,11 @@ public class LevelGenerator : MonoBehaviour
             Vector3 position = clusterCenter + new Vector3(
                 Mathf.Cos(angle) * distance,
                 Mathf.Sin(angle) * distance * 0.4f + UnityEngine.Random.Range(-4f, 4f),
-
                 0f
             );
 
             if (IsValidPlatformPosition(position))
             {
-
                 SpawnPlatformAt(position);
                 clusterPositions.Add(position);
             }
@@ -384,7 +384,6 @@ public class LevelGenerator : MonoBehaviour
             0f
         );
 
-
         if (IsValidPlatformPosition(endPos))
         {
             SpawnPlatformAt(endPos);
@@ -393,7 +392,6 @@ public class LevelGenerator : MonoBehaviour
 
         return 0;
     }
-
 
     private float GetHorizontalShift(float baseDirection = 0f)
     {
@@ -414,10 +412,8 @@ public class LevelGenerator : MonoBehaviour
                 baseShift *= UnityEngine.Random.Range(1.5f, 2.5f);
             }
 
-
             return baseShift;
         }
-
     }
 
     private bool IsValidPlatformPosition(Vector3 position)
@@ -444,7 +440,6 @@ public class LevelGenerator : MonoBehaviour
         {
             float horizontalShift = GetHorizontalShift();
 
-
             Vector3 alternative = currentPos + new Vector3(
                 horizontalShift,
                 -UnityEngine.Random.Range(minVerticalDrop, maxVerticalDrop * 2f),
@@ -456,7 +451,6 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return currentPos + Vector3.down * maxVerticalDrop;
-
     }
 
     #endregion
@@ -508,7 +502,6 @@ public class LevelGenerator : MonoBehaviour
 
     private bool IsGoodIslandPosition(Vector3 position)
     {
-
         foreach (var platformPos in platformPositions)
         {
             if (Vector3.Distance(position, platformPos) < minDistanceFromPlatforms)
@@ -552,12 +545,10 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return false;
-
     }
 
     private bool GenerateOriginalIslandShape(Vector3 center, int width, int height)
     {
-
         int startX = Mathf.RoundToInt(center.x - width * 0.5f);
         int startY = Mathf.RoundToInt(center.y - height * 0.5f);
 
@@ -578,7 +569,6 @@ public class LevelGenerator : MonoBehaviour
         int[] bottomY = new int[width];
 
         for (int x = 0; x < width; x++)
-
         {
             float t = width > 1 ? x / (float)(width - 1) : 0f;
 
@@ -645,6 +635,186 @@ public class LevelGenerator : MonoBehaviour
 
     #endregion
 
+    #region Altar Generation (Third Phase)
+
+    private void GenerateAltars()
+    {
+        if (altarPrefab == null) return;
+
+        generatedAltars.Clear();
+        int successfulAltars = 0;
+        int maxAttempts = maxAltarCount * 20;
+
+        for (int attempt = 0; attempt < maxAttempts && successfulAltars < maxAltarCount; attempt++)
+        {
+            Vector3 candidatePosition = FindValidAltarPosition();
+
+            if (candidatePosition != Vector3.zero)
+            {
+                if (GenerateAltarWithIsland(candidatePosition))
+                {
+                    successfulAltars++;
+                }
+            }
+        }
+    }
+
+    private Vector3 FindValidAltarPosition()
+    {
+        for (int attempts = 0; attempts < 100; attempts++)
+        {
+            float padding = Mathf.Max(altarIslandX, altarIslandY) + 5f;
+
+            Vector3 candidate = new Vector3(
+                UnityEngine.Random.Range(-platformLevelWidth * 0.5f + padding, platformLevelWidth * 0.5f - padding),
+                UnityEngine.Random.Range(platformEndY + padding, platformStartY - padding),
+                0f
+            );
+
+            if (IsValidAltarPosition(candidate))
+                return candidate;
+        }
+
+        return Vector3.zero;
+    }
+
+    private bool IsValidAltarPosition(Vector3 position)
+    {
+        float halfIslandX = altarIslandX * 0.5f;
+        float halfIslandY = altarIslandY * 0.5f;
+
+        if (position.x - halfIslandX < -platformLevelWidth * 0.5f ||
+            position.x + halfIslandX > platformLevelWidth * 0.5f)
+            return false;
+
+        if (position.y - halfIslandY < platformEndY ||
+            position.y + halfIslandY > platformStartY)
+            return false;
+
+        foreach (var platformPos in platformPositions)
+        {
+            if (Vector3.Distance(position, platformPos) < minDistanceFromPlatformsAltar)
+                return false;
+        }
+
+        foreach (var island in generatedIslands)
+        {
+            if (Vector3.Distance(position, island.center) < minDistanceFromIslandsAltar)
+                return false;
+        }
+
+        foreach (var altar in generatedAltars)
+        {
+            if (Vector3.Distance(position, altar.position) < minAltarDistance)
+                return false;
+        }
+
+        return true;
+    }
+
+    private bool GenerateAltarWithIsland(Vector3 altarPosition)
+    {
+        Vector3 islandCenter = altarPosition;
+
+        if (!GenerateAltarIsland(islandCenter))
+            return false;
+
+        float topTileY = Mathf.RoundToInt(islandCenter.y) + (altarIslandY / 2);
+        Vector3 finalAltarPosition = new Vector3(
+            islandCenter.x + altarHorizontalOffsetX,
+            topTileY + altarVerticalOffset,
+            islandCenter.z + altarHorizontalOffsetZ
+        );
+
+        GameObject altar = Instantiate(altarPrefab, finalAltarPosition, Quaternion.identity);
+        spawnedAltars.Add(altar);
+
+        AltarData altarData = new AltarData
+        {
+            position = finalAltarPosition,
+            islandCenter = islandCenter,
+            bounds = new Bounds(finalAltarPosition, new Vector3(altarIslandX + 4, altarIslandY + 4, 0))
+        };
+
+        generatedAltars.Add(altarData);
+        return true;
+    }
+
+    private bool GenerateAltarIsland(Vector3 center)
+    {
+        if (islandTilemap == null) return false;
+
+        int startX = Mathf.RoundToInt(center.x) - altarIslandX / 2;
+        int startY = Mathf.RoundToInt(center.y) - altarIslandY / 2;
+
+        List<Vector3Int> tilesToPlace = new List<Vector3Int>();
+
+        for (int x = 0; x < altarIslandX; x++)
+        {
+            for (int y = 0; y < altarIslandY; y++)
+            {
+                Vector3Int tilePos = new Vector3Int(startX + x, startY + y, 0);
+                Vector3 worldPos = new Vector3(tilePos.x, tilePos.y, 0);
+
+                if (worldPos.x < -platformLevelWidth * 0.5f || worldPos.x > platformLevelWidth * 0.5f ||
+                    worldPos.y < platformEndY || worldPos.y > platformStartY)
+                {
+                    continue;
+                }
+
+                bool tooCloseToPlat = false;
+                foreach (var platformPos in platformPositions)
+                {
+                    if (Vector3.Distance(worldPos, platformPos) < minDistanceFromPlatformsAltar * 0.5f)
+                    {
+                        tooCloseToPlat = true;
+                        break;
+                    }
+                }
+
+                if (!tooCloseToPlat && !OccupiedPositions.Contains(tilePos))
+                {
+                    tilesToPlace.Add(tilePos);
+                }
+            }
+        }
+
+        if (tilesToPlace.Count >= (altarIslandX * altarIslandY) * 0.8f)
+        {
+            foreach (var tilePos in tilesToPlace)
+            {
+                islandTilemap.SetTile(tilePos, islandTile);
+                OccupiedPositions.Add(tilePos);
+                islandTiles.Add(tilePos);
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsPositionNearAltar(Vector3 worldPosition, float radius = 5f)
+    {
+        foreach (var altar in generatedAltars)
+        {
+            if (Vector3.Distance(worldPosition, altar.position) < radius)
+                return true;
+        }
+        return false;
+    }
+
+    public List<Vector3> GetAltarPositions()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        foreach (var altar in generatedAltars)
+        {
+            positions.Add(altar.position);
+        }
+        return positions;
+    }
+
+    #endregion
+
     #region Utility Methods
 
     private void SpawnPlatformAt(Vector3 position)
@@ -674,10 +844,23 @@ public class LevelGenerator : MonoBehaviour
         spawnedPlatforms.Clear();
         platformPositions.Clear();
 
+        foreach (var altar in spawnedAltars)
+        {
+            if (altar != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(altar);
+                else
+                    DestroyImmediate(altar);
+            }
+        }
+        spawnedAltars.Clear();
+
         if (islandTilemap != null)
             islandTilemap.ClearAllTiles();
 
         generatedIslands.Clear();
+        generatedAltars.Clear();
         islandTiles.Clear();
         OccupiedPositions.Clear();
     }
@@ -714,7 +897,6 @@ public class LevelGenerator : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-
         if (!debugVisualization) return;
 
         Gizmos.color = Color.green;
@@ -735,11 +917,23 @@ public class LevelGenerator : MonoBehaviour
             Gizmos.DrawWireCube(island.center, new Vector3(island.size.x, island.size.y, 0));
         }
 
+        // Draw altar gizmos
+        Gizmos.color = Color.magenta;
+        foreach (var altar in generatedAltars)
+        {
+            Gizmos.DrawWireCube(altar.position, Vector3.one * 2f);
+            Gizmos.DrawWireCube(altar.islandCenter, new Vector3(altarIslandX, altarIslandY, 0));
+            
+            // Draw minimum distance sphere
+            Gizmos.color = new Color(1f, 0f, 1f, 0.1f);
+            Gizmos.DrawSphere(altar.position, minAltarDistance);
+            Gizmos.color = Color.magenta;
+        }
+
         Gizmos.color = Color.blue;
         Vector3 platformBounds = new Vector3(platformLevelWidth, platformStartY - platformEndY, 0);
         Vector3 platformCenter = new Vector3(0, (platformStartY + platformEndY) * 0.5f, 0);
         Gizmos.DrawWireCube(platformCenter, platformBounds);
-
 
         Gizmos.color = Color.cyan;
         Vector3 islandBounds = new Vector3(islandLevelMaxX - islandLevelMinX, islandLevelMaxY - islandLevelMinY, 0);
