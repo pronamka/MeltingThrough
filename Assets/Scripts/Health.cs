@@ -4,7 +4,14 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Health : MonoBehaviour
+
+  
 {
+
+    [Header("Curse Drop Settings")]
+    [SerializeField] private bool canDropCurse = false; // По умолчанию false для игрока
+    [SerializeField] private float curseDropChance = -1f; // -1 = использовать настройки CurseManager
+
     [SerializeField] public float maxHealth;
     [SerializeField] private float currentHealth;
 
@@ -105,9 +112,27 @@ public class Health : MonoBehaviour
         animator.SetTrigger(AnimationParameters.Death);
         SoundManager.instance.PlaySound(deathSound);
 
-    
-        StartCoroutine(DeathSequence());
+        
+        if (canDropCurse)
+        {
+            if (curseDropChance >= 0)
+            {
+        
+                if (UnityEngine.Random.value <= curseDropChance)
+                {
+                    CurseManager.Instance?.DropRandomCurse(transform.position);
+                    Debug.Log($"[Health] {gameObject.name} dropped curse (custom chance: {curseDropChance:P0})");
+                }
+            }
+            else
+            {
+                
+                CurseManager.Instance?.TryDropCurse(transform.position);
+                Debug.Log($"[Health] {gameObject.name} trying to drop curse (manager chance)");
+            }
+        }
 
+        StartCoroutine(DeathSequence());
         float deathAnimationDuration = utils.GetAnimationDuration(AnimationNames.Death);
         Invoke(nameof(DisableEntity), deathAnimationDuration);
     }
@@ -123,16 +148,13 @@ public class Health : MonoBehaviour
             deathCanvas.SetActive(true);
     
         }
-        if (playHurtAnimation)
-        {
-            animator.SetTrigger(AnimationParameters.Hurt);
-        }
+        
+        animator.SetTrigger(AnimationParameters.Hurt);
+        
         SoundManager.instance.PlaySound(hurtSound);
-    }
-
-    
+   
         yield return new WaitForSeconds(canvasDisplayTime);
-
+    
     
     
         SceneManager.LoadScene(menuSceneName);
@@ -183,8 +205,6 @@ public class Health : MonoBehaviour
     }
 
    
-}
-
     public bool IsBeingHurt()
     {
         return timeSinceTakenDamage < hurtAnimationDuration;
