@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        // Сохраняем базовые значения
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         baseSpeed = moveSpeed;
         baseDamage = damage;
         baseDefense = defense;
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"Defense modified by {modifier}. New defense: {defense}");
     }
 
-    public void ModifyMaxHealth(int modifier)
+    public void ModifyMaxHealth(float modifier)
     {
         maxHealth += modifier;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
