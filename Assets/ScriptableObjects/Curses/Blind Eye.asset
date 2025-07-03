@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curseName: Blind Eye
   description: '***'
-  curseSprite: {fileID: 0}
-  dropPrefab: {fileID: 0}
+  curseSprite: {fileID: 2351909315670105333, guid: 853dd5dcc9cbc074785196168c74d49c, type: 3}
+  dropPrefab: {fileID: 7302044071340657100, guid: 966553d9719cd0c4294d6039a430b1de, type: 3}
   category: 1
   curseType: 4
   value: 1

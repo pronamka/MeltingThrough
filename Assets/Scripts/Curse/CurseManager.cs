@@ -179,9 +179,7 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Принудительно выбросить случайное проклятие
-    /// </summary>
+    
     public void DropRandomCurse(Vector3 position)
     {
         if (availableCurses == null || availableCurses.Length == 0)
@@ -190,7 +188,7 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        // Фильтруем проклятия, которые могут быть выброшены
+      
         var availableForDrop = availableCurses.Where(c => c != null && c.dropPrefab != null).ToArray();
 
         if (availableForDrop.Length == 0)
@@ -199,14 +197,12 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        // Выбираем случайное проклятие
+      
         CurseData randomCurse = availableForDrop[Random.Range(0, availableForDrop.Length)];
         DropSpecificCurse(randomCurse, position);
     }
 
-    /// <summary>
-    /// Выбросить конкретное проклятие
-    /// </summary>
+   
     public void DropSpecificCurse(CurseData curse, Vector3 position)
     {
         if (curse == null)
@@ -237,9 +233,7 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Применить проклятие к игроку
-    /// </summary>
+   
     public void ApplyCurse(CurseData curse)
     {
         if (curse == null)
@@ -254,7 +248,6 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        // Проверяем, можно ли складывать эффекты
         ActiveCurse existingCurse = activeCurses.FirstOrDefault(ac => ac.curseData == curse);
 
         if (existingCurse != null)
