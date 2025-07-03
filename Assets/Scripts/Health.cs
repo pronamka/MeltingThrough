@@ -1,16 +1,16 @@
-using System;
+п»їusing System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Health : MonoBehaviour
 
-  
+
 {
 
     [Header("Curse Drop Settings")]
-    [SerializeField] private bool canDropCurse = false; // По умолчанию false для игрока
-    [SerializeField] private float curseDropChance = -1f; // -1 = использовать настройки CurseManager
+    [SerializeField] private bool canDropCurse = false; // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ false пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private float curseDropChance = -1f; // -1 = пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CurseManager
 
     [SerializeField] public float maxHealth;
     [SerializeField] private float currentHealth;
@@ -32,9 +32,9 @@ public class Health : MonoBehaviour
 
     [Header("Death UI Settings")]
     [SerializeField] private GameObject deathCanvas;
-    [SerializeField] private float showCanvasDelay = 2f; 
-    [SerializeField] private float canvasDisplayTime = 60f; 
-    [SerializeField] private string menuSceneName = "MenuScene"; 
+    [SerializeField] private float showCanvasDelay = 2f;
+    [SerializeField] private float canvasDisplayTime = 60f;
+    [SerializeField] private string menuSceneName = "MenuScene";
 
     private float hurtAnimationDuration;
 
@@ -112,12 +112,12 @@ public class Health : MonoBehaviour
         animator.SetTrigger(AnimationParameters.Death);
         SoundManager.instance.PlaySound(deathSound);
 
-        
+
         if (canDropCurse)
         {
             if (curseDropChance >= 0)
             {
-        
+
                 if (UnityEngine.Random.value <= curseDropChance)
                 {
                     CurseManager.Instance?.DropRandomCurse(transform.position);
@@ -126,7 +126,7 @@ public class Health : MonoBehaviour
             }
             else
             {
-                
+
                 CurseManager.Instance?.TryDropCurse(transform.position);
                 Debug.Log($"[Health] {gameObject.name} trying to drop curse (manager chance)");
             }
@@ -139,24 +139,24 @@ public class Health : MonoBehaviour
 
     private IEnumerator DeathSequence()
     {
-    
+
         yield return new WaitForSeconds(showCanvasDelay);
 
-    
+
         if (deathCanvas != null)
         {
             deathCanvas.SetActive(true);
-    
+
         }
-        
+
         animator.SetTrigger(AnimationParameters.Hurt);
-        
+
         SoundManager.instance.PlaySound(hurtSound);
-   
+
         yield return new WaitForSeconds(canvasDisplayTime);
-    
-    
-    
+
+
+
         SceneManager.LoadScene(menuSceneName);
     }
 
@@ -197,14 +197,14 @@ public class Health : MonoBehaviour
         return currentHealth / maxHealth;
     }
 
-    
+
     public void GoToMenuNow()
     {
-        StopAllCoroutines(); 
+        StopAllCoroutines();
         SceneManager.LoadScene(menuSceneName);
     }
 
-   
+
     public bool IsBeingHurt()
     {
         return timeSinceTakenDamage < hurtAnimationDuration;

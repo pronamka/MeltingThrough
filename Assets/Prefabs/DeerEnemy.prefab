@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89c89cd286285f4c8024fd8fe1ef05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDropCurse: 0
+  curseDropChance: -1
   maxHealth: 100
   currentHealth: 100
   regenerationRate: 0
