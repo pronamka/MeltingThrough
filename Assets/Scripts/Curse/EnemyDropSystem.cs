@@ -6,7 +6,7 @@ public class EnemyDropSystem : MonoBehaviour
 {
     [Header("Drop Settings")]
     [SerializeField] private float dropChance = 0.3f;
-    [SerializeField] private float curseDrop Chance = 0.1f;
+    [SerializeField] private float curseDropChance = 0.1f;
     [SerializeField] private GameObject cursePickupPrefab;
     
     [Header("Drop Tables")]
@@ -60,7 +60,7 @@ public class EnemyDropSystem : MonoBehaviour
     
     private bool ShouldDropCurse()
     {
-        return Random.Range(0f, 1f) < curseDrop Chance;
+        return Random.Range(0f, 1f) < curseDropChance;
     }
     
     private bool ShouldDropCommonItem()
@@ -76,7 +76,7 @@ public class EnemyDropSystem : MonoBehaviour
         }
         
         // Выбираем случайное проклятие
-        CurseData curseToDropа = availableCurses[Random.Range(0, availableCurses.Count)];
+        CurseData curseToDrop = availableCurses[Random.Range(0, availableCurses.Count)];
         
         // Создаем объект подбора
         GameObject pickupObject = Instantiate(cursePickupPrefab, position, Quaternion.identity);
@@ -85,7 +85,7 @@ public class EnemyDropSystem : MonoBehaviour
         CursePickup pickup = pickupObject.GetComponent<CursePickup>();
         if (pickup != null)
         {
-            pickup.Initialize(curseToDropа);
+            pickup.Initialize(curseToDrop);
         }
         
         // Добавляем небольшую физику для более натурального падения
@@ -166,6 +166,6 @@ public class EnemyDropSystem : MonoBehaviour
     
     public void SetCurseDropChance(float newCurseDropChance)
     {
-        curseDrop Chance = Mathf.Clamp01(newCurseDropChance);
+        curseDropChance = Mathf.Clamp01(newCurseDropChance);
     }
 }
