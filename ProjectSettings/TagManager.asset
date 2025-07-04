@@ -58,5 +58,8 @@ TagManager:
   - name: Item
     uniqueID: 1462659837
     locked: 0
+  - name: Curse
+    uniqueID: 2578850901
+    locked: 0
   m_RenderingLayers:
   - Default

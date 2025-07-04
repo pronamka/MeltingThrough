@@ -1,24 +1,9 @@
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using System.Collections;
 
 public class VisualEffectManager : MonoBehaviour
 {
-    [Header("Post-Processing")]
-    public Volume postProcessVolume;
-
-    [Header("Blur Effect")]
-    public Material blurMaterial;
-    public Camera mainCamera;
-
-    private RenderTexture blurTexture;
-    private Coroutine blurCoroutine;
-
-    
-    private Vignette vignette;
-    private ColorAdjustments colorAdjustments;
-    private DepthOfField depthOfField;
+    private Camera targetCamera;
+    private float defaultCameraSize;
 
     public static VisualEffectManager Instance { get; private set; }
 
@@ -37,94 +22,43 @@ public class VisualEffectManager : MonoBehaviour
 
     private void Start()
     {
-        
-        if (postProcessVolume != null && postProcessVolume.profile != null)
+        // Автоматический поиск основной камеры
+        targetCamera = Camera.main;
+
+        if (targetCamera != null && targetCamera.orthographic)
         {
-            postProcessVolume.profile.TryGet(out vignette);
-            postProcessVolume.profile.TryGet(out colorAdjustments);
-            postProcessVolume.profile.TryGet(out depthOfField);
+            defaultCameraSize = targetCamera.orthographicSize;
+            Debug.Log($"Target orthographic camera found: {targetCamera.name} with size: {defaultCameraSize}");
         }
-
-        SetupBlurEffect();
-    }
-
-    private void SetupBlurEffect()
-    {
-        if (blurMaterial == null)
+        else
         {
-            
-            Shader blurShader = Shader.Find("Custom/EdgeBlur");
-            if (blurShader != null)
-            {
-                blurMaterial = new Material(blurShader);
-            }
+            Debug.LogError("No orthographic main camera found in the scene. Please assign an orthographic camera manually.");
         }
     }
 
-    public void ApplyEdgeBlur(float intensity, float edgeWidth, AnimationCurve falloff)
+    public void ApplyCameraSize(float newSize)
     {
-        if (blurMaterial != null)
+        if (targetCamera != null && targetCamera.orthographic)
         {
-            blurMaterial.SetFloat("_BlurIntensity", intensity);
-            blurMaterial.SetFloat("_EdgeWidth", edgeWidth);
-
-            
-            if (mainCamera != null)
-            {
-                EdgeBlurEffect blurEffect = mainCamera.GetComponent<EdgeBlurEffect>();
-                if (blurEffect == null)
-                {
-                    blurEffect = mainCamera.gameObject.AddComponent<EdgeBlurEffect>();
-                }
-                blurEffect.Initialize(blurMaterial, intensity, edgeWidth, falloff);
-            }
+            targetCamera.orthographicSize = newSize;
+            Debug.Log($"Camera size changed to: {newSize}");
+        }
+        else
+        {
+            Debug.LogError("Target camera is not set or is not orthographic. Cannot change camera size.");
         }
     }
 
-    public void RemoveEdgeBlur()
+    public void ResetCameraSize()
     {
-        if (mainCamera != null)
+        if (targetCamera != null && targetCamera.orthographic)
         {
-            EdgeBlurEffect blurEffect = mainCamera.GetComponent<EdgeBlurEffect>();
-            if (blurEffect != null)
-            {
-                blurEffect.RemoveEffect();
-            }
+            targetCamera.orthographicSize = defaultCameraSize;
+            Debug.Log("Camera size reset to default.");
         }
-    }
-
-    
-    public void ApplyColorFilter(Color filterColor, float intensity)
-    {
-        if (colorAdjustments != null)
+        else
         {
-            colorAdjustments.colorFilter.value = Color.Lerp(Color.white, filterColor, intensity);
-            colorAdjustments.active = true;
-        }
-    }
-
-    public void ApplyVignette(float intensity, float smoothness)
-    {
-        if (vignette != null)
-        {
-            vignette.intensity.value = intensity;
-            vignette.smoothness.value = smoothness;
-            vignette.active = true;
-        }
-    }
-
-    public void RemoveAllEffects()
-    {
-        RemoveEdgeBlur();
-
-        if (vignette != null)
-        {
-            vignette.active = false;
-        }
-
-        if (colorAdjustments != null)
-        {
-            colorAdjustments.active = false;
+            Debug.LogError("Target camera is not set or is not orthographic. Cannot reset camera size.");
         }
     }
 }

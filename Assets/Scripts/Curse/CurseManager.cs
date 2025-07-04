@@ -20,10 +20,9 @@ public class CurseManager : MonoBehaviour
     private List<ActiveCurse> activeCurses = new List<ActiveCurse>();
     private PlayerController player;
 
-    // Singleton Pattern
+    
     public static CurseManager Instance { get; private set; }
 
-    // События для подписки других систем
     public System.Action<CurseData> OnCurseApplied;
     public System.Action<CurseData> OnCurseRemoved;
 
@@ -44,7 +43,6 @@ public class CurseManager : MonoBehaviour
 
     private void Awake()
     {
-        // Инициализация Singleton
         if (Instance == null)
         {
             Instance = this;
@@ -72,7 +70,7 @@ public class CurseManager : MonoBehaviour
     {
         UpdateCurseTimers();
 
-        // Отладочная клавиша для тестирования
+        
         if (debugMode && Input.GetKeyDown(testDropKey))
         {
             Vector3 dropPos = player != null ? player.transform.position : Vector3.zero;
@@ -82,13 +80,13 @@ public class CurseManager : MonoBehaviour
 
     private void InitializeReferences()
     {
-        // Ищем игрока в сцене
+     
         if (player == null)
         {
             player = FindObjectOfType<PlayerController>();
         }
 
-        // Создаем UI панель если её нет
+     
         if (curseUIParent == null)
         {
             CreateCurseUIPanel();
@@ -100,7 +98,7 @@ public class CurseManager : MonoBehaviour
         Canvas canvas = FindObjectOfType<Canvas>();
         if (canvas == null)
         {
-            // Создаем Canvas если его нет
+            
             GameObject canvasObj = new GameObject("Canvas");
             canvas = canvasObj.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -108,11 +106,11 @@ public class CurseManager : MonoBehaviour
             canvasObj.AddComponent<UnityEngine.UI.GraphicRaycaster>();
         }
 
-        // Создаем панель для проклятий
+       
         GameObject panel = new GameObject("CursesPanel");
         panel.transform.SetParent(canvas.transform, false);
 
-        // Настраиваем RectTransform
+        
         RectTransform rect = panel.AddComponent<RectTransform>();
         rect.anchorMin = new Vector2(0, 1);
         rect.anchorMax = new Vector2(0, 1);
@@ -120,7 +118,7 @@ public class CurseManager : MonoBehaviour
         rect.anchoredPosition = new Vector2(10, -10);
         rect.sizeDelta = new Vector2(300, 400);
 
-        // Добавляем компонент для автоматической компоновки
+        
         UnityEngine.UI.VerticalLayoutGroup layout = panel.AddComponent<UnityEngine.UI.VerticalLayoutGroup>();
         layout.spacing = 5;
         layout.padding = new RectOffset(5, 5, 5, 5);
@@ -158,9 +156,7 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Попытка выбросить проклятие с учетом вероятности
-    /// </summary>
+    
     public void TryDropCurse(Vector3 position)
     {
         if (availableCurses == null || availableCurses.Length == 0)
@@ -217,7 +213,7 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        // Создаем дроп
+        
         GameObject drop = Instantiate(curse.dropPrefab, position, Quaternion.identity);
         CursePickup pickup = drop.GetComponent<CursePickup>();
 
@@ -242,16 +238,17 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        if (player == null)
+        /*if (player == null)
         {
             if (debugMode) Debug.LogError("[CurseManager] Player not found when applying curse!");
             return;
-        }
+        }*/
 
         ActiveCurse existingCurse = activeCurses.FirstOrDefault(ac => ac.curseData == curse);
 
         if (existingCurse != null)
         {
+            Debug.Log("1");
             if (curse.stackable)
             {
                 existingCurse.stackCount++;
@@ -266,22 +263,18 @@ public class CurseManager : MonoBehaviour
         }
         else
         {
-            // Добавляем новое проклятие
+            Debug.Log("2");
+
             activeCurses.Add(new ActiveCurse(curse));
             ApplyCurseEffect(curse);
             if (debugMode) Debug.Log($"[CurseManager] Applied new curse: {curse.curseName}");
         }
 
-        // Обновляем UI
+        
         UpdateCurseUI();
 
-        // Воспроизводим звук подбора
-        if (curse.pickupSound != null)
-        {
-            AudioSource.PlayClipAtPoint(curse.pickupSound, transform.position);
-        }
-
-        // Вызываем событие
+  
+ 
         OnCurseApplied?.Invoke(curse);
     }
 
@@ -295,13 +288,13 @@ public class CurseManager : MonoBehaviour
                     curse.ApplyEffect(player);
                     break;
                 case CurseCategory.Visual:
-                    // Находим VisualEffectManager в сцене
+                    
                     VisualEffectManager visualManager = FindObjectOfType<VisualEffectManager>();
                     if (visualManager != null)
                         curse.ApplyVisualEffect(visualManager);
                     break;
                 case CurseCategory.UI:
-                    // Находим UIManager в сцене
+                    
                     UIManager uiManager = FindObjectOfType<UIManager>();
                     if (uiManager != null)
                         curse.ApplyUIEffect(uiManager);
@@ -310,7 +303,7 @@ public class CurseManager : MonoBehaviour
                     curse.ApplyEffect(player);
                     break;
                 case CurseCategory.Special:
-                    // Применяем все типы эффектов (кроме аудио)
+                    
                     curse.ApplyEffect(player);
 
                     VisualEffectManager vm = FindObjectOfType<VisualEffectManager>();
@@ -327,9 +320,6 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Убрать проклятие
-    /// </summary>
     public void RemoveCurse(CurseData curse)
     {
         ActiveCurse activeCurse = activeCurses.FirstOrDefault(ac => ac.curseData == curse);
@@ -347,10 +337,10 @@ public class CurseManager : MonoBehaviour
         }
         else
         {
-            // Убираем эффект полностью
+
             RemoveCurseEffect(curse);
 
-            // Для стакающихся проклятий убираем все стаки
+
             if (curse.stackable)
             {
                 for (int i = 1; i < activeCurse.stackCount; i++)
@@ -359,16 +349,16 @@ public class CurseManager : MonoBehaviour
                 }
             }
 
-            // Удаляем из списка
+          
             activeCurses.Remove(activeCurse);
 
             if (debugMode) Debug.Log($"[CurseManager] Removed curse: {curse.curseName}");
         }
 
-        // Обновляем UI
+        
         UpdateCurseUI();
 
-        // Вызываем событие
+        
         OnCurseRemoved?.Invoke(curse);
     }
 
@@ -441,13 +431,13 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        // Очищаем старые UI элементы
+        
         foreach (Transform child in curseUIParent)
         {
             Destroy(child.gameObject);
         }
 
-        // Создаем новые UI элементы
+        
         foreach (var activeCurse in activeCurses)
         {
             GameObject uiElement = Instantiate(curseUIPrefab, curseUIParent);
