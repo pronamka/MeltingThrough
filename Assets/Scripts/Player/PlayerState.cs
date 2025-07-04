@@ -130,7 +130,7 @@ public class PlayerState : MonoBehaviour
         attackTimeLeft = attackTime;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool collisionDamage = false)
     {
         if (IsDead()) return;
         health.TakeDamage(damage);

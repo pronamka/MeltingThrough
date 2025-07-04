@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 8847234657673324119}
   - component: {fileID: 5013003353663324182}
   - component: {fileID: 4609832151581288028}
-  - component: {fileID: 109936909409294265}
   m_Layer: 11
   m_Name: TrapEnemy
   m_TagString: Untagged
@@ -203,13 +202,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89c89cd286285f4c8024fd8fe1ef05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDropCurse: 0
+  curseDropChance: -1
   maxHealth: 200
   currentHealth: 200
   regenerationRate: 0
   regenerationDelay: 0
   invincibilityPeriod: 0
+  timeSinceTakenDamage: 0
   hurtSound: {fileID: 8300000, guid: 06a6c3b09f1198d40b888003feb70315, type: 3}
   deathSound: {fileID: 8300000, guid: 9e20df22128234e4b869997027bdc26a, type: 3}
+  deathCanvas: {fileID: 0}
+  showCanvasDelay: 2
+  canvasDisplayTime: 60
+  menuSceneName: MenuScene
 --- !u!114 &5013003353663324182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,22 +258,6 @@ MonoBehaviour:
   firePoint: {fileID: 3795914748435120917}
   attackSound: {fileID: 8300000, guid: 2596f896b9c61304ba73169c191d2d2f, type: 3}
   beamPrefab: {fileID: 2091562029724715720, guid: 71fa64612df5a2443ad2fde0efc587e3, type: 3}
---- !u!114 &109936909409294265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786206856872896041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabf6e493a74f1f4c8d331124d59b74b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropChance: 1
-  minCurseValue: 0.3
-  maxCurseValue: 2
-  cursePickupPrefab: {fileID: 0}
 --- !u!1 &3681075041515669352
 GameObject:
   m_ObjectHideFlags: 0
