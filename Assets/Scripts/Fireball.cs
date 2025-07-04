@@ -60,12 +60,12 @@ public class Fireball : MonoBehaviour
         boxCollider.enabled = false;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        Invoke(nameof(ReturnToPool), animationUtils.GetAnimationDuration(AnimationNames.FireballExplode));
+        Invoke(nameof(DestroyFireball), animationUtils.GetAnimationDuration(AnimationNames.FireballExplode));
     }
 
-    private void ReturnToPool()
+    private void DestroyFireball()
     {
-        pool.ReturnFireball(this);
+        Destroy(transform.gameObject);
     }
 
     public void SetDirection(Vector2 newDirection, Vector2 additionalSpeed)

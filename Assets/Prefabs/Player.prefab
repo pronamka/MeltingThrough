@@ -552,6 +552,7 @@ MonoBehaviour:
   fireballPool: {fileID: 7991445185254602452, guid: 6d463ad8bd0254d4db1936a6c15bce4a, type: 3}
   bonusAttackSound: {fileID: 8300000, guid: 7a1121be33723e540aee942e321de7d5, type: 3}
   primaryAttackSound: {fileID: 8300000, guid: 1d937f04e2ccc254cb161bd0515fd8be, type: 3}
+  fireballPrefab: {fileID: 4624942002248620000, guid: 2f654aa1f9444b241b7c8eacea975db4, type: 3}
 --- !u!114 &6335057556379682203
 MonoBehaviour:
   m_ObjectHideFlags: 0

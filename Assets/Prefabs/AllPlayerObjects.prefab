@@ -677,6 +677,10 @@ PrefabInstance:
       propertyPath: deathCanvas
       value: 
       objectReference: {fileID: 3303445010258383644}
+    - target: {fileID: 3041579762911714754, guid: c345dc8c2600b3b4e90866c1930becdb, type: 3}
+      propertyPath: fireballPrefab
+      value: 
+      objectReference: {fileID: 4624942002248620000, guid: 2f654aa1f9444b241b7c8eacea975db4, type: 3}
     - target: {fileID: 3578591123425492333, guid: c345dc8c2600b3b4e90866c1930becdb, type: 3}
       propertyPath: m_Name
       value: Player
