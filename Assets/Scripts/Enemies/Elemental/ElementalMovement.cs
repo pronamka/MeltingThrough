@@ -31,11 +31,19 @@ public class ElementalMovement : MonoBehaviour
 
     private void Start()
     {
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            return;
+        }
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
         if (enemyState.IsDead()) return;
         if (enemyState.isAttacking) return;
         if (enemyState.IsStunned()) return;
