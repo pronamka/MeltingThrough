@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2c151a7d93b4c469ef3b3bbb094ef1, type: 3}
-  m_Name: Broken sword
+  m_Script: {fileID: 11500000, guid: 0f470c8f3caf5f24586a18e3da8a4325, type: 3}
+  m_Name: Chains of time
   m_EditorClassIdentifier: 
-  curseName: Broken sword
-  description: Decrease sword attack damage
-  curseSprite: {fileID: -4212201979884232367, guid: a6b7e8bab2f1be14fa5e60fe0bc41477, type: 3}
-  dropPrefab: {fileID: 7302044071340657100, guid: 46bc51f1ede10a24c99e7caf13c2bf29, type: 3}
+  curseName: Chains of time
+  description: Decrease movement speed
+  curseSprite: {fileID: 5064722732708528588, guid: 96ae2115ba4a41448b91f6be2cd2b9e7, type: 3}
+  dropPrefab: {fileID: 7302044071340657100, guid: ef952de70bd265545a2db20e14b4c157, type: 3}
   category: 0
-  curseType: 0
+  curseType: 1
   value: 1
   duration: -1
   stackable: 0

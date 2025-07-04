@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2c151a7d93b4c469ef3b3bbb094ef1, type: 3}
-  m_Name: Broken sword
+  m_Script: {fileID: 11500000, guid: ef029116f091365438791ce57372d3a3, type: 3}
+  m_Name: Curse of guilt
   m_EditorClassIdentifier: 
-  curseName: Broken sword
-  description: Decrease sword attack damage
-  curseSprite: {fileID: -4212201979884232367, guid: a6b7e8bab2f1be14fa5e60fe0bc41477, type: 3}
-  dropPrefab: {fileID: 7302044071340657100, guid: 46bc51f1ede10a24c99e7caf13c2bf29, type: 3}
+  curseName: "\u041D\u043E\u0432\u043E\u0435 \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u0435"
+  description: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u044D\u0444\u0444\u0435\u043A\u0442\u0430
+    \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u044F"
+  curseSprite: {fileID: 0}
+  dropPrefab: {fileID: 0}
   category: 0
   curseType: 0
   value: 1

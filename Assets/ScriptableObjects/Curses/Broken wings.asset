@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2c151a7d93b4c469ef3b3bbb094ef1, type: 3}
-  m_Name: Broken sword
+  m_Script: {fileID: 11500000, guid: e9ee2ae7a4b8b6748a2e813be01a414d, type: 3}
+  m_Name: Broken wings
   m_EditorClassIdentifier: 
-  curseName: Broken sword
-  description: Decrease sword attack damage
-  curseSprite: {fileID: -4212201979884232367, guid: a6b7e8bab2f1be14fa5e60fe0bc41477, type: 3}
-  dropPrefab: {fileID: 7302044071340657100, guid: 46bc51f1ede10a24c99e7caf13c2bf29, type: 3}
+  curseName: Broken wings
+  description: 'Decrease dash force '
+  curseSprite: {fileID: -3992837685371359178, guid: 59348aa235264ff48972bb6bd3ad3188, type: 3}
+  dropPrefab: {fileID: 7302044071340657100, guid: fd21237e41f6252488d0b2d8294a3002, type: 3}
   category: 0
-  curseType: 0
+  curseType: 1
   value: 1
   duration: -1
   stackable: 0
