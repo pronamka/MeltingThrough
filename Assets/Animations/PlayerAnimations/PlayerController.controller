@@ -505,6 +505,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isOnFire
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isShootingFireball
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8090307936149215976}
   m_Solo: 0
@@ -847,6 +850,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: isShootingFireball
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1083,6 +1092,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isOnFire
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isShootingFireball
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4032121314090538630}
   m_Solo: 0
@@ -1189,6 +1201,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isOnFire
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isShootingFireball
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8126902997141744454}
   m_Solo: 0
@@ -1292,7 +1307,7 @@ AnimatorStateMachine:
     m_Position: {x: -650, y: 570, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3275233790257947057}
-    m_Position: {x: -970, y: -240, z: 0}
+    m_Position: {x: -1050, y: -240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4716193674455068064}
     m_Position: {x: -1080, y: -400, z: 0}
@@ -1647,6 +1662,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: isOnFire
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isShootingFireball
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2789626830109230328}

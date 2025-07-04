@@ -8,6 +8,7 @@ TagManager:
   - DeathUI
   - CurseManager
   - Boss
+  - Alter
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Player
   - Enemy
   - AttackZones
-  - 
+  - FireballLayer
   - 
   - 
   - 

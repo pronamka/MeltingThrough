@@ -4,9 +4,9 @@ using UnityEngine;
 public class CurseData : ScriptableObject
 {
     [Header("Basic Info")]
-    public string curseName = "Новое проклятие";
+    public string curseName = "new curse";
     [TextArea(3, 5)]
-    public string description = "Описание эффекта проклятия";
+    public string description = "description";
     public Sprite curseSprite;
     public GameObject dropPrefab;
 
@@ -42,14 +42,4 @@ public class CurseData : ScriptableObject
         Debug.Log($"[CurseData] Removing {curseName} visual effect");
     }
 
-    
-    public virtual void ApplyUIEffect(UIManager uiManager)
-    {
-        Debug.Log($"[CurseData] Applying {curseName} UI effect");
-    }
-
-    public virtual void RemoveUIEffect(UIManager uiManager)
-    {
-        Debug.Log($"[CurseData] Removing {curseName} UI effect");
-    }
 }

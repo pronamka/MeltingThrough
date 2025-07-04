@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6563489f6baeca4599da78babc91455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meltingTime: 1.2
+  meltingTime: 3
   meltedBlock: {fileID: 0}
 --- !u!212 &1732470397385421220
 SpriteRenderer:

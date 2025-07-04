@@ -62,7 +62,7 @@ public class PlayerState : MonoBehaviour
 
         if (takeDamageAction.triggered)
         {
-            TakeDamage(20);
+            TakeDamage(200);
         }
 
         if (changeStateAction.triggered)

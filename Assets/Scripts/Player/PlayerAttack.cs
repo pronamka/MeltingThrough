@@ -36,6 +36,8 @@ public class PlayerAttack : MonoBehaviour
 
     private Vector2 fireballDirection;
 
+    [SerializeField] private Fireball fireballPrefab;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -118,19 +120,27 @@ public class PlayerAttack : MonoBehaviour
     private void BonusAttack()
     {
         playerState.mana.UseMana(bonusAttackManaCost);
+        animator.SetBool("isShootingFireball", true);
+        StartCoroutine(TurnOffSpawnFireballStatus());
         ManageAnimationAndSound("bonus");
-
         fireballDirection = CalculateFireballDirection();
         timeSinceBonusAttack = 0;
     }
 
+    private IEnumerator TurnOffSpawnFireballStatus()
+    {
+        yield return new WaitForSeconds(attackAnimationsAndSounds["bonus"].AnimationDuration);
+        animator.SetBool("isShootingFireball", true);
+    }
+
     private void SpawnFireball()
     {
-        Fireball fireball = fireballPool.TakeFireball();
+        //Fireball fireball = fireballPool.TakeFireball();
 
         Vector3 spawnPosition = CalculateFireballPosition(fireballDirection);
-
+        Fireball fireball = Instantiate(fireballPrefab);
         fireball.transform.position = spawnPosition;
+        
         fireball.SetDirection(fireballDirection, body.linearVelocity);
     }
 

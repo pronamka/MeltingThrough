@@ -4,51 +4,43 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Health : MonoBehaviour
-
-
 {
 
     [Header("Curse Drop Settings")]
-    [SerializeField] private bool canDropCurse = false; 
-    [SerializeField] private float curseDropChance = -1f;
+    [SerializeField] protected bool canDropCurse = false; 
+    [SerializeField] protected float curseDropChance = -1f;
 
     [SerializeField] public float maxHealth;
-    [SerializeField] private float currentHealth;
+    [SerializeField] protected float currentHealth;
 
-    [SerializeField] private float regenerationRate;
-    [SerializeField] private float regenerationDelay;
+    [SerializeField] protected float regenerationRate;
+    [SerializeField] protected float regenerationDelay;
 
-    [SerializeField] private float invincibilityPeriod;
+    [SerializeField] protected float invincibilityPeriod;
 
     public float timeSinceTakenDamage = 0;
 
-    private Animator animator;
-    private SpriteRenderer playerRenderer;
+    protected Animator animator;
+    protected SpriteRenderer playerRenderer;
 
-    private AnimationUtils utils;
+    protected AnimationUtils utils;
 
-    [SerializeField] private AudioClip hurtSound;
-    [SerializeField] private AudioClip deathSound;
+    [SerializeField] protected AudioClip hurtSound;
+    [SerializeField] protected AudioClip deathSound;
 
-    [Header("Death UI Settings")]
-    [SerializeField] private GameObject deathCanvas;
-    [SerializeField] private float showCanvasDelay = 2f;
-    [SerializeField] private float canvasDisplayTime = 60f;
-    [SerializeField] private string menuSceneName = "MenuScene";
+    protected float hurtAnimationDuration;
 
-    private float hurtAnimationDuration;
-
-    public bool isDead { get; private set; }
+    public bool isDead { get; protected set; }
 
 #if UNITY_EDITOR
-    private void OnValidate()
+    protected void OnValidate()
     {
         if (currentHealth <= 0)
             currentHealth = maxHealth;
     }
 #endif
 
-    private void Awake()
+    protected void Awake()
     {
         isDead = false;
         currentHealth = maxHealth;
@@ -59,23 +51,7 @@ public class Health : MonoBehaviour
         hurtAnimationDuration = utils.GetAnimationDuration("Hurt");
     }
 
-    private void Start()
-    {
-        if (deathCanvas == null)
-        {
-            GameObject foundCanvas = GameObject.FindGameObjectWithTag("DeathUI");
-            if (foundCanvas == null)
-                foundCanvas = GameObject.Find("DeathCanvas");
-
-            if (foundCanvas != null)
-            {
-                deathCanvas = foundCanvas;
-                deathCanvas.SetActive(false);
-            }
-        }
-    }
-
-    private void Update()
+    protected void Update()
     {
         if (isDead) return;
 
@@ -106,50 +82,33 @@ public class Health : MonoBehaviour
         SoundManager.instance.PlaySound(hurtSound);
     }
 
-    private void HandleDeath()
+    public virtual void HandleDeath()
     {
         isDead = true;
         animator.SetTrigger(AnimationParameters.Death);
         SoundManager.instance.PlaySound(deathSound);
-        
-        GameObject curseManager = GameObject.FindGameObjectWithTag("CurseManager");
-        curseManager.GetComponent<CurseManager>().TryDropCurse(transform.position);
+
+        Vector3 pos = transform.position;
 
         float deathAnimationDuration = utils.GetAnimationDuration(AnimationNames.Death);
         Invoke(nameof(DisableEntity), deathAnimationDuration);
-        StartCoroutine(DeathSequence());
+
+        GameObject curseManager = GameObject.FindGameObjectWithTag("CurseManager");
+        curseManager.GetComponent<CurseManager>().TryDropCurse(pos);
+
+        
+
     }
 
-    private IEnumerator DeathSequence()
-    {
-
-        yield return new WaitForSeconds(showCanvasDelay);
 
 
-        if (deathCanvas != null)
-        {
-            deathCanvas.SetActive(true);
-
-        }
-
-        animator.SetTrigger(AnimationParameters.Hurt);
-
-        SoundManager.instance.PlaySound(hurtSound);
-
-        yield return new WaitForSeconds(canvasDisplayTime);
-
-
-
-        SceneManager.LoadScene(menuSceneName);
-    }
-
-    private void DisableEntity()
+    protected void DisableEntity()
     {
         playerRenderer.enabled = false;
         Destroy(this.gameObject);
     }
 
-    private bool IsInvincible()
+    protected bool IsInvincible()
     {
         return timeSinceTakenDamage < invincibilityPeriod;
     }
@@ -157,13 +116,6 @@ public class Health : MonoBehaviour
     public float GetHealthPercentage()
     {
         return currentHealth / maxHealth;
-    }
-
-
-    public void GoToMenuNow()
-    {
-        StopAllCoroutines();
-        SceneManager.LoadScene(menuSceneName);
     }
 
 

@@ -8,13 +8,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public float jumpForce = 2.5f;
 
     [Header("Dash Settings")]
-    [SerializeField] private float dashForce = 20f;
-    [SerializeField] private float dashDuration = 0.2f;
-    [SerializeField] private float dashCooldown = 1f;
+    [SerializeField] public float dashForce = 20f;
+    [SerializeField] public float dashDuration = 0.2f;
+    [SerializeField] public float dashCooldown = 1f;
 
     [Header("Double Jump Settings")]
-    [SerializeField] private float doubleJumpForce = 15f;
-    [SerializeField] private int maxJumps = 2;
+    [SerializeField] public float doubleJumpForce = 15f;
+    [SerializeField] public int maxJumps = 2;
 
     private InputAction moveAction;
     private InputAction jumpAction;

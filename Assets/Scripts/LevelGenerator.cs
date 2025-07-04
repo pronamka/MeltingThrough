@@ -7,12 +7,12 @@ using System.Linq;
 public class LevelGenerator : MonoBehaviour
 {
 
-    [Header("===== VISUAL SETTINGS =====")]
+    [Header("VISUAL SETTINGS")]
     public Tilemap islandTilemap;
     public TileBase islandTile;
     public GameObject[] platformPrefabs;
 
-    [Header("===== PLATFORM GENERATION (FIRST) =====")]
+    [Header("PLATFORM GENERATION")]
     [SerializeField, Range(50, 30000)] private int totalPlatforms = 300;
     [SerializeField] private float platformLevelWidth = 1000f;
     [SerializeField] private float platformStartY = 200f;
@@ -40,7 +40,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float bridgeChance = 0.1f;
     [SerializeField, Range(0f, 1f)] private float clusterChance = 0.05f;
 
-    [Header("===== ISLAND GENERATION (SECOND) =====")]
+    [Header("ISLAND GENERATION")]
     [SerializeField, Range(3, 1500)] private int islandCount = 15;
     [SerializeField, Range(3, 15)] private int minIslandWidth = 4;
     [SerializeField, Range(5, 25)] private int maxIslandWidth = 10;
@@ -61,7 +61,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int islandLevelMaxY = 150;
     [SerializeField, Range(2f, 25f)] private float minDistanceFromPlatforms = 8f;
 
-    [Header("===== ALTAR GENERATION (THIRD) =====")]
+    [Header("ALTAR GENERATION")]
     [SerializeField] public GameObject altarPrefab;
     [SerializeField, Range(1, 50)] private int maxAltarCount = 10;
     [SerializeField] private float minAltarDistance = 500f;
@@ -73,7 +73,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField, Range(5f, 50f)] private float minDistanceFromPlatformsAltar = 15f;
     [SerializeField, Range(5f, 50f)] private float minDistanceFromIslandsAltar = 10f;
 
-    [Header("===== ADVANCED SETTINGS =====")]
+    [Header("ADVANCED SETTINGS")]
     [SerializeField] private int generationSeed = 0;
     [SerializeField] private bool debugVisualization = false;
 
@@ -917,14 +917,14 @@ public class LevelGenerator : MonoBehaviour
             Gizmos.DrawWireCube(island.center, new Vector3(island.size.x, island.size.y, 0));
         }
 
-        // Draw altar gizmos
+        
         Gizmos.color = Color.magenta;
         foreach (var altar in generatedAltars)
         {
             Gizmos.DrawWireCube(altar.position, Vector3.one * 2f);
             Gizmos.DrawWireCube(altar.islandCenter, new Vector3(altarIslandX, altarIslandY, 0));
             
-            // Draw minimum distance sphere
+            
             Gizmos.color = new Color(1f, 0f, 1f, 0.1f);
             Gizmos.DrawSphere(altar.position, minAltarDistance);
             Gizmos.color = Color.magenta;

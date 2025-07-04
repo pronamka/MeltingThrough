@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curseName: Broken sword
   description: Decrease sword attack damage
-  curseSprite: {fileID: -1319724202921559727, guid: d5a0002a76e1de246a01790d0b4faf2c, type: 3}
-  dropPrefab: {fileID: 7302044071340657100, guid: 737fab610de06b54fbf311ef280b4564, type: 3}
+  curseSprite: {fileID: -4212201979884232367, guid: a6b7e8bab2f1be14fa5e60fe0bc41477, type: 3}
+  dropPrefab: {fileID: 7302044071340657100, guid: 46bc51f1ede10a24c99e7caf13c2bf29, type: 3}
   category: 0
   curseType: 0
   value: 1

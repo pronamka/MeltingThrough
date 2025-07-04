@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef029116f091365438791ce57372d3a3, type: 3}
+  m_Name: Curse of guilt
+  m_EditorClassIdentifier: 
+  curseName: Curse of guilt
+  description: Decrease jump force
+  curseSprite: {fileID: 4952386625692786166, guid: d3c185b46973f4340a8f816524e01683, type: 3}
+  dropPrefab: {fileID: 7302044071340657100, guid: d4058af67a399344b9a59f92234108c9, type: 3}
+  category: 0
+  curseType: 0
+  value: 1
+  duration: -1
+  stackable: 0
+  uiColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupSound: {fileID: 0}

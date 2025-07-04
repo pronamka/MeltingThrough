@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f470c8f3caf5f24586a18e3da8a4325, type: 3}
+  m_Name: Chains of time
+  m_EditorClassIdentifier: 
+  curseName: Chains of time
+  description: Decrease movement speed
+  curseSprite: {fileID: 5064722732708528588, guid: 96ae2115ba4a41448b91f6be2cd2b9e7, type: 3}
+  dropPrefab: {fileID: 7302044071340657100, guid: ef952de70bd265545a2db20e14b4c157, type: 3}
+  category: 0
+  curseType: 1
+  value: 1
+  duration: -1
+  stackable: 0
+  uiColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupSound: {fileID: 0}
