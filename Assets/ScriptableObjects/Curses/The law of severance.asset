@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e2d0ccc7c198d4697a0587699ba1fd, type: 3}
+  m_Name: The law of severance
+  m_EditorClassIdentifier: 
+  curseName: The law of severance
+  description: 'Touching enemies kills you '
+  curseSprite: {fileID: -496583036985271767, guid: 7e875d3ed38e8d24aa12ab31099de35e, type: 3}
+  dropPrefab: {fileID: 0}
+  category: 0
+  curseType: 0
+  value: 1
+  duration: -1
+  stackable: 0
+  uiColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupSound: {fileID: 0}

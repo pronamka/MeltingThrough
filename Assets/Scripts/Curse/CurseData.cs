@@ -14,14 +14,13 @@ public class CurseData : ScriptableObject
     public CurseCategory category = CurseCategory.Stat;
     public CurseType curseType = CurseType.Health;
     public float value = 1f;
-    public float duration = -1f; // -1 для постоянного эффекта
+    public float duration = -1f; 
     public bool stackable = false;
 
     [Header("Visual")]
     public Color uiColor = Color.white;
     public AudioClip pickupSound;
 
-    // Виртуальные методы для разных типов эффектов
     public virtual void ApplyEffect(PlayerController player)
     {
         Debug.Log($"[CurseData] Applying {curseName} stat effect to player");
@@ -32,7 +31,7 @@ public class CurseData : ScriptableObject
         Debug.Log($"[CurseData] Removing {curseName} stat effect from player");
     }
 
-    // Методы для визуальных эффектов
+    
     public virtual void ApplyVisualEffect(VisualEffectManager visualManager)
     {
         Debug.Log($"[CurseData] Applying {curseName} visual effect");
@@ -43,7 +42,7 @@ public class CurseData : ScriptableObject
         Debug.Log($"[CurseData] Removing {curseName} visual effect");
     }
 
-    // Методы для UI эффектов
+    
     public virtual void ApplyUIEffect(UIManager uiManager)
     {
         Debug.Log($"[CurseData] Applying {curseName} UI effect");
