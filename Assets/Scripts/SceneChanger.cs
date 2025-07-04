@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PictureSwitcher : MonoBehaviour
 {
@@ -11,17 +12,20 @@ public class PictureSwitcher : MonoBehaviour
     public TMP_Text uiText;
     private int currentIndex = 0;
 
+    private InputAction jumpAction;
+
     void Start()
     {
         if (pictures.Length > 0 && displayImage != null)
         {
             displayImage.sprite = pictures[0];
         }
+        jumpAction = InputSystem.actions.FindAction("Jump");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (jumpAction.triggered)
         {
             if (currentIndex == pictures.Length - 2)
             {
