@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - DeathUI
+  - CurseManager
   layers:
   - Default
   - TransparentFX

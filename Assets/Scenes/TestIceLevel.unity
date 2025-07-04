@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 705254060}
   m_Layer: 0
   m_Name: CurseManager
-  m_TagString: Untagged
+  m_TagString: CurseManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -610,9 +610,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b09610d7ee0cd4991bbfcf436986cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curseDropChance: 1
+  curseDropChance: 0.477
   availableCurses:
   - {fileID: 11400000, guid: 1bfc419d0463e7a498cbcd7a38b48660, type: 2}
+  - {fileID: 11400000, guid: 413e97ea4d3a1f2418720f3ad16fc2f2, type: 2}
   curseUIParent: {fileID: 0}
   curseUIPrefab: {fileID: 0}
   debugMode: 1
@@ -1651,11 +1652,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6226000965771935778, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.0999756
+      value: 3.1000977
       objectReference: {fileID: 0}
     - target: {fileID: 6226000965771935778, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -105.80002
+      value: -105.80005
       objectReference: {fileID: 0}
     - target: {fileID: 8060827744251922292, guid: 1bd5a9c50c4ba174fb205617dcaec63a, type: 3}
       propertyPath: levelEndY

@@ -21,12 +21,12 @@ public class CurseData : ScriptableObject
     public Color uiColor = Color.white;
     public AudioClip pickupSound;
 
-    public virtual void ApplyEffect(PlayerController player)
+    public virtual void ApplyEffect()
     {
         Debug.Log($"[CurseData] Applying {curseName} stat effect to player");
     }
 
-    public virtual void RemoveEffect(PlayerController player)
+    public virtual void RemoveEffect()
     {
         Debug.Log($"[CurseData] Removing {curseName} stat effect from player");
     }

@@ -18,7 +18,7 @@ public class CurseManager : MonoBehaviour
     [SerializeField] private KeyCode testDropKey = KeyCode.T;
 
     private List<ActiveCurse> activeCurses = new List<ActiveCurse>();
-    private PlayerController player;
+   
 
     
     public static CurseManager Instance { get; private set; }
@@ -57,7 +57,6 @@ public class CurseManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeReferences();
         ValidateSetup();
 
         if (debugMode)
@@ -73,26 +72,12 @@ public class CurseManager : MonoBehaviour
         
         if (debugMode && Input.GetKeyDown(testDropKey))
         {
-            Vector3 dropPos = player != null ? player.transform.position : Vector3.zero;
+            Vector3 dropPos = Vector3.zero;
             TryDropCurse(dropPos + Vector3.up * 2f);
         }
     }
 
-    private void InitializeReferences()
-    {
-     
-        if (player == null)
-        {
-            player = FindObjectOfType<PlayerController>();
-        }
-
-     
-        if (curseUIParent == null)
-        {
-            CreateCurseUIPanel();
-        }
-    }
-
+    
     private void CreateCurseUIPanel()
     {
         Canvas canvas = FindObjectOfType<Canvas>();
@@ -138,11 +123,6 @@ public class CurseManager : MonoBehaviour
         if (availableCurses == null || availableCurses.Length == 0)
         {
             warnings.Add("No curses assigned to CurseManager!");
-        }
-
-        if (player == null)
-        {
-            warnings.Add("PlayerController not found in scene!");
         }
 
         if (warnings.Count > 0 && debugMode)
@@ -285,7 +265,7 @@ public class CurseManager : MonoBehaviour
             switch (curse.category)
             {
                 case CurseCategory.Stat:
-                    curse.ApplyEffect(player);
+                    curse.ApplyEffect();
                     break;
                 case CurseCategory.Visual:
                     
@@ -300,11 +280,11 @@ public class CurseManager : MonoBehaviour
                         curse.ApplyUIEffect(uiManager);
                     break;
                 case CurseCategory.Gameplay:
-                    curse.ApplyEffect(player);
+                    curse.ApplyEffect();
                     break;
                 case CurseCategory.Special:
                     
-                    curse.ApplyEffect(player);
+                    curse.ApplyEffect();
 
                     VisualEffectManager vm = FindObjectOfType<VisualEffectManager>();
                     if (vm != null) curse.ApplyVisualEffect(vm);
@@ -369,7 +349,7 @@ public class CurseManager : MonoBehaviour
             switch (curse.category)
             {
                 case CurseCategory.Stat:
-                    curse.RemoveEffect(player);
+                    curse.RemoveEffect();
                     break;
                 case CurseCategory.Visual:
                     VisualEffectManager visualManager = FindObjectOfType<VisualEffectManager>();
@@ -382,10 +362,10 @@ public class CurseManager : MonoBehaviour
                         curse.RemoveUIEffect(uiManager);
                     break;
                 case CurseCategory.Gameplay:
-                    curse.RemoveEffect(player);
+                    curse.RemoveEffect();
                     break;
                 case CurseCategory.Special:
-                    curse.RemoveEffect(player);
+                    curse.RemoveEffect();
 
                     VisualEffectManager vm = FindObjectOfType<VisualEffectManager>();
                     if (vm != null) curse.RemoveVisualEffect(vm);
@@ -485,14 +465,9 @@ public class CurseManager : MonoBehaviour
     [ContextMenu("Drop Random Curse")]
     public void DebugDropRandomCurse()
     {
-        if (player != null)
-        {
-            TryDropCurse(player.transform.position + Vector3.up * 2f);
-        }
-        else
-        {
-            TryDropCurse(Vector3.zero);
-        }
+        
+         TryDropCurse(Vector3.zero);
+        
     }
 
     [ContextMenu("Remove All Curses")]
@@ -511,8 +486,7 @@ public class CurseManager : MonoBehaviour
         GUILayout.Label($"User: ObjoradDdd | Time: {System.DateTime.Now:HH:mm:ss}");
         GUILayout.Label($"Active Curses: {activeCurses.Count}");
         GUILayout.Label($"Available Curses: {availableCurses?.Length ?? 0}");
-        GUILayout.Label($"Drop Chance: {curseDropChance:P0}");
-        GUILayout.Label($"Player Found: {player != null}");
+        GUILayout.Label($"Drop Chance: {curseDropChance:P0}");       
 
         GUILayout.Space(5);
 

@@ -3,13 +3,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "The law of severance", menuName = "Game/Curses/Gameplay/The law of severance")]
 public class TheLawOfSeverance : CurseData
 {
-    
-    public override void ApplyEffect(PlayerController player)
+
+    public override void ApplyEffect()
     {
-        Debug.Log("added/////////////////////////////////////////////////////////");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerState>().diesOnCollision = true;
+        Debug.Log("added");
     }
 
-    public override void RemoveEffect(PlayerController player)
+    public override void RemoveEffect()
     {
         Debug.Log("deleted");
     }

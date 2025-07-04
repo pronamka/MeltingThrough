@@ -9,8 +9,8 @@ public class Health : MonoBehaviour
 {
 
     [Header("Curse Drop Settings")]
-    [SerializeField] private bool canDropCurse = false; // �� ��������� false ��� ������
-    [SerializeField] private float curseDropChance = -1f; // -1 = ������������ ��������� CurseManager
+    [SerializeField] private bool canDropCurse = false; 
+    [SerializeField] private float curseDropChance = -1f;
 
     [SerializeField] public float maxHealth;
     [SerializeField] private float currentHealth;
@@ -111,30 +111,13 @@ public class Health : MonoBehaviour
         isDead = true;
         animator.SetTrigger(AnimationParameters.Death);
         SoundManager.instance.PlaySound(deathSound);
+        
+        GameObject curseManager = GameObject.FindGameObjectWithTag("CurseManager");
+        curseManager.GetComponent<CurseManager>().TryDropCurse(transform.position);
 
-
-        if (canDropCurse)
-        {
-            if (curseDropChance >= 0)
-            {
-
-                if (UnityEngine.Random.value <= curseDropChance)
-                {
-                    CurseManager.Instance?.DropRandomCurse(transform.position);
-                    Debug.Log($"[Health] {gameObject.name} dropped curse (custom chance: {curseDropChance:P0})");
-                }
-            }
-            else
-            {
-
-                CurseManager.Instance?.TryDropCurse(transform.position);
-                Debug.Log($"[Health] {gameObject.name} trying to drop curse (manager chance)");
-            }
-        }
         float deathAnimationDuration = utils.GetAnimationDuration(AnimationNames.Death);
         Invoke(nameof(DisableEntity), deathAnimationDuration);
         StartCoroutine(DeathSequence());
-        
     }
 
     private IEnumerator DeathSequence()
