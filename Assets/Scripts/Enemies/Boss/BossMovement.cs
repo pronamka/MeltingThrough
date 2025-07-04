@@ -37,6 +37,10 @@ public class BossMovement : MonoBehaviour
 
     private void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
         if (enemyState.IsDead()) return;
         if (enemyState.isAttacking) return;
         if (enemyState.IsStunned()) return;
