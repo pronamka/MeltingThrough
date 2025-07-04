@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2276050675590103115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9074327845722885710}
+  - component: {fileID: 2686196166217580949}
+  m_Layer: 0
+  m_Name: LevelGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9074327845722885710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276050675590103115}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.29855, y: 0.00305, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2686196166217580949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276050675590103115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c768bdb5d8794c146944cd614be9d938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  islandTilemap: {fileID: 0}
+  islandTile: {fileID: 11400000, guid: a67dfcb78927f634bb9f288e7e9bc44f, type: 2}
+  platformPrefabs:
+  - {fileID: 5969253860548061359, guid: d503297a59d533a4887ab5d863bb31ba, type: 3}
+  - {fileID: 5969253860548061359, guid: 7a3f6161314f2f04c95966d39327f3b6, type: 3}
+  - {fileID: 5969253860548061359, guid: 60cc38e11459d9947a1ab436bdac43df, type: 3}
+  - {fileID: 5969253860548061359, guid: 008789179106436448a36209601f9900, type: 3}
+  - {fileID: 5969253860548061359, guid: 39be123bfd117b945910e1027377356e, type: 3}
+  totalPlatforms: 700
+  platformLevelWidth: 90
+  platformStartY: 30
+  platformEndY: -1500
+  minJumpDistance: 3.15
+  maxJumpDistance: 6.1
+  minVerticalDrop: 2
+  maxVerticalDrop: 4.23
+  platformSafetyRadius: 2.88
+  maxHorizontalShift: 24.8
+  horizontalVariation: 0.406
+  extremeShiftChance: 0.478
+  straightPathChance: 0.073
+  zigzagChance: 0.175
+  spiralChance: 0.241
+  bridgeChance: 0.423
+  clusterChance: 0.518
+  islandCount: 213
+  minIslandWidth: 4
+  maxIslandWidth: 9
+  minIslandHeight: 3
+  maxIslandHeight: 6
+  topBumpiness: 0
+  bottomBumpiness: 0.3
+  leftBumpiness: 0.3
+  rightBumpiness: 0.3
+  holeChance: 0
+  islandLevelMinX: -30
+  islandLevelMaxX: 60
+  islandLevelMinY: -1500
+  islandLevelMaxY: 30
+  minDistanceFromPlatforms: 8
+  altarPrefab: {fileID: 4774632494878272479, guid: 690781b36a4c1e042ae639da2c059a88, type: 3}
+  maxAltarCount: 29
+  minAltarDistance: 350
+  altarIslandX: 10
+  altarIslandY: 3
+  altarVerticalOffset: 3
+  altarHorizontalOffsetX: 0.4
+  altarHorizontalOffsetZ: 0
+  minDistanceFromPlatformsAltar: 5
+  minDistanceFromIslandsAltar: 5
+  generationSeed: 0
+  debugVisualization: 0
+  difficultyProgression:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
