@@ -111,13 +111,17 @@ public class Health : MonoBehaviour
         isDead = true;
         animator.SetTrigger(AnimationParameters.Death);
         SoundManager.instance.PlaySound(deathSound);
-        
-        GameObject curseManager = GameObject.FindGameObjectWithTag("CurseManager");
-        curseManager.GetComponent<CurseManager>().TryDropCurse(transform.position);
+
+        Vector3 pos = transform.position;
 
         float deathAnimationDuration = utils.GetAnimationDuration(AnimationNames.Death);
         Invoke(nameof(DisableEntity), deathAnimationDuration);
+
+        GameObject curseManager = GameObject.FindGameObjectWithTag("CurseManager");
+        curseManager.GetComponent<CurseManager>().TryDropCurse(pos);
+
         StartCoroutine(DeathSequence());
+
     }
 
     private IEnumerator DeathSequence()

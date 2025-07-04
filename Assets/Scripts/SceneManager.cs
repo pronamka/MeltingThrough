@@ -81,12 +81,14 @@ public class ScenesTransition : MonoBehaviour
     
     public void ReturnToMenu()
     {
+        Debug.Log("return to menu");
         LoadSceneWithDelay(menuSceneName);
     }
 
     
     public void RestartCurrentLevel()
     {
+        Debug.Log("restart");
         PlayButtonSound();
         StartCoroutine(LoadSceneCoroutine(SceneManager.GetActiveScene().name));
     }
