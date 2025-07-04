@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Prefabs/Scenes/TestIceLevel.unity
     guid: c8db53272c2d53d438cf558732489bc8
+  - enabled: 1
+    path: Assets/Scenes/Story.unity
+    guid: 97bf80d8116b5ba40bc7fe3ca45a7abb
+  - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: c0cf23a07bdd6864cbc75860a18332fa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

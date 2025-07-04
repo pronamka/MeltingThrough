@@ -277,6 +277,7 @@ MonoBehaviour:
   curseUIPrefab: {fileID: 0}
   debugMode: 1
   testDropKey: 281
+  alterAccessDistance: 10
 --- !u!4 &705254061
 Transform:
   m_ObjectHideFlags: 0

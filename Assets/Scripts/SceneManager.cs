@@ -7,6 +7,8 @@ public class ScenesTransition : MonoBehaviour
 {
     [Header("Названия сцен")]
     [SerializeField] private string gameSceneName = "TestIceLevel";
+    [SerializeField] private string storySceneName = "Story";
+    [SerializeField] private string loadingSceneName = "Loading";
     [SerializeField] private string menuSceneName = "MenuScene";
 
     [Header("Кнопки")]
@@ -36,7 +38,7 @@ public class ScenesTransition : MonoBehaviour
     {
         
         if (startGameButton != null)
-            startGameButton.onClick.AddListener(() => LoadSceneWithDelay(gameSceneName));
+            startGameButton.onClick.AddListener(() => LoadSceneWithDelay(storySceneName));
 
         
         if (returnToMenuButton != null)
@@ -75,7 +77,7 @@ public class ScenesTransition : MonoBehaviour
     
     private void StartGame()
     {
-        LoadSceneWithDelay(gameSceneName);
+        LoadSceneWithDelay(storySceneName);
     }
 
     
@@ -90,7 +92,7 @@ public class ScenesTransition : MonoBehaviour
     {
         Debug.Log("restart");
         PlayButtonSound();
-        StartCoroutine(LoadSceneCoroutine(SceneManager.GetActiveScene().name));
+        LoadSceneWithDelay(gameSceneName);
     }
 
     

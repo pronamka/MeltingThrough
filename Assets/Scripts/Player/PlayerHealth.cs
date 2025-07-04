@@ -41,4 +41,12 @@ public class PlayerHealth : Health
         SceneManager.LoadScene(menuSceneName);
     }
 
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
 }
