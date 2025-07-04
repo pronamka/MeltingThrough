@@ -121,7 +121,7 @@ public class EnemyState : MonoBehaviour
         if (data.type == EnemyPlayerOverlapDetector.ColliderType.Body)
         {
             if (timeSinceCollisionDamage < collisionDamageCooldown) return;
-            data.playerCollider.GetComponent<PlayerState>().TakeDamage(collisionDamage);
+            data.playerCollider.GetComponent<PlayerState>().TakeDamage(collisionDamage, true);
             timeSinceCollisionDamage = 0;
         }
     }
