@@ -117,11 +117,10 @@ public class EnemyState : MonoBehaviour
 
     public void OnChildTrigger(TriggerData data)
     {
-        Debug.Log($"{data.type}; {data.playerCollider}");
         if (data.type == EnemyPlayerOverlapDetector.ColliderType.Body)
         {
             if (timeSinceCollisionDamage < collisionDamageCooldown) return;
-            data.playerCollider.GetComponent<PlayerState>().TakeDamage(collisionDamage);
+            data.playerCollider.GetComponent<PlayerState>().TakeDamage(collisionDamage, true);
             timeSinceCollisionDamage = 0;
         }
     }

@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 6383365496923045550}
   m_Layer: 11
   m_Name: BossEnemy
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -305,6 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89c89cd286285f4c8024fd8fe1ef05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDropCurse: 0
+  curseDropChance: -1
   maxHealth: 500
   currentHealth: 500
   regenerationRate: 0
@@ -313,6 +315,10 @@ MonoBehaviour:
   timeSinceTakenDamage: 0
   hurtSound: {fileID: 8300000, guid: fae7f46d39e2ee348af27783c702cad9, type: 3}
   deathSound: {fileID: 8300000, guid: 5e791cb0448951f41b870121fd1cfa2a, type: 3}
+  deathCanvas: {fileID: 0}
+  showCanvasDelay: 2
+  canvasDisplayTime: 60
+  menuSceneName: MenuScene
 --- !u!114 &7194058940104740394
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  maxFlyingTime: 1
+  maxFlyingTime: 3
   damage: 70
 --- !u!95 &1487291687698747901
 Animator:

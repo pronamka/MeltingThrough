@@ -44,6 +44,8 @@ public class Fireball : MonoBehaviour
         {
             return;
         }
+
+        body.linearVelocity = new Vector2(0f, 0f);
         animator.SetTrigger("explode");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {

@@ -18,12 +18,12 @@ public class CurseManager : MonoBehaviour
     [SerializeField] private KeyCode testDropKey = KeyCode.T;
 
     private List<ActiveCurse> activeCurses = new List<ActiveCurse>();
-    private PlayerController player;
+    private List<CurseData> spawnedCurses = new List<CurseData>();
 
-    // Singleton Pattern
+
+
     public static CurseManager Instance { get; private set; }
 
-    // События для подписки других систем
     public System.Action<CurseData> OnCurseApplied;
     public System.Action<CurseData> OnCurseRemoved;
 
@@ -44,7 +44,6 @@ public class CurseManager : MonoBehaviour
 
     private void Awake()
     {
-        // Инициализация Singleton
         if (Instance == null)
         {
             Instance = this;
@@ -59,7 +58,6 @@ public class CurseManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeReferences();
         ValidateSetup();
 
         if (debugMode)
@@ -72,35 +70,21 @@ public class CurseManager : MonoBehaviour
     {
         UpdateCurseTimers();
 
-        // Отладочная клавиша для тестирования
+        
         if (debugMode && Input.GetKeyDown(testDropKey))
         {
-            Vector3 dropPos = player != null ? player.transform.position : Vector3.zero;
+            Vector3 dropPos = Vector3.zero;
             TryDropCurse(dropPos + Vector3.up * 2f);
         }
     }
 
-    private void InitializeReferences()
-    {
-        // Ищем игрока в сцене
-        if (player == null)
-        {
-            player = FindObjectOfType<PlayerController>();
-        }
-
-        // Создаем UI панель если её нет
-        if (curseUIParent == null)
-        {
-            CreateCurseUIPanel();
-        }
-    }
-
+    
     private void CreateCurseUIPanel()
     {
         Canvas canvas = FindObjectOfType<Canvas>();
         if (canvas == null)
         {
-            // Создаем Canvas если его нет
+            
             GameObject canvasObj = new GameObject("Canvas");
             canvas = canvasObj.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -108,11 +92,11 @@ public class CurseManager : MonoBehaviour
             canvasObj.AddComponent<UnityEngine.UI.GraphicRaycaster>();
         }
 
-        // Создаем панель для проклятий
+       
         GameObject panel = new GameObject("CursesPanel");
         panel.transform.SetParent(canvas.transform, false);
 
-        // Настраиваем RectTransform
+        
         RectTransform rect = panel.AddComponent<RectTransform>();
         rect.anchorMin = new Vector2(0, 1);
         rect.anchorMax = new Vector2(0, 1);
@@ -120,7 +104,7 @@ public class CurseManager : MonoBehaviour
         rect.anchoredPosition = new Vector2(10, -10);
         rect.sizeDelta = new Vector2(300, 400);
 
-        // Добавляем компонент для автоматической компоновки
+        
         UnityEngine.UI.VerticalLayoutGroup layout = panel.AddComponent<UnityEngine.UI.VerticalLayoutGroup>();
         layout.spacing = 5;
         layout.padding = new RectOffset(5, 5, 5, 5);
@@ -142,11 +126,6 @@ public class CurseManager : MonoBehaviour
             warnings.Add("No curses assigned to CurseManager!");
         }
 
-        if (player == null)
-        {
-            warnings.Add("PlayerController not found in scene!");
-        }
-
         if (warnings.Count > 0 && debugMode)
         {
             Debug.LogWarning($"[CurseManager] Setup Warnings:\n{string.Join("\n", warnings)}");
@@ -158,9 +137,7 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Попытка выбросить проклятие с учетом вероятности
-    /// </summary>
+    
     public void TryDropCurse(Vector3 position)
     {
         if (availableCurses == null || availableCurses.Length == 0)
@@ -179,7 +156,6 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    
     public void DropRandomCurse(Vector3 position)
     {
         if (availableCurses == null || availableCurses.Length == 0)
@@ -188,21 +164,40 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-      
-        var availableForDrop = availableCurses.Where(c => c != null && c.dropPrefab != null).ToArray();
+        
+        var availableForDrop = availableCurses
+            .Where(c => c != null && c.dropPrefab != null && !spawnedCurses.Contains(c))
+            .ToArray();
 
         if (availableForDrop.Length == 0)
         {
-            if (debugMode) Debug.LogWarning("[CurseManager] No curses have drop prefabs assigned!");
+            if (debugMode) Debug.LogWarning("[CurseManager] No curses available for drop (all have been spawned)!");
             return;
         }
 
-      
+        
         CurseData randomCurse = availableForDrop[Random.Range(0, availableForDrop.Length)];
         DropSpecificCurse(randomCurse, position);
+
+        spawnedCurses.Add(randomCurse);
     }
 
-   
+    public void ResetSpawnedCurses()
+    {
+        
+        spawnedCurses.Clear();
+
+        
+        CursePickup[] cursePickups = FindObjectsOfType<CursePickup>();
+        foreach (var cursePickup in cursePickups)
+        {
+            Destroy(cursePickup.gameObject);
+        }
+
+        if (debugMode) Debug.Log("[CurseManager] Spawned curses list has been reset and all active curses on the map have been destroyed.");
+    }
+
+
     public void DropSpecificCurse(CurseData curse, Vector3 position)
     {
         if (curse == null)
@@ -217,7 +212,7 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        // Создаем дроп
+        
         GameObject drop = Instantiate(curse.dropPrefab, position, Quaternion.identity);
         CursePickup pickup = drop.GetComponent<CursePickup>();
 
@@ -242,16 +237,17 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        if (player == null)
+        /*if (player == null)
         {
             if (debugMode) Debug.LogError("[CurseManager] Player not found when applying curse!");
             return;
-        }
+        }*/
 
         ActiveCurse existingCurse = activeCurses.FirstOrDefault(ac => ac.curseData == curse);
 
         if (existingCurse != null)
         {
+            Debug.Log("1");
             if (curse.stackable)
             {
                 existingCurse.stackCount++;
@@ -266,22 +262,18 @@ public class CurseManager : MonoBehaviour
         }
         else
         {
-            // Добавляем новое проклятие
+            Debug.Log("2");
+
             activeCurses.Add(new ActiveCurse(curse));
             ApplyCurseEffect(curse);
             if (debugMode) Debug.Log($"[CurseManager] Applied new curse: {curse.curseName}");
         }
 
-        // Обновляем UI
+        
         UpdateCurseUI();
 
-        // Воспроизводим звук подбора
-        if (curse.pickupSound != null)
-        {
-            AudioSource.PlayClipAtPoint(curse.pickupSound, transform.position);
-        }
-
-        // Вызываем событие
+  
+ 
         OnCurseApplied?.Invoke(curse);
     }
 
@@ -292,26 +284,26 @@ public class CurseManager : MonoBehaviour
             switch (curse.category)
             {
                 case CurseCategory.Stat:
-                    curse.ApplyEffect(player);
+                    curse.ApplyEffect();
                     break;
                 case CurseCategory.Visual:
-                    // Находим VisualEffectManager в сцене
+                    
                     VisualEffectManager visualManager = FindObjectOfType<VisualEffectManager>();
                     if (visualManager != null)
                         curse.ApplyVisualEffect(visualManager);
                     break;
                 case CurseCategory.UI:
-                    // Находим UIManager в сцене
+                    
                     UIManager uiManager = FindObjectOfType<UIManager>();
                     if (uiManager != null)
                         curse.ApplyUIEffect(uiManager);
                     break;
                 case CurseCategory.Gameplay:
-                    curse.ApplyEffect(player);
+                    curse.ApplyEffect();
                     break;
                 case CurseCategory.Special:
-                    // Применяем все типы эффектов (кроме аудио)
-                    curse.ApplyEffect(player);
+                    
+                    curse.ApplyEffect();
 
                     VisualEffectManager vm = FindObjectOfType<VisualEffectManager>();
                     if (vm != null) curse.ApplyVisualEffect(vm);
@@ -327,9 +319,6 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Убрать проклятие
-    /// </summary>
     public void RemoveCurse(CurseData curse)
     {
         ActiveCurse activeCurse = activeCurses.FirstOrDefault(ac => ac.curseData == curse);
@@ -347,10 +336,10 @@ public class CurseManager : MonoBehaviour
         }
         else
         {
-            // Убираем эффект полностью
+
             RemoveCurseEffect(curse);
 
-            // Для стакающихся проклятий убираем все стаки
+
             if (curse.stackable)
             {
                 for (int i = 1; i < activeCurse.stackCount; i++)
@@ -359,16 +348,16 @@ public class CurseManager : MonoBehaviour
                 }
             }
 
-            // Удаляем из списка
+          
             activeCurses.Remove(activeCurse);
 
             if (debugMode) Debug.Log($"[CurseManager] Removed curse: {curse.curseName}");
         }
 
-        // Обновляем UI
+        
         UpdateCurseUI();
 
-        // Вызываем событие
+        
         OnCurseRemoved?.Invoke(curse);
     }
 
@@ -379,7 +368,7 @@ public class CurseManager : MonoBehaviour
             switch (curse.category)
             {
                 case CurseCategory.Stat:
-                    curse.RemoveEffect(player);
+                    curse.RemoveEffect();
                     break;
                 case CurseCategory.Visual:
                     VisualEffectManager visualManager = FindObjectOfType<VisualEffectManager>();
@@ -392,10 +381,10 @@ public class CurseManager : MonoBehaviour
                         curse.RemoveUIEffect(uiManager);
                     break;
                 case CurseCategory.Gameplay:
-                    curse.RemoveEffect(player);
+                    curse.RemoveEffect();
                     break;
                 case CurseCategory.Special:
-                    curse.RemoveEffect(player);
+                    curse.RemoveEffect();
 
                     VisualEffectManager vm = FindObjectOfType<VisualEffectManager>();
                     if (vm != null) curse.RemoveVisualEffect(vm);
@@ -441,13 +430,13 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-        // Очищаем старые UI элементы
+        
         foreach (Transform child in curseUIParent)
         {
             Destroy(child.gameObject);
         }
 
-        // Создаем новые UI элементы
+        
         foreach (var activeCurse in activeCurses)
         {
             GameObject uiElement = Instantiate(curseUIPrefab, curseUIParent);
@@ -481,6 +470,8 @@ public class CurseManager : MonoBehaviour
         }
 
         if (debugMode) Debug.Log("[CurseManager] Removed all curses");
+
+        ResetSpawnedCurses();
     }
 
     public int GetActiveCursesCount()
@@ -495,14 +486,9 @@ public class CurseManager : MonoBehaviour
     [ContextMenu("Drop Random Curse")]
     public void DebugDropRandomCurse()
     {
-        if (player != null)
-        {
-            TryDropCurse(player.transform.position + Vector3.up * 2f);
-        }
-        else
-        {
-            TryDropCurse(Vector3.zero);
-        }
+        
+         TryDropCurse(Vector3.zero);
+        
     }
 
     [ContextMenu("Remove All Curses")]
@@ -521,8 +507,7 @@ public class CurseManager : MonoBehaviour
         GUILayout.Label($"User: ObjoradDdd | Time: {System.DateTime.Now:HH:mm:ss}");
         GUILayout.Label($"Active Curses: {activeCurses.Count}");
         GUILayout.Label($"Available Curses: {availableCurses?.Length ?? 0}");
-        GUILayout.Label($"Drop Chance: {curseDropChance:P0}");
-        GUILayout.Label($"Player Found: {player != null}");
+        GUILayout.Label($"Drop Chance: {curseDropChance:P0}");       
 
         GUILayout.Space(5);
 

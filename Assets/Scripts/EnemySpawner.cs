@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
         EnemyState[] enemies = FindObjectsOfType<EnemyState>();
         foreach (var enemy in enemies)
         {
-            if (enemy == null || enemy.IsDead()) continue;
+            if (enemy == null || enemy.IsDead() || enemy.tag == "Boss") continue;
 
             float dist = Vector2.Distance(enemy.transform.position, player.position);
             if (dist >= maxDist)
@@ -308,7 +308,7 @@ public class EnemySpawner : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
 
-        if (!enemyState.IsGrounded())
+        if (!enemyState.IsGrounded() && enemy.tag != "Boss")
         {
             if (debugMode) Debug.LogWarning($"{enemy.name} not grounded, destroying");
             Destroy(enemy);

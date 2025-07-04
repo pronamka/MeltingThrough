@@ -67,6 +67,7 @@ public class IceMonsterAttack : MonoBehaviour
 
     private void DamagePlayer()
     {
+        Debug.Log($"{playerCollider}; {playerCollider.transform}");
         if (!state.isAttacking)
         {
             return;

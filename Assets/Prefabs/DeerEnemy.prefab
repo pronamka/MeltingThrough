@@ -246,7 +246,7 @@ MonoBehaviour:
   isAttacking: 0
   groundCheck: {fileID: 2126492081405829120}
   collisionDamage: 10
-  collisionDamageCooldown: 2
+  collisionDamageCooldown: 1
 --- !u!114 &871450658067184051
 MonoBehaviour:
   m_ObjectHideFlags: 0
