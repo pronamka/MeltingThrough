@@ -7,12 +7,13 @@ public class TheLawOfSeverance : CurseData
     public override void ApplyEffect()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponent<PlayerState>().diesOnCollision = true;
-        Debug.Log("added");
+        player.GetComponent<PlayerState>().diesOnCollision = true;        
     }
 
     public override void RemoveEffect()
     {
-        Debug.Log("deleted");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerState>().diesOnCollision = false;
+
     }
 }

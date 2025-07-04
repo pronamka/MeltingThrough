@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9123437123392056531}
   - component: {fileID: 2236901675370725488}
   m_Layer: 0
-  m_Name: CursePickup
+  m_Name: CursePickup 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ SpriteRenderer:
   m_SortingLayerID: 1462659837
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1178215594808428635, guid: 7be8cb060211c4546a023324e8b2ea8e, type: 3}
+  m_Sprite: {fileID: -1319724202921559727, guid: d5a0002a76e1de246a01790d0b4faf2c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,7 +146,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.32, y: 1.41}
+    oldSize: {x: 1.18, y: 1.3}
     newSize: {x: 1.36, y: 1.23}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

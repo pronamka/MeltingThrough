@@ -18,9 +18,10 @@ public class CurseManager : MonoBehaviour
     [SerializeField] private KeyCode testDropKey = KeyCode.T;
 
     private List<ActiveCurse> activeCurses = new List<ActiveCurse>();
-   
+    private List<CurseData> spawnedCurses = new List<CurseData>();
 
-    
+
+
     public static CurseManager Instance { get; private set; }
 
     public System.Action<CurseData> OnCurseApplied;
@@ -155,7 +156,6 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-    
     public void DropRandomCurse(Vector3 position)
     {
         if (availableCurses == null || availableCurses.Length == 0)
@@ -164,21 +164,40 @@ public class CurseManager : MonoBehaviour
             return;
         }
 
-      
-        var availableForDrop = availableCurses.Where(c => c != null && c.dropPrefab != null).ToArray();
+        
+        var availableForDrop = availableCurses
+            .Where(c => c != null && c.dropPrefab != null && !spawnedCurses.Contains(c))
+            .ToArray();
 
         if (availableForDrop.Length == 0)
         {
-            if (debugMode) Debug.LogWarning("[CurseManager] No curses have drop prefabs assigned!");
+            if (debugMode) Debug.LogWarning("[CurseManager] No curses available for drop (all have been spawned)!");
             return;
         }
 
-      
+        
         CurseData randomCurse = availableForDrop[Random.Range(0, availableForDrop.Length)];
         DropSpecificCurse(randomCurse, position);
+
+        spawnedCurses.Add(randomCurse);
     }
 
-   
+    public void ResetSpawnedCurses()
+    {
+        
+        spawnedCurses.Clear();
+
+        
+        CursePickup[] cursePickups = FindObjectsOfType<CursePickup>();
+        foreach (var cursePickup in cursePickups)
+        {
+            Destroy(cursePickup.gameObject);
+        }
+
+        if (debugMode) Debug.Log("[CurseManager] Spawned curses list has been reset and all active curses on the map have been destroyed.");
+    }
+
+
     public void DropSpecificCurse(CurseData curse, Vector3 position)
     {
         if (curse == null)
@@ -451,6 +470,8 @@ public class CurseManager : MonoBehaviour
         }
 
         if (debugMode) Debug.Log("[CurseManager] Removed all curses");
+
+        ResetSpawnedCurses();
     }
 
     public int GetActiveCursesCount()

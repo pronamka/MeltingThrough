@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b080ba82250239145baadcd8a38eda69, type: 3}
-  m_Name: Blind Eye
+  m_Name: Veil of oblivion
   m_EditorClassIdentifier: 
-  curseName: Blind Eye
+  curseName: Veil of oblivion
   description: Reduce your vision range
-  curseSprite: {fileID: 2351909315670105333, guid: 853dd5dcc9cbc074785196168c74d49c, type: 3}
+  curseSprite: {fileID: 1178215594808428635, guid: 7be8cb060211c4546a023324e8b2ea8e, type: 3}
   dropPrefab: {fileID: 7302044071340657100, guid: 966553d9719cd0c4294d6039a430b1de, type: 3}
   category: 1
   curseType: 4

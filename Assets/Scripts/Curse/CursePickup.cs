@@ -34,24 +34,24 @@ public class CursePickup : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
 
-        // Добавляем Rigidbody2D для физики
+        
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
-        rb.gravityScale = 0.5f; // Легкая гравитация
-        rb.linearDamping = 2f; // Сопротивление для плавной остановки
+        rb.gravityScale = 0.5f;
+        rb.linearDamping = 2f; 
     }
 
     private void SetupColliders()
     {
-        // Триггер для определения близости игрока
+        
         CircleCollider2D triggerCollider = gameObject.AddComponent<CircleCollider2D>();
         triggerCollider.isTrigger = true;
         triggerCollider.radius = pickupRange;
 
-        // Физический коллайдер для взаимодействия с землей
+        
         BoxCollider2D physicsCollider = gameObject.AddComponent<BoxCollider2D>();
         physicsCollider.isTrigger = false;
         physicsCollider.size = new Vector2(0.8f, 0.8f);
@@ -61,7 +61,6 @@ public class CursePickup : MonoBehaviour
     {
         interactAction = new InputAction();
         interactAction.AddBinding("<Keyboard>/e");
-        interactAction.AddBinding("<Keyboard>/f"); // Альтернативная клавиша
         interactAction.performed += OnInteract;
         interactAction.Enable();
     }
@@ -69,26 +68,17 @@ public class CursePickup : MonoBehaviour
    
     private void Update()
     {
-        // Анимация плавания
+        
         AnimateFloat();
-
-        // Вращение
+  
         transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
 
-        // Проверяем дистанцию до игрока для автоматического подбора
-        if (player != null && playerInRange)
-        {
-            float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-            if (distanceToPlayer <= 1f) // Очень близко - автоматический подбор
-            {
-                PickupCurse();
-            }
-        }
+      
     }
 
     private void AnimateFloat()
     {
-        // Плавное движение вверх-вниз
+        
         Vector3 newPosition = startPosition;
         newPosition.y += Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
         transform.position = newPosition;
@@ -110,7 +100,7 @@ public class CursePickup : MonoBehaviour
             return;
         }
 
-        // Добавляем проклятие игроку через CurseManager
+        
         if (CurseManager.Instance != null)
         {
             CurseManager.Instance.ApplyCurse(curseData);
@@ -120,10 +110,10 @@ public class CursePickup : MonoBehaviour
             Debug.LogError("CurseManager.Instance is null. Cannot apply curse.");
         }
 
-        // Создаем эффект подбора
+        
         CreatePickupEffect();
 
-        // Звук подбора (если есть SoundManager)
+        
         if (curseData.pickupSound != null)
         {
             AudioSource.PlayClipAtPoint(curseData.pickupSound, transform.position);
@@ -131,7 +121,7 @@ public class CursePickup : MonoBehaviour
 
         Debug.Log($"Picked up curse: {curseData.curseName}");
 
-        // Уничтожаем объект
+        
         Destroy(gameObject);
     }
 
@@ -158,7 +148,7 @@ public class CursePickup : MonoBehaviour
         shape.shapeType = ParticleSystemShapeType.Circle;
         shape.radius = 0.3f;
 
-        // Уничтожаем эффект
+        
         Destroy(effectObj, 2f);
     }
 
@@ -173,7 +163,7 @@ public class CursePickup : MonoBehaviour
             spriteRenderer.color = color;
         }
 
-        // Обновляем стартовую позицию после инициализации
+        
         startPosition = transform.position;
     }
 
