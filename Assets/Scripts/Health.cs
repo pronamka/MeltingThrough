@@ -131,10 +131,10 @@ public class Health : MonoBehaviour
                 Debug.Log($"[Health] {gameObject.name} trying to drop curse (manager chance)");
             }
         }
-
-        StartCoroutine(DeathSequence());
         float deathAnimationDuration = utils.GetAnimationDuration(AnimationNames.Death);
         Invoke(nameof(DisableEntity), deathAnimationDuration);
+        StartCoroutine(DeathSequence());
+        
     }
 
     private IEnumerator DeathSequence()
@@ -163,28 +163,7 @@ public class Health : MonoBehaviour
     private void DisableEntity()
     {
         playerRenderer.enabled = false;
-
-        Collider2D[] colliders = GetComponents<Collider2D>();
-        foreach (Collider2D col in colliders)
-        {
-            col.enabled = false;
-        }
-
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.isKinematic = true;
-        }
-
-        MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
-        foreach (MonoBehaviour script in scripts)
-        {
-            if (script != this && script != null)
-            {
-                script.enabled = false;
-            }
-        }
+        Destroy(this.gameObject);
     }
 
     private bool IsInvincible()

@@ -110,7 +110,6 @@ GameObject:
   - component: {fileID: 4634532369373434115}
   - component: {fileID: 8771692981696193528}
   - component: {fileID: 1514554151243434195}
-  - component: {fileID: 4823194291334184993}
   m_Layer: 11
   m_Name: ElementalEnemy
   m_TagString: Untagged
@@ -297,13 +296,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89c89cd286285f4c8024fd8fe1ef05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDropCurse: 0
+  curseDropChance: -1
   maxHealth: 60
   currentHealth: 60
   regenerationRate: 0
   regenerationDelay: 0
   invincibilityPeriod: 0
+  timeSinceTakenDamage: 0
   hurtSound: {fileID: 8300000, guid: 072256393f7ec5b418aeb2e4c7351d3a, type: 3}
   deathSound: {fileID: 8300000, guid: 45e1666b73673844e9c630916b829213, type: 3}
+  deathCanvas: {fileID: 0}
+  showCanvasDelay: 2
+  canvasDisplayTime: 60
+  menuSceneName: MenuScene
 --- !u!114 &4634532369373434115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +329,7 @@ MonoBehaviour:
   isAttacking: 0
   groundCheck: {fileID: 0}
   collisionDamage: 10
-  collisionDamageCooldown: 2
+  collisionDamageCooldown: 1
 --- !u!114 &8771692981696193528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,22 +363,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3072
   attackSound: {fileID: 8300000, guid: 73668c509ea3b934c9016d4affb61a41, type: 3}
---- !u!114 &4823194291334184993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992816280256527373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabf6e493a74f1f4c8d331124d59b74b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropChance: 1
-  minCurseValue: 0.3
-  maxCurseValue: 2
-  cursePickupPrefab: {fileID: 0}
 --- !u!1 &8690377686136804093
 GameObject:
   m_ObjectHideFlags: 0
