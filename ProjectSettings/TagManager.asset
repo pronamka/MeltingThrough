@@ -8,6 +8,7 @@ TagManager:
   - DeathUI
   - CurseManager
   - Boss
+  - Alter
   layers:
   - Default
   - TransparentFX

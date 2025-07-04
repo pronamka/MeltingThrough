@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class CurseManager : MonoBehaviour
 {
+    private GameObject player;
+
     [Header("Settings")]
     [Range(0f, 1f)]
     public float curseDropChance = 0.3f;
@@ -20,7 +23,7 @@ public class CurseManager : MonoBehaviour
     private List<ActiveCurse> activeCurses = new List<ActiveCurse>();
     private List<CurseData> spawnedCurses = new List<CurseData>();
 
-
+    [SerializeField] private float alterAccessDistance;
 
     public static CurseManager Instance { get; private set; }
 
@@ -44,6 +47,7 @@ public class CurseManager : MonoBehaviour
 
     private void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         if (Instance == null)
         {
             Instance = this;
@@ -463,15 +467,56 @@ public class CurseManager : MonoBehaviour
 
     public void RemoveAllCurses()
     {
-        var cursesToRemove = activeCurses.ToList();
-        foreach (var curse in cursesToRemove)
+        Debug.Log("Trading curses");
+        GameObject[] alters = GameObject.FindGameObjectsWithTag("Alter");
+
+        List<float> distances = new List<float>();
+        for (int i = 0; i < alters.Length; i++)
         {
-            RemoveCurse(curse.curseData);
+            distances.Add(Vector3.Distance(player.transform.position, alters[i].transform.position));
         }
 
-        if (debugMode) Debug.Log("[CurseManager] Removed all curses");
+        float minDistance = distances.Min();
+
+        if (minDistance < alterAccessDistance)
+        {
+            var cursesToRemove = activeCurses.ToList();
+            foreach (var curse in cursesToRemove)
+            {
+                RemoveCurse(curse.curseData);
+            }
+
+            foreach (var curse in cursesToRemove)
+            {
+                GiveBuff();
+                player.GetComponent<PlayerHealth>().Heal(40);
+            }
+
+            if (debugMode) Debug.Log("[CurseManager] Removed all curses");
+        }
 
         ResetSpawnedCurses();
+    }
+
+    public void GiveBuff()
+    {
+        int buffIndex = Random.Range(0, 6);
+        Debug.Log($"Effect: {buffIndex}");
+        switch (buffIndex)
+        {
+            case 0: player.GetComponent<Health>().maxHealth *= 1.2f;
+                break;
+            case 1: player.GetComponent<PlayerMana>().maxMana *= 1.2f;
+                break;
+            case 2: player.GetComponent<PlayerMana>().regenerationRate *= 1.2f;
+                break;
+            case 3: player.GetComponent<PlayerAttack>().primaryAttackDamage *= 1.2f;
+                break;
+            case 4: player.GetComponent<PlayerMovement>().speed *= 1.2f;
+                break;
+            case 5: player.GetComponent<PlayerMovement>().jumpForce *= 1.2f;
+                break;
+        }
     }
 
     public int GetActiveCursesCount()

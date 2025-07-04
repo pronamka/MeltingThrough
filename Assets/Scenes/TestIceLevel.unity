@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b09610d7ee0cd4991bbfcf436986cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curseDropChance: 0.15
+  curseDropChance: 1
   availableCurses:
   - {fileID: 11400000, guid: 1bfc419d0463e7a498cbcd7a38b48660, type: 2}
   - {fileID: 11400000, guid: 413e97ea4d3a1f2418720f3ad16fc2f2, type: 2}
@@ -273,6 +273,7 @@ MonoBehaviour:
   curseUIPrefab: {fileID: 0}
   debugMode: 1
   testDropKey: 281
+  alterAccessDistance: 10
 --- !u!4 &705254061
 Transform:
   m_ObjectHideFlags: 0
