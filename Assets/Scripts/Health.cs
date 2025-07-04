@@ -96,7 +96,7 @@ public class Health : MonoBehaviour
         GameObject curseManager = GameObject.FindGameObjectWithTag("CurseManager");
         curseManager.GetComponent<CurseManager>().TryDropCurse(pos);
 
-        //StartCoroutine(DeathSequence());
+        
 
     }
 

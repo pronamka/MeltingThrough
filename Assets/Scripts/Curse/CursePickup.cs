@@ -13,6 +13,14 @@ public class CursePickup : MonoBehaviour
     [SerializeField] private GameObject promptUI;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    [Header("Text Settings")]
+    [SerializeField] private string itemText = "Static Text";
+    [SerializeField] private float textHeightOffset = 1f;
+    [SerializeField] private Color textColor = Color.yellow;
+    [SerializeField] private int textFontSize = 20;
+
+    private TextMesh textMesh;
+
     private CurseData curseData;
     private bool playerInRange = false;
     private GameObject player;
@@ -21,6 +29,7 @@ public class CursePickup : MonoBehaviour
 
     private void Start()
     {
+   
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
         {
@@ -31,27 +40,29 @@ public class CursePickup : MonoBehaviour
         SetupColliders();
         SetupInput();
 
-
         player = GameObject.FindGameObjectWithTag("Player");
 
-        
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
         rb.gravityScale = 0.5f;
-        rb.linearDamping = 2f; 
+        rb.linearDamping = 2f;
+
+        
+        rb.freezeRotation = true;
+
+       
+        CreateTextMesh();
     }
 
     private void SetupColliders()
     {
-        
         CircleCollider2D triggerCollider = gameObject.AddComponent<CircleCollider2D>();
         triggerCollider.isTrigger = true;
         triggerCollider.radius = pickupRange;
 
-        
         BoxCollider2D physicsCollider = gameObject.AddComponent<BoxCollider2D>();
         physicsCollider.isTrigger = false;
         physicsCollider.size = new Vector2(0.8f, 0.8f);
@@ -65,20 +76,28 @@ public class CursePickup : MonoBehaviour
         interactAction.Enable();
     }
 
-   
+    private void CreateTextMesh()
+    {
+        GameObject textObject = new GameObject("PickupText");
+        textObject.transform.SetParent(transform, false);
+        textObject.transform.localPosition = new Vector3(0f, textHeightOffset, 0f);
+
+        textMesh = textObject.AddComponent<TextMesh>();
+        textMesh.text = itemText;
+        textMesh.anchor = TextAnchor.MiddleCenter;
+        textMesh.alignment = TextAlignment.Center;
+        textMesh.color = textColor;
+        textMesh.characterSize = 0.1f;
+        textMesh.fontSize = textFontSize;
+    }
+
     private void Update()
     {
-        
         AnimateFloat();
-  
-        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
-
-      
     }
 
     private void AnimateFloat()
     {
-        
         Vector3 newPosition = startPosition;
         newPosition.y += Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
         transform.position = newPosition;
@@ -100,7 +119,6 @@ public class CursePickup : MonoBehaviour
             return;
         }
 
-        
         if (CurseManager.Instance != null)
         {
             CurseManager.Instance.ApplyCurse(curseData);
@@ -110,10 +128,8 @@ public class CursePickup : MonoBehaviour
             Debug.LogError("CurseManager.Instance is null. Cannot apply curse.");
         }
 
-        
         CreatePickupEffect();
 
-        
         if (curseData.pickupSound != null)
         {
             AudioSource.PlayClipAtPoint(curseData.pickupSound, transform.position);
@@ -121,7 +137,6 @@ public class CursePickup : MonoBehaviour
 
         Debug.Log($"Picked up curse: {curseData.curseName}");
 
-        
         Destroy(gameObject);
     }
 
@@ -148,7 +163,6 @@ public class CursePickup : MonoBehaviour
         shape.shapeType = ParticleSystemShapeType.Circle;
         shape.radius = 0.3f;
 
-        
         Destroy(effectObj, 2f);
     }
 
@@ -163,7 +177,6 @@ public class CursePickup : MonoBehaviour
             spriteRenderer.color = color;
         }
 
-        
         startPosition = transform.position;
     }
 

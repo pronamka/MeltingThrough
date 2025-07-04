@@ -53,6 +53,10 @@ MonoBehaviour:
   rotationSpeed: 45
   promptUI: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  itemText: Decrease movement speed
+  textHeightOffset: 2
+  textColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  textFontSize: 25
 --- !u!212 &3188162840291566291
 SpriteRenderer:
   m_ObjectHideFlags: 0

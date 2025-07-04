@@ -10,7 +10,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 8;
     [SerializeField] private float spawnDistance = 20f;
 
-
     [Header("Cleaner Settings")]
     [SerializeField] private float checkInterval = 1.0f;
     [SerializeField] private float screenDistanceMultiplier = 1.05f;
@@ -19,12 +18,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private LayerMask groundLayer = 1 << 6;
     [SerializeField] private LayerMask obstacleLayer = -1;
     [SerializeField] private float groundCheckDistance = 50f;
-    [SerializeField] private float spawnHeightAboveGround = 2f;    
+    [SerializeField] private float spawnHeightAboveGround = 2f;
 
     [Header("Safety Settings")]
-    [SerializeField] private float safetyMargin = 1f;             
+    [SerializeField] private float safetyMargin = 1f;
     [SerializeField] private int maxSpawnAttempts = 50;
-    [SerializeField] private bool debugMode = true;
 
     private Camera mainCamera;
     private Transform player;
@@ -74,7 +72,6 @@ public class EnemySpawner : MonoBehaviour
             float dist = Vector2.Distance(enemy.transform.position, player.position);
             if (dist >= maxDist)
             {
-                Debug.Log("Enemy destoyed");
                 Destroy(enemy.gameObject);
             }
         }
@@ -97,54 +94,29 @@ public class EnemySpawner : MonoBehaviour
                 IsPositionTrulySafe(safeSpawnPos, enemySize))
             {
                 SpawnEnemyAt(safeSpawnPos, selectedPrefab);
-                if (debugMode)
-                {
-                    Debug.Log($"{selectedPrefab.name} spawned at: {safeSpawnPos} (attempt: {attempt + 1})");
-                }
                 return;
             }
-        }
-
-        if (debugMode)
-        {
-            Debug.LogWarning($"failed to spawn {selectedPrefab.name} after {maxSpawnAttempts} attempts");
         }
     }
 
     private Vector3 FindSafeSpawnPosition(Vector3 startPos, Vector2 enemySize)
     {
-        
         RaycastHit2D groundHit = Physics2D.Raycast(startPos, Vector2.down, groundCheckDistance, groundLayer);
 
         if (groundHit.collider == null)
         {
-            if (debugMode) Debug.Log("no ground");
             return Vector3.zero;
         }
 
-        
         float enemyHeight = enemySize.y;
         float totalHeightNeeded = enemyHeight / 2f + spawnHeightAboveGround;
         Vector3 potentialSpawnPos = groundHit.point + Vector2.up * totalHeightNeeded;
 
-        if (debugMode)
-        {
-            Debug.DrawRay(startPos, Vector2.down * groundCheckDistance, Color.blue, 2f);
-            Debug.DrawLine(groundHit.point, potentialSpawnPos, Color.yellow, 2f);
-            Debug.Log($"ground hit at: {groundHit.point}, Spawn pos: {potentialSpawnPos}");
-        }
-
-        
         Vector3 ceilingCheckStart = potentialSpawnPos + Vector3.up * (enemyHeight / 2f);
         RaycastHit2D ceilingHit = Physics2D.Raycast(ceilingCheckStart, Vector2.up, enemyHeight + safetyMargin, obstacleLayer);
 
         if (ceilingHit.collider != null)
         {
-            if (debugMode)
-            {
-                Debug.Log($"ceiling blocked by: {ceilingHit.collider.name}");
-                Debug.DrawLine(ceilingCheckStart, ceilingHit.point, Color.red, 2f);
-            }
             return Vector3.zero;
         }
 
@@ -153,35 +125,25 @@ public class EnemySpawner : MonoBehaviour
 
     private bool IsPositionTrulySafe(Vector3 spawnPos, Vector2 enemySize)
     {
-        
         Vector2 checkSize = enemySize + Vector2.one * safetyMargin;
 
-        
         Collider2D centerCheck = Physics2D.OverlapPoint(spawnPos, obstacleLayer);
         if (centerCheck != null)
         {
-            if (debugMode) Debug.Log($"center blocked by: {centerCheck.name}");
             return false;
         }
 
-        
         RaycastHit2D boxCheck = Physics2D.BoxCast(spawnPos, checkSize, 0f, Vector2.zero, 0.01f, obstacleLayer);
         if (boxCheck.collider != null)
         {
-            if (debugMode)
-            {
-                Debug.Log($"area blocked by: {boxCheck.collider.name}");
-                Debug.DrawLine(spawnPos, boxCheck.point, Color.red, 2f);
-            }
             return false;
         }
 
-        
         Vector3[] corners = {
-            spawnPos + new Vector3(-checkSize.x/2, checkSize.y/2, 0),   
-            spawnPos + new Vector3(checkSize.x/2, checkSize.y/2, 0),    
-            spawnPos + new Vector3(-checkSize.x/2, -checkSize.y/2, 0),  
-            spawnPos + new Vector3(checkSize.x/2, -checkSize.y/2, 0)    
+            spawnPos + new Vector3(-checkSize.x/2, checkSize.y/2, 0),
+            spawnPos + new Vector3(checkSize.x/2, checkSize.y/2, 0),
+            spawnPos + new Vector3(-checkSize.x/2, -checkSize.y/2, 0),
+            spawnPos + new Vector3(checkSize.x/2, -checkSize.y/2, 0)
         };
 
         foreach (Vector3 corner in corners)
@@ -189,27 +151,13 @@ public class EnemySpawner : MonoBehaviour
             Collider2D cornerCheck = Physics2D.OverlapPoint(corner, obstacleLayer);
             if (cornerCheck != null)
             {
-                if (debugMode)
-                {
-                    Debug.Log($"corner blocked by: {cornerCheck.name} at {corner}");
-                    Debug.DrawLine(spawnPos, corner, Color.red, 2f);
-                }
                 return false;
             }
         }
 
-        
         if (IsAnotherEnemyNearby(spawnPos, enemySize))
         {
-            if (debugMode) Debug.Log("another enemy nearby");
             return false;
-        }
-
-        
-        if (debugMode)
-        {
-            Debug.DrawLine(spawnPos + Vector3.left * checkSize.x / 2, spawnPos + Vector3.right * checkSize.x / 2, Color.green, 3f);
-            Debug.DrawLine(spawnPos + Vector3.down * checkSize.y / 2, spawnPos + Vector3.up * checkSize.y / 2, Color.green, 3f);
         }
 
         return true;
@@ -255,13 +203,12 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector3 basePos = player != null ? player.position : mainCamera.transform.position;
 
-        
         float angle;
-        if (Random.value < 0.7f) 
+        if (Random.value < 0.7f)
         {
             angle = Random.value < 0.5f ? Random.Range(120f, 240f) : Random.Range(300f, 60f);
         }
-        else 
+        else
         {
             angle = Random.Range(60f, 120f);
         }
@@ -286,12 +233,6 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject enemy = Instantiate(prefab, position, Quaternion.identity);
 
-        if (debugMode)
-        {
-          
-            Debug.DrawLine(position, position + Vector3.up * 3f, Color.cyan, 5f);
-        }
-
         StartCoroutine(ValidateSpawnedEnemy(enemy, position));
     }
 
@@ -305,17 +246,11 @@ public class EnemySpawner : MonoBehaviour
         EnemyState enemyState = enemy.GetComponent<EnemyState>();
         if (enemyState == null) yield break;
 
-        
         yield return new WaitForSeconds(0.5f);
 
         if (!enemyState.IsGrounded() && enemy.tag != "Boss")
         {
-            if (debugMode) Debug.LogWarning($"{enemy.name} not grounded, destroying");
             Destroy(enemy);
-        }
-        else if (debugMode)
-        {
-            Debug.Log($"{enemy.name} successfully landed and grounded");
         }
     }
 
@@ -335,23 +270,16 @@ public class EnemySpawner : MonoBehaviour
         return count;
     }
 
-    [ContextMenu("test Spawn Now")]
-    public void TestSpawn()
-    {
-        TrySpawnSafely();
-    }
-
+   
     private void OnDrawGizmosSelected()
     {
         if (player == null) return;
 
         Vector3 center = player.position;
 
-        
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(center, spawnDistance);
 
-        
         Gizmos.color = Color.green;
         Gizmos.DrawLine(center, center + Vector3.up * spawnHeightAboveGround);
     }
