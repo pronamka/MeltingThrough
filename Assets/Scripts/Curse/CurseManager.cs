@@ -508,13 +508,13 @@ public class CurseManager : MonoBehaviour
                 break;
             case 1: player.GetComponent<PlayerMana>().maxMana *= 1.2f;
                 break;
-            case 2: player.GetComponent<PlayerMana>().regenerationRate *= 1.2f;
+            case 2: player.GetComponent<PlayerMana>().regenerationRate *= 1.1f;
                 break;
             case 3: player.GetComponent<PlayerAttack>().primaryAttackDamage *= 1.2f;
                 break;
-            case 4: player.GetComponent<PlayerMovement>().speed *= 1.2f;
+            case 4: player.GetComponent<PlayerMovement>().speed *= 1.1f;
                 break;
-            case 5: player.GetComponent<PlayerMovement>().jumpForce *= 1.2f;
+            case 5: player.GetComponent<PlayerMovement>().maxJumps += 1;
                 break;
         }
     }

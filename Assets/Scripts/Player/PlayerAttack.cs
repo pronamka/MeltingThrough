@@ -136,7 +136,7 @@ public class PlayerAttack : MonoBehaviour
 
     private Vector3 CalculateFireballPosition(Vector2 direction)
     {
-        float fireballOffset = 1.7f;
+        float fireballOffset = 2f;
         Vector3 spawnPosition = transform.position + (Vector3)(direction * fireballOffset);
         return spawnPosition;
     }
