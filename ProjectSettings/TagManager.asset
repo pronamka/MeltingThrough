@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - DeathUI
+  - Boss
   layers:
   - Default
   - TransparentFX

@@ -53,7 +53,7 @@ public class PlayerState : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y < -1000)
+        if (transform.position.y < -2000)
         {
             TakeDamage(1000);
         }
