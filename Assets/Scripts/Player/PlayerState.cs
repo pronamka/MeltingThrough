@@ -30,6 +30,8 @@ public class PlayerState : MonoBehaviour
 
     private string menuSceneName = "MenuScene";
 
+    public bool diesOnCollision = false;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -133,6 +135,10 @@ public class PlayerState : MonoBehaviour
     public void TakeDamage(float damage, bool collisionDamage = false)
     {
         if (IsDead()) return;
+        if (diesOnCollision)
+        {
+            health.TakeDamage(health.maxHealth+1);
+        }
         health.TakeDamage(damage);
     }
 
