@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Double Jump Settings")]
     [SerializeField] private float doubleJumpForce = 15f;
-    [SerializeField] private int maxJumps = 2;
+    [SerializeField] public int maxJumps = 2;
 
     private InputAction moveAction;
     private InputAction jumpAction;
