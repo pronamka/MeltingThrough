@@ -36,7 +36,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "07f0dfab-813c-4a46-a28c-48ef570f9a1c",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -117,6 +117,15 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "862c5271-b165-4847-9ff4-f7687d851635",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact2",
+                    "type": "Button",
+                    "id": "042cc8ca-32ca-4054-b516-d7bf0a94a1ba",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -550,6 +559,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a06b597a-bf06-4540-b638-8688636afc72",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

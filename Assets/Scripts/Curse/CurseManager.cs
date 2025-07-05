@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class CurseManager : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class CurseManager : MonoBehaviour
 
     public System.Action<CurseData> OnCurseApplied;
     public System.Action<CurseData> OnCurseRemoved;
+
+    
 
     [System.Serializable]
     public class ActiveCurse
@@ -387,6 +390,7 @@ public class CurseManager : MonoBehaviour
 
     public void RemoveAllCurses()
     {
+        Debug.Log("Trying to trade curses...");
         GameObject[] alters = GameObject.FindGameObjectsWithTag("Alter");
 
         List<float> distances = new List<float>();
@@ -399,14 +403,17 @@ public class CurseManager : MonoBehaviour
 
         if (minDistance < alterAccessDistance)
         {
+            Debug.Log("Alter found");
             var cursesToRemove = activeCurses.ToList();
             foreach (var curse in cursesToRemove)
             {
+                Debug.Log($"Removing {curse}");
                 RemoveCurse(curse.curseData);
             }
 
             foreach (var curse in cursesToRemove)
             {
+                Debug.Log($"Giving buff");
                 GiveBuff();
                 player.GetComponent<PlayerHealth>().Heal(40);
             }

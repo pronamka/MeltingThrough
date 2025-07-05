@@ -32,6 +32,8 @@ public class PlayerState : MonoBehaviour
 
     public bool diesOnCollision = false;
 
+    private InputAction interactAction;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -49,10 +51,20 @@ public class PlayerState : MonoBehaviour
 
         takeDamageAction = InputSystem.actions.FindAction("TakeDamage");
         takeDamageAction.Enable();
+
+        interactAction = InputSystem.actions.FindAction("Interact2");
+        Debug.Log($"Interact: {interactAction}");
+        interactAction.Enable();
     }
 
     private void Update()
     {
+        if (interactAction.triggered)
+        {
+            Debug.Log("Interact action triggered");
+            CurseManager curseManager = GameObject.FindGameObjectWithTag("CurseManager").GetComponent<CurseManager>();
+            curseManager.RemoveAllCurses();
+        }
         if (transform.position.y < -2000)
         {
             TakeDamage(1000);
