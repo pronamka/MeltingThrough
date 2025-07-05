@@ -27,7 +27,7 @@ public class CurseManager : MonoBehaviour
     public System.Action<CurseData> OnCurseApplied;
     public System.Action<CurseData> OnCurseRemoved;
 
-    private InputAction interactAction;
+    
 
     [System.Serializable]
     public class ActiveCurse
@@ -47,8 +47,6 @@ public class CurseManager : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        interactAction = InputSystem.actions.FindAction("Interact");
-        interactAction.Enable();
         if (Instance == null)
         {
             Instance = this;
@@ -73,11 +71,6 @@ public class CurseManager : MonoBehaviour
         {
             Vector3 dropPos = Vector3.zero;
             TryDropCurse(dropPos + Vector3.up * 2f);
-        }
-
-        if (interactAction.triggered)
-        {
-            RemoveAllCurses();
         }
     }
 
@@ -397,6 +390,7 @@ public class CurseManager : MonoBehaviour
 
     public void RemoveAllCurses()
     {
+        Debug.Log("Trying to trade curses...");
         GameObject[] alters = GameObject.FindGameObjectsWithTag("Alter");
 
         List<float> distances = new List<float>();
@@ -409,14 +403,17 @@ public class CurseManager : MonoBehaviour
 
         if (minDistance < alterAccessDistance)
         {
+            Debug.Log("Alter found");
             var cursesToRemove = activeCurses.ToList();
             foreach (var curse in cursesToRemove)
             {
+                Debug.Log($"Removing {curse}");
                 RemoveCurse(curse.curseData);
             }
 
             foreach (var curse in cursesToRemove)
             {
+                Debug.Log($"Giving buff");
                 GiveBuff();
                 player.GetComponent<PlayerHealth>().Heal(40);
             }

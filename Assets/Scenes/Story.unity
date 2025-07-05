@@ -484,7 +484,7 @@ MonoBehaviour:
   - {fileID: 2278769393490559486, guid: 9dca97cc9ad47f94dbd555cd9ad7cf07, type: 3}
   - {fileID: 4377537981518263733, guid: f5e5d9c912398994baa00c6b7cbd73dd, type: 3}
   - {fileID: -2624647463821943873, guid: bb38250ee9db33c4599bfc96922bc90f, type: 3}
-  - {fileID: 2670187514021365539, guid: b78afd39d560e904cbef7cc9351ad2ce, type: 3}
+  - {fileID: 1567249235216114127, guid: 8934f9d00a6ab0542b972fe4c6040ae0, type: 3}
   displayImage: {fileID: 1385404298}
   nextSceneName: TestIceLevel
   uiText: {fileID: 1834278579}
