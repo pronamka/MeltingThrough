@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class CurseManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class CurseManager : MonoBehaviour
     public System.Action<CurseData> OnCurseApplied;
     public System.Action<CurseData> OnCurseRemoved;
 
+    private InputAction interactAction;
+
     [System.Serializable]
     public class ActiveCurse
     {
@@ -44,6 +47,8 @@ public class CurseManager : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        interactAction = InputSystem.actions.FindAction("Interact");
+        interactAction.Enable();
         if (Instance == null)
         {
             Instance = this;
@@ -68,6 +73,11 @@ public class CurseManager : MonoBehaviour
         {
             Vector3 dropPos = Vector3.zero;
             TryDropCurse(dropPos + Vector3.up * 2f);
+        }
+
+        if (interactAction.triggered)
+        {
+            RemoveAllCurses();
         }
     }
 
